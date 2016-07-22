@@ -12,9 +12,9 @@ public interface GenericDao<T extends AbstractPersistable> {
 	
 	List<T> findAll();
 	
-	T findById(long id);
+	T findById(Long id);
 	
-	void delete(long id);
+	void delete(Long id);
 	
 	void delete(T obj);
 }

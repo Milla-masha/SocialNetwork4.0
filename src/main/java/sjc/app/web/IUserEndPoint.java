@@ -9,4 +9,6 @@ public interface IUserEndPoint {
 	Response getAllUser();
 
 	Response getProfile(Long iduser);
+
+	Response getMusic(Long idUser);
 }

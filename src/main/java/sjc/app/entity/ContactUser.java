@@ -7,9 +7,17 @@ import java.util.Date;
 @Table(name = "contact_user")
 public class ContactUser extends AbstractPersistable {
 
-    @JoinColumn(name = "fk_info_user", referencedColumnName = "id")
+    @JoinColumn(name = "fk_registeruser", referencedColumnName = "id")
     @OneToOne(optional = false,fetch = FetchType.LAZY)
-    private InfoUser infoUser;
+    private RegisterUser registerUser;
+
+    public RegisterUser getRegisterUser() {
+        return registerUser;
+    }
+
+    public void setRegisterUser(RegisterUser registerUser) {
+        this.registerUser = registerUser;
+    }
 
     @Column(name = "mobile")
     private String mobile;
@@ -23,13 +31,6 @@ public class ContactUser extends AbstractPersistable {
     @Column(name = "email")
     private String email;
 
-    public InfoUser getInfoUser() {
-        return infoUser;
-    }
-
-    public void setInfoUser(InfoUser infoUser) {
-        this.infoUser = infoUser;
-    }
 
     public String getMobile() {
         return mobile;

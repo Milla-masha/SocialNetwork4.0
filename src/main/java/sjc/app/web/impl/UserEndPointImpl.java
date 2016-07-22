@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.entity.InfoUser;
 import sjc.app.service.InfoUserService;
+import sjc.app.service.MusicService;
 import sjc.app.service.UserService;
 import sjc.app.web.IUserEndPoint;
 import javax.ws.rs.core.Response;
@@ -20,6 +21,8 @@ public class UserEndPointImpl implements IUserEndPoint
 	private UserService userService;
 	@Autowired
 	private InfoUserService infoUserService;
+	@Autowired
+	private MusicService musicService;
 
 	@Override
     @ResponseStatus(HttpStatus.OK)
@@ -33,11 +36,19 @@ public class UserEndPointImpl implements IUserEndPoint
 
 	@Override
 	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(method = RequestMethod.GET, value ="/{idInfoUser}")
+	@RequestMapping(method = RequestMethod.GET, value ="/{idUser}")
 	@ResponseBody
-	public Response getProfile(@PathVariable Long idInfoUser)
+	public Response getProfile(@PathVariable Long idUser)
 	{
-		return Response.ok(infoUserService.getInfoUserVO(idInfoUser)).build();
+		return Response.ok(infoUserService.getInfoUserVO(idUser)).build();
+	}
+
+	@Override
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(method = RequestMethod.GET, value ="/{idUser}/music")
+	@ResponseBody
+	public Response getMusic(@PathVariable Long idUser) {
+		return Response.ok(musicService.getMusics(idUser)).build();
 	}
 
 

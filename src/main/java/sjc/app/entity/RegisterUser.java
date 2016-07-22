@@ -15,6 +15,17 @@ public class RegisterUser extends AbstractPersistable {
 	@OneToOne(mappedBy = "user")
 	private InfoUser infoUser;
 
+	@OneToOne(mappedBy = "registerUser")
+	private ContactUser contactUser;
+
+	public ContactUser getContactUser() {
+		return contactUser;
+	}
+
+	public void setContactUser(ContactUser contactUser) {
+		this.contactUser = contactUser;
+	}
+
 	public InfoUser getInfoUser() {
 		return infoUser;
 	}

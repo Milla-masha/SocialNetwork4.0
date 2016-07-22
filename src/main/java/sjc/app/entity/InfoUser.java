@@ -35,17 +35,6 @@ public class InfoUser extends AbstractPersistable {
     @Column(name = "sex")
     private String sex;
 
-    @OneToOne(mappedBy = "infoUser")
-    private ContactUser contactUser;
-
-    public ContactUser getContactUser() {
-        return contactUser;
-    }
-
-    public void setContactUser(ContactUser contactUser) {
-        this.contactUser = contactUser;
-    }
-
     public RegisterUser getUser() {
         return user;
     }
