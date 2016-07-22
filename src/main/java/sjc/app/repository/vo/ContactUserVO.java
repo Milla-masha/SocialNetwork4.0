@@ -14,7 +14,6 @@ public class ContactUserVO {
     public ContactUserVO(String mobile, String skype, String email) {
         this.mobile = mobile;
         this.skype = skype;
-
         this.email = email;
     }
 

@@ -11,7 +11,7 @@ public class Authorities extends AbstractPersistable {
 
     @JoinColumn(name = "idU", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private RegisterUser idU;
+    private UserEntity idU;
 
     @Column(name = "authorities")
     public String getAuthorities() {
@@ -22,11 +22,11 @@ public class Authorities extends AbstractPersistable {
         this.authorities = authorities;
     }
 
-    public RegisterUser getIdU() {
+    public UserEntity getIdU() {
         return idU;
     }
 
-    public void setIdU(RegisterUser idU) {
+    public void setIdU(UserEntity idU) {
         this.idU = idU;
     }
 }

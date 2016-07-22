@@ -1,46 +1,44 @@
 package sjc.app.repository.vo;
 
-import sjc.app.entity.RegisterUser;
-
 import java.util.List;
 
-public class RegisterUserVO {
+public class UserVO {
 
-    private long id;
+    private Long id;
     private String password;
     private String login;
 
-    public List<RegisterUserVO> getFriends() {
+    public List<UserVO> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<RegisterUserVO> friends) {
+    public void setFriends(List<UserVO> friends) {
         this.friends = friends;
     }
 
-    private List<RegisterUserVO> friends;
+    private List<UserVO> friends;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
 
 
-    public RegisterUserVO() {
+    public UserVO() {
     }
 
-    public RegisterUserVO(long id, String password, String login) {
+    public UserVO(Long id, String password, String login) {
         this.id=id;
         this.password = password;
         this.login = login;
         this.friends=null;
         }
 
-    public RegisterUserVO(long id, String password, String login,List<RegisterUserVO> friends) {
+    public UserVO(Long id, String password, String login, List<UserVO> friends) {
         this.id=id;
         this.password = password;
         this.login = login;

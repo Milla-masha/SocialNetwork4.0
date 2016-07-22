@@ -9,7 +9,7 @@ public class InfoUser extends AbstractPersistable {
 
     @JoinColumn(name = "fk_registeruser", referencedColumnName = "id")
     @OneToOne(optional = false,fetch = FetchType.LAZY)
-    private RegisterUser user;
+    private UserEntity user;
 
     public InfoUser() {
     }
@@ -46,11 +46,11 @@ public class InfoUser extends AbstractPersistable {
         this.contactUser = contactUser;
     }
 
-    public RegisterUser getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(RegisterUser user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 

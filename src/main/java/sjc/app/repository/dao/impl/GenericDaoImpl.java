@@ -72,13 +72,13 @@ public abstract class GenericDaoImpl<T extends AbstractPersistable> implements G
     }
 
     @Override
-    public T findById(long id) {
+    public T findById(Long id) {
         final T result = getEntityManager().find(persistentClass, id);
         return result;
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         getEntityManager().remove(findById(id));
     }
 

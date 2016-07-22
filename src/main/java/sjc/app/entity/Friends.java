@@ -12,25 +12,25 @@ public class Friends extends AbstractPersistable {
 
     @JoinColumn(name = "fk_user1", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private RegisterUser friend1;
+    private UserEntity friend1;
 
     @JoinColumn(name = "fk_user2", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private RegisterUser friend2;
+    private UserEntity friend2;
 
-    public RegisterUser getFriend1() {
+    public UserEntity getFriend1() {
         return friend1;
     }
 
-    public void setFriend1(RegisterUser friend1) {
+    public void setFriend1(UserEntity friend1) {
         this.friend1 = friend1;
     }
 
-    public RegisterUser getFriend2() {
+    public UserEntity getFriend2() {
         return friend2;
     }
 
-    public void setFriend2(RegisterUser friend2) {
+    public void setFriend2(UserEntity friend2) {
         this.friend2 = friend2;
     }
 }

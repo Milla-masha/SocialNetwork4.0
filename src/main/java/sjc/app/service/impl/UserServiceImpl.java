@@ -1,21 +1,15 @@
 package sjc.app.service.impl;
 
-import org.dozer.DozerBeanMapperSingletonWrapper;
-import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sjc.app.entity.UserEntity;
 import sjc.app.repository.dao.UserDao;
-import sjc.app.repository.dao.impl.UserDaoImpl;
-import sjc.app.repository.vo.RegisterUserVO;
-import sjc.app.entity.RegisterUser;
+import sjc.app.repository.vo.UserVO;
 import sjc.app.service.UserService;
 
 import java.util.ArrayList;
@@ -26,59 +20,96 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userRepository;
-    @Autowired
-    private UserService userService;
-    static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public UserServiceImpl() {
-        userRepository = new UserDaoImpl();
+        userRepository = new UserDao() {
+            @Override
+            public UserEntity findByCredentials(String login, String password) {
+                return null;
+            }
+
+            @Override
+            public UserEntity findByName(String userName) {
+                return null;
+            }
+
+            @Override
+            public UserEntity save(UserEntity obj) {
+                return null;
+            }
+
+            @Override
+            public void update(UserEntity obj) {
+
+            }
+
+            @Override
+            public List<UserEntity> findAll() {
+                return null;
+            }
+
+            @Override
+            public UserEntity findById(Long id) {
+                return null;
+            }
+
+            @Override
+            public void delete(Long id) {
+
+            }
+
+            @Override
+            public void delete(UserEntity obj) {
+
+            }
+        };
     }
 
-    public RegisterUser loadUserByCredentials(String login, String password) {
+    public UserEntity loadUserByCredentials(String login, String password) {
 
-        RegisterUser registerUser = userRepository.findByCredentials(login, password);
+        UserEntity userEntity = userRepository.findByCredentials(login, password);
 
-        return registerUser;
+        return userEntity;
     }
 
-    public RegisterUser getUserByID(Long userId) {
+    public UserEntity getUserByID(Long userId) {
 
-        RegisterUser registerUser = userRepository.findById(new Long(userId));
+        UserEntity userEntity = userRepository.findById(new Long(userId));
 
-        return registerUser;
+        return userEntity;
     }
 
     @Override
-    public RegisterUserVO getUserByName(String userName) {
-        RegisterUser registerUser = userRepository.findByName(userName);
-        RegisterUserVO registerUserVO = new RegisterUserVO(registerUser.getId(), registerUser.getPassword(), registerUser.getLogin());
-        return registerUserVO;
+    public UserVO getUserByName(String userName) {
+        UserEntity userEntity = userRepository.findByName(userName);
+        UserVO userVO = new UserVO(userEntity.getId(), userEntity.getPassword(), userEntity.getLogin());
+        return userVO;
     }
 
     @Override
     @Transactional
-    public List<RegisterUserVO> getAllUsers() {
-        List<RegisterUser> registerUsers = userRepository.findAll();
-        //	System.out.println(registerUsers.get(0).getName());
-        List<RegisterUserVO> registerUserVOs = new ArrayList<RegisterUserVO>();
-        for (RegisterUser user : registerUsers) {
-            List<RegisterUserVO> friendsVO = new ArrayList<RegisterUserVO>();
-            for (RegisterUser friend : user.getFriends()) {
-                RegisterUserVO friendVO = new RegisterUserVO(friend.getId(), friend.getPassword(), friend.getLogin());
+    public List<UserVO> getAllUsers() {
+        List<UserEntity> userEntities = userRepository.findAll();
+        //	System.out.println(userEntities.get(0).getName());
+        List<UserVO> userVOs = new ArrayList<UserVO>();
+        for (UserEntity user : userEntities) {
+            List<UserVO> friendsVO = new ArrayList<UserVO>();
+            for (UserEntity friend : user.getFriends()) {
+                UserVO friendVO = new UserVO(friend.getId(), friend.getPassword(), friend.getLogin());
                 friendsVO.add(friendVO);
             }
-            RegisterUserVO registerUserVO = new RegisterUserVO(user.getId(), user.getPassword(), user.getLogin(), friendsVO);
-            registerUserVOs.add(registerUserVO);
+            UserVO userVO = new UserVO(user.getId(), user.getPassword(), user.getLogin(), friendsVO);
+            userVOs.add(userVO);
         }
-        return registerUserVOs;
+        return userVOs;
     }
 
     @Override
     public User loadUserByUsername(String userName) throws UsernameNotFoundException {
-        RegisterUser registerUser = userRepository.findByName(userName);
-        if (registerUser == null) {
+        UserEntity userEntity = userRepository.findByName(userName);
+        if (userEntity == null) {
             throw new UsernameNotFoundException("No such user: " + userName);
-        } else if (registerUser.getAuthorities().isEmpty()) {
+        } else if (userEntity.getAuthorities().isEmpty()) {
             throw new UsernameNotFoundException("User " + userName + " has no authorities");
         }
 
@@ -87,12 +118,12 @@ public class UserServiceImpl implements UserService {
         boolean accountNonLocked = true;
 
         List<String> roles = new ArrayList<>();
-        for (int i = 0; i < registerUser.getAuthorities().size(); i++) {
-            roles.add(registerUser.getAuthorities().iterator().next().getAuthorities());
+        for (int i = 0; i < userEntity.getAuthorities().size(); i++) {
+            roles.add(userEntity.getAuthorities().iterator().next().getAuthorities());
         }
         return new User(
-                registerUser.getLogin(),
-                registerUser.getPassword().toLowerCase(),
+                userEntity.getLogin(),
+                userEntity.getPassword().toLowerCase(),
                 true,
                 accountNonExpired,
                 credentialsNonExpired,

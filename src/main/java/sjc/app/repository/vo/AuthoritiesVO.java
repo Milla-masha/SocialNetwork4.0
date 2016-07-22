@@ -3,19 +3,20 @@ package sjc.app.repository.vo;
 /**
  * Created by Aleks69 on 12.07.2016.
  */
-    public class AuthoritiesVO {
+public class AuthoritiesVO {
 
-    private long id;
+    private Long id;
     private String authorities;
-    private RegisterUserVO idU;
+    private UserVO idU;
 
-    public AuthoritiesVO() {}
+    public AuthoritiesVO() {
+    }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -27,11 +28,11 @@ package sjc.app.repository.vo;
         this.authorities = authorities;
     }
 
-    public RegisterUserVO getIdU() {
+    public UserVO getIdU() {
         return idU;
     }
 
-    public void setIdU(RegisterUserVO idU) {
+    public void setIdU(UserVO idU) {
         this.idU = idU;
     }
 }
