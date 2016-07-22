@@ -1,16 +1,18 @@
 package sjc.app.service;
 
-import sjc.app.repository.entity.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import sjc.app.repository.vo.RegisterUserVO;
+import sjc.app.entity.RegisterUser;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 	
-	User loadUserByCredentials(String login, String password);
+	RegisterUser loadUserByCredentials(String login, String password);
 
-	User getUserByID(Long userId);
+	RegisterUser getUserByID(Long userId);
 
-	User getUserByName(String username);
-	
-	List<User> getAllUsers();
+	RegisterUserVO getUserByName(String username);
+
+	List<RegisterUserVO> getAllUsers();
 }
