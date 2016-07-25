@@ -1,11 +1,10 @@
 package sjc.app.service;
 
-import sjc.app.repository.vo.IMusic;
-import sjc.app.repository.vo.impl.MusicVO;
+import sjc.app.model.vo.IMusic;
 
 import java.util.List;
 
 public interface MusicService
 {
-    List<IMusic> getMusics(Long userId);
+    List<IMusic> getMusics(Long userId, int offset, int limit);
 }

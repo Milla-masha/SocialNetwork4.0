@@ -1,6 +1,6 @@
-package sjc.app.repository.vo.impl;
+package sjc.app.model.vo.impl;
 
-import sjc.app.repository.vo.IAuthorities;
+import sjc.app.model.vo.IAuthorities;
 
 public class AuthoritiesVO implements IAuthorities
 {

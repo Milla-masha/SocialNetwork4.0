@@ -1,7 +1,6 @@
-package sjc.app.entity;
+package sjc.app.model.entity;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "contact_user")

@@ -22,4 +22,12 @@ public class GroupEndpointImpl implements GroupEndpoint{
     public Response getGroups(@PathVariable Long idUser,@PathVariable Integer offset,@PathVariable Integer limit) {
         return Response.ok(groupService.getGroups(idUser,offset,limit)).build();
     }
+
+    @Override
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, value ="/{idGroup}")
+    @ResponseBody
+    public Response getGroup(@PathVariable Long idGroup) {
+        return Response.ok(groupService.getGroup(idGroup)).build();
+    }
 }

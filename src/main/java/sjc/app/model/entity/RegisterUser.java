@@ -1,9 +1,6 @@
-package sjc.app.entity;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
+package sjc.app.model.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @Entity

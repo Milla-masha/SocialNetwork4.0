@@ -1,11 +1,11 @@
 package sjc.app.service;
 
-import sjc.app.repository.vo.ISmallUser;
-import sjc.app.repository.vo.impl.SmallUserVO;
+import sjc.app.model.vo.IUserSmall;
+
 
 import java.util.List;
 
 public interface FriendService
 {
-    List<ISmallUser> getFriends(Long userId, int offset, int limit);
+    List<IUserSmall> getFriends(Long userId, int offset, int limit);
 }

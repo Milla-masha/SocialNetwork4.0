@@ -1,10 +1,9 @@
 package sjc.app.service.impl;
 
 import org.springframework.stereotype.Service;
-import sjc.app.repository.vo.IPost;
-import sjc.app.repository.vo.ISmallUser;
-import sjc.app.repository.vo.impl.PostVO;
-import sjc.app.repository.vo.impl.SmallUserVO;
+import sjc.app.model.vo.IPost;
+import sjc.app.model.vo.impl.PostVO;
+import sjc.app.model.vo.impl.UserSmallVO;
 import sjc.app.service.PostService;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class PostServiceImpl implements PostService {
             post.setLike(10);
             post.setDislike(21);
             post.setText("sometext sometext sometext sometext sometext sometext sometext sometext sometext sometext sometext sometext");
-            SmallUserVO owner=new SmallUserVO();
+            UserSmallVO owner=new UserSmallVO();
             owner.setAvatar("http://i2.wp.com/jewelryvirtualfair.com/wp-content/themes/kleo-child/images-themes/avatar-profile.jpg");
             owner.setName("Masha");
             owner.setLastName("Piton");

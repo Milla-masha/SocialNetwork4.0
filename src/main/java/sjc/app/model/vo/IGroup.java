@@ -1,4 +1,4 @@
-package sjc.app.repository.vo;
+package sjc.app.model.vo;
 
 public interface IGroup
 {
@@ -13,4 +13,8 @@ public interface IGroup
     String getImage();
 
     void setImage(String image);
+
+    String getDescription();
+
+    void setDescription(String description);
 }

@@ -1,6 +1,6 @@
 package sjc.app.service;
 
-import sjc.app.repository.vo.IPost;
+import sjc.app.model.vo.IPost;
 
 import java.util.List;
 

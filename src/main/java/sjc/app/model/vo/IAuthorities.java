@@ -1,6 +1,6 @@
-package sjc.app.repository.vo;
+package sjc.app.model.vo;
 
-import sjc.app.repository.vo.impl.RegisterUserVO;
+import sjc.app.model.vo.impl.RegisterUserVO;
 
 public interface IAuthorities
 {

@@ -1,10 +1,10 @@
-package sjc.app.repository.vo.impl;
+package sjc.app.model.vo.impl;
 
-import sjc.app.repository.vo.IPost;
+import sjc.app.model.vo.IPost;
 
 public class PostVO implements IPost{
 
-    SmallUserVO owner;
+    UserSmallVO owner;
     String image;
     String text;
     Integer like;
@@ -13,19 +13,11 @@ public class PostVO implements IPost{
     public PostVO() {
     }
 
-    public PostVO(SmallUserVO owner, String image, String text, Integer like, Integer dislike) {
-        this.owner = owner;
-        this.image = image;
-        this.text = text;
-        this.like = like;
-        this.dislike = dislike;
-    }
-
-    public SmallUserVO getOwner() {
+    public UserSmallVO getOwner() {
         return owner;
     }
 
-    public void setOwner(SmallUserVO owner) {
+    public void setOwner(UserSmallVO owner) {
         this.owner = owner;
     }
 

@@ -1,7 +1,10 @@
 package sjc.app.repository.dao;
 
-import sjc.app.entity.InfoUser;
+import sjc.app.model.entity.InfoUser;
 
-public interface InfoUserDao extends GenericDao<InfoUser>{
+import java.util.List;
 
+public interface InfoUserDao extends GenericDao<InfoUser>
+{
+    List<InfoUser> getFriends(Long idUser, int offset, int limit);
 }

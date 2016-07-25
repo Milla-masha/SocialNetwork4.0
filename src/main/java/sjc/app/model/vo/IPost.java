@@ -1,11 +1,13 @@
-package sjc.app.repository.vo;
-import sjc.app.repository.vo.impl.SmallUserVO;
+package sjc.app.model.vo;
+
+
+import sjc.app.model.vo.impl.UserSmallVO;
 
 public interface IPost
 {
-    SmallUserVO getOwner();
+    UserSmallVO getOwner();
 
-    void setOwner(SmallUserVO owner);
+    void setOwner(UserSmallVO owner);
 
     String getImage();
 

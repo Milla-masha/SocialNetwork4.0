@@ -1,6 +1,6 @@
-package sjc.app.repository.vo;
+package sjc.app.model.vo;
 
-public interface ISmallUser
+public interface IUserSmall
 {
     String getName();
 

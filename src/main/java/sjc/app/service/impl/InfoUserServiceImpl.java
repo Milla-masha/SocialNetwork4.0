@@ -2,13 +2,12 @@ package sjc.app.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sjc.app.entity.ContactUser;
-import sjc.app.entity.RegisterUser;
+import sjc.app.model.entity.ContactUser;
+import sjc.app.model.entity.RegisterUser;
 import sjc.app.repository.dao.UserDao;
-import sjc.app.repository.vo.IContactUser;
-import sjc.app.repository.vo.IInfoUser;
-import sjc.app.repository.vo.impl.ContactUserVO;
-import sjc.app.repository.vo.impl.InfoUserVO;
+import sjc.app.model.vo.IInfoUser;
+import sjc.app.model.vo.impl.ContactUserVO;
+import sjc.app.model.vo.impl.InfoUserVO;
 import sjc.app.service.InfoUserService;
 
 @Service

@@ -8,12 +8,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import sjc.app.repository.dao.UserDao;
 import sjc.app.repository.dao.impl.UserDaoImpl;
-import sjc.app.repository.vo.IRegisterUser;
-import sjc.app.repository.vo.impl.RegisterUserVO;
-import sjc.app.entity.RegisterUser;
+import sjc.app.model.entity.RegisterUser;
 import sjc.app.service.UserService;
 
 import java.util.ArrayList;

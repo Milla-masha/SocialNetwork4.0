@@ -1,6 +1,6 @@
 package sjc.app.repository.dao;
 
-import sjc.app.entity.AbstractPersistable;
+import sjc.app.model.entity.AbstractPersistable;
 
 import java.util.List;
 

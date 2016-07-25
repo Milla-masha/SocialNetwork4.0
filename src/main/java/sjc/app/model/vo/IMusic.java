@@ -1,4 +1,4 @@
-package sjc.app.repository.vo;
+package sjc.app.model.vo;
 
 import java.sql.Time;
 

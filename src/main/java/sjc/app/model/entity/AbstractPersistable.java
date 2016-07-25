@@ -1,4 +1,4 @@
-package sjc.app.entity;
+package sjc.app.model.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;

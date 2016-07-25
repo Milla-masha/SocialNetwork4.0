@@ -1,6 +1,6 @@
-package sjc.app.repository.vo;
+package sjc.app.model.vo;
 
-import sjc.app.repository.vo.impl.ContactUserVO;
+import sjc.app.model.vo.impl.ContactUserVO;
 
 import java.util.Date;
 

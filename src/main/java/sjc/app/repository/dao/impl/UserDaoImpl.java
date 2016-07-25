@@ -1,7 +1,7 @@
 package sjc.app.repository.dao.impl;
 
 import org.springframework.stereotype.Repository;
-import sjc.app.entity.RegisterUser;
+import sjc.app.model.entity.RegisterUser;
 import sjc.app.repository.dao.UserDao;
 
 import javax.persistence.TypedQuery;

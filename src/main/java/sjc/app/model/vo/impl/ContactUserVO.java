@@ -1,6 +1,6 @@
-package sjc.app.repository.vo.impl;
+package sjc.app.model.vo.impl;
 
-import sjc.app.repository.vo.IContactUser;
+import sjc.app.model.vo.IContactUser;
 
 public class ContactUserVO implements IContactUser {
 

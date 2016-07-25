@@ -1,21 +1,23 @@
-package sjc.app.repository.vo.impl;
+package sjc.app.model.vo.impl;
 
-import sjc.app.repository.vo.IGroup;
+import sjc.app.model.vo.IGroup;
 
-public class GroupVO implements IGroup
-{
+public class GroupVO implements IGroup {
 
     String name;
     Integer folowers;
     String image;
+    String description;
 
     public GroupVO() {
     }
 
-    public GroupVO(String name, Integer folowers, String image) {
-        this.name = name;
-        this.folowers = folowers;
-        this.image = image;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {

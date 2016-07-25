@@ -1,5 +1,5 @@
 package sjc.app.repository.dao;
-import sjc.app.entity.RegisterUser;
+import sjc.app.model.entity.RegisterUser;
 
 public interface UserDao extends GenericDao<RegisterUser>{
 
