@@ -48,7 +48,7 @@
 
     <filter>
         <filter-name>CorseFilter</filter-name>
-        <filter-class>sjc.app.web.authentication.filter.SimpleCORSFilter</filter-class>
+        <filter-class>sjc.app.rest.authentication.filter.SimpleCORSFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>CorseFilter</filter-name>

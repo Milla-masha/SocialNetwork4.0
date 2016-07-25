@@ -43,7 +43,6 @@ public abstract class GenericDaoImpl<T extends AbstractPersistable> implements G
     @Override
     public T save(T obj) {
         T savedEntity;
-        // Approximate the Hibernate saveOrUpdate functionality
         if ( obj.getId()==null) {
             savedEntity = getEntityManager().merge(obj);
         } else {
@@ -66,8 +65,6 @@ public abstract class GenericDaoImpl<T extends AbstractPersistable> implements G
         Root<T> rootEntry = cq.from(persistentClass);
         CriteriaQuery<T> all = cq.select(rootEntry);
         TypedQuery<T> allQuery = getEntityManager().createQuery(all);
-//        return entityManager.createQuery("select * from "+getPersistentClass().getName())
-//                .getResultList();
         return allQuery.getResultList();
     }
 

@@ -1,36 +1,17 @@
-package sjc.app.repository.vo;
+package sjc.app.repository.vo.impl;
 
-import sjc.app.entity.RegisterUser;
+import sjc.app.repository.vo.IRegisterUser;
 
 import java.util.List;
 
-public class RegisterUserVO {
+public class RegisterUserVO implements IRegisterUser{
 
     private long id;
     private String password;
     private String login;
-
-    public List<RegisterUserVO> getFriends() {
-        return friends;
-    }
-
-    public void setFriends(List<RegisterUserVO> friends) {
-        this.friends = friends;
-    }
-
     private List<RegisterUserVO> friends;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-
-
-    public RegisterUserVO() {
+      public RegisterUserVO() {
     }
 
     public RegisterUserVO(long id, String password, String login) {
@@ -61,6 +42,22 @@ public class RegisterUserVO {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<RegisterUserVO> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<RegisterUserVO> friends) {
+        this.friends = friends;
     }
 
 }

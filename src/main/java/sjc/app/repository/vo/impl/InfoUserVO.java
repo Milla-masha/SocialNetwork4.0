@@ -1,8 +1,8 @@
-package sjc.app.repository.vo;
-
+package sjc.app.repository.vo.impl;
 import java.util.Date;
+import sjc.app.repository.vo.IInfoUser;
 
-public class InfoUserVO {
+public class InfoUserVO implements IInfoUser {
 
     private String name;
 
@@ -10,13 +10,13 @@ public class InfoUserVO {
 
     private Date birthday;
 
-    public InfoUserVO() {
-    }
+    private String avatar;
 
-    public String getName() {
-        return name;
+    private String city;
 
-    }
+    private String about;
+
+    private ContactUserVO contactUser;
 
     public InfoUserVO(String name, String lastName, Date birthday, String avatar, String city, String about, ContactUserVO contactUser) {
         this.name = name;
@@ -26,6 +26,14 @@ public class InfoUserVO {
         this.city = city;
         this.about = about;
         this.contactUser = contactUser;
+    }
+
+    public InfoUserVO() {
+    }
+
+    public String getName() {
+        return name;
+
     }
 
     public void setName(String name) {
@@ -81,11 +89,4 @@ public class InfoUserVO {
         this.contactUser = contactUser;
     }
 
-    private String avatar;
-
-    private String city;
-
-    private String about;
-
-    private ContactUserVO contactUser;
 }

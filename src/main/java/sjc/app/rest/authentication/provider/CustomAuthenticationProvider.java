@@ -1,4 +1,4 @@
-package sjc.app.web.authentication.provider;
+package sjc.app.rest.authentication.provider;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;

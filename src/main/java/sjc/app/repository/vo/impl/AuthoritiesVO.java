@@ -1,10 +1,9 @@
-package sjc.app.repository.vo;
+package sjc.app.repository.vo.impl;
 
-/**
- * Created by Aleks69 on 12.07.2016.
- */
-    public class AuthoritiesVO {
+import sjc.app.repository.vo.IAuthorities;
 
+public class AuthoritiesVO implements IAuthorities
+{
     private long id;
     private String authorities;
     private RegisterUserVO idU;

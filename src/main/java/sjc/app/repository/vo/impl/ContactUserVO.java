@@ -1,6 +1,8 @@
-package sjc.app.repository.vo;
+package sjc.app.repository.vo.impl;
 
-public class ContactUserVO {
+import sjc.app.repository.vo.IContactUser;
+
+public class ContactUserVO implements IContactUser {
 
     private String mobile;
 

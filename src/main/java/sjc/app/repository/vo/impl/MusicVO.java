@@ -1,9 +1,15 @@
-package sjc.app.repository.vo;
+package sjc.app.repository.vo.impl;
+
+import sjc.app.repository.vo.IMusic;
 
 import java.sql.Time;
 
-public class MusicVO
+public class MusicVO implements IMusic
 {
+
+    private String name;
+    private Time time;
+    private String url;
 
     public MusicVO() {
     }
@@ -13,8 +19,6 @@ public class MusicVO
         this.name = name;
         this.time = time;
     }
-
-    private String url;
 
     public String getUrl() {
         return url;
@@ -40,7 +44,4 @@ public class MusicVO
         this.time = time;
     }
 
-    private String name;
-
-    private Time time;
 }

@@ -1,4 +1,4 @@
-package sjc.app.web.authentication.filter;
+package sjc.app.rest.authentication.filter;
 
 import java.io.IOException;
 import javax.servlet.Filter;
