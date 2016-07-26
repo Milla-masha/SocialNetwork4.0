@@ -22,4 +22,12 @@ public class VideoEndpointImpl implements VideoEndpoint
     public Response getVideos(@PathVariable Long idUser, @PathVariable Integer offset, @PathVariable Integer limit) {
         return Response.ok(videoService.getVideos(idUser,offset,limit)).build();
     }
+
+    @Override
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, value ="/{idVideo}")
+    @ResponseBody
+    public Response getVideo(@PathVariable Long idVideo) {
+        return Response.ok(videoService.getVideo(idVideo)).build();
+    }
 }

@@ -2,10 +2,6 @@ package sjc.app.model.entity;
 
 import javax.persistence.*;
 
-/**
- * Created by Aleks69 on 19.07.2016.
- */
-
 @Entity
 @Table(name = "friends")
 public class Friends extends AbstractPersistable {
