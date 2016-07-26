@@ -1,7 +1,8 @@
 package sjc.app.service;
 
-import sjc.app.repository.vo.InfoUserVO;
+import sjc.app.model.vo.InfoUserVO;
 
-public interface InfoUserService {
+public interface InfoUserService
+{
     InfoUserVO getInfoUserVO(Long userId);
 }

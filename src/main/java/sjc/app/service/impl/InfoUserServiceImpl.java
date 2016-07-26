@@ -1,26 +1,37 @@
 package sjc.app.service.impl;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sjc.app.entity.ContactUser;
-import sjc.app.entity.InfoUser;
-import sjc.app.repository.dao.InfoUserDao;
-import sjc.app.repository.vo.ContactUserVO;
-import sjc.app.repository.vo.InfoUserVO;
+import sjc.app.dao.UserDao;
+import sjc.app.model.entity.ContactUser;
+import sjc.app.model.entity.UserEntity;
+import sjc.app.model.vo.ContactUserVO;
+import sjc.app.model.vo.InfoUserVO;
 import sjc.app.service.InfoUserService;
 
 @Service
 public class InfoUserServiceImpl implements InfoUserService {
 
     @Autowired
-    private InfoUserDao userDao;
+    private UserDao userDao;
 
     @Override
-    public InfoUserVO getInfoUserVO(Long infoUserId) {
-        InfoUser infoUser = userDao.findById(infoUserId);
-        ContactUser contactUser = infoUser.getContactUser();
-        return new InfoUserVO(infoUser.getName(), infoUser.getLastName(), infoUser.getBirthday(),
-                infoUser.getAvatar(), infoUser.getCity(), infoUser.getAbout()
-                , new ContactUserVO(contactUser.getMobile(), contactUser.getSkype(), contactUser.getEmail()));
+    public InfoUserVO getInfoUserVO(Long userId) {
+        UserEntity userEntity = userDao.findById(userId);
+        ContactUser contactUser = userEntity.getContactUser();
+        InfoUserVO user = new InfoUserVO();
+        ContactUserVO contact = new ContactUserVO();
+        user.setName(userEntity.getInfoUser().getName());
+        user.setLastName(userEntity.getInfoUser().getLastName());
+        user.setAvatar(userEntity.getInfoUser().getAvatar());
+        user.setAbout(userEntity.getInfoUser().getAbout());
+        user.setBirthday(userEntity.getInfoUser().getBirthday());
+        user.setCity(userEntity.getInfoUser().getCity());
+        contact.setEmail(contactUser.getEmail());
+        contact.setMobile(contactUser.getMobile());
+        contact.setSkype(contactUser.getSkype());
+        user.setContactUser(contact);
+        return user;
     }
 }

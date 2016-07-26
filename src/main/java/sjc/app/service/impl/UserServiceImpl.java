@@ -7,9 +7,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sjc.app.entity.UserEntity;
-import sjc.app.repository.dao.UserDao;
-import sjc.app.repository.vo.UserVO;
+import sjc.app.dao.UserDao;
+import sjc.app.model.entity.UserEntity;
+import sjc.app.model.vo.UserVO;
 import sjc.app.service.UserService;
 
 import java.util.ArrayList;
@@ -23,10 +23,6 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl() {
         userRepository = new UserDao() {
-            @Override
-            public UserEntity findByCredentials(String login, String password) {
-                return null;
-            }
 
             @Override
             public UserEntity findByName(String userName) {
@@ -65,11 +61,10 @@ public class UserServiceImpl implements UserService {
         };
     }
 
+
+    @Override
     public UserEntity loadUserByCredentials(String login, String password) {
-
-        UserEntity userEntity = userRepository.findByCredentials(login, password);
-
-        return userEntity;
+        return null;
     }
 
     public UserEntity getUserByID(Long userId) {
@@ -103,6 +98,7 @@ public class UserServiceImpl implements UserService {
         }
         return userVOs;
     }
+
 
     @Override
     public User loadUserByUsername(String userName) throws UsernameNotFoundException {

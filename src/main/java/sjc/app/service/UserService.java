@@ -1,11 +1,13 @@
 package sjc.app.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
-import sjc.app.entity.UserEntity;
-import sjc.app.repository.vo.UserVO;
+import org.springframework.transaction.annotation.Transactional;
+import sjc.app.model.entity.UserEntity;
+import sjc.app.model.vo.UserVO;
 
 import java.util.List;
 
+@Transactional
 public interface UserService extends UserDetailsService {
 	
 	UserEntity loadUserByCredentials(String login, String password);
@@ -15,4 +17,5 @@ public interface UserService extends UserDetailsService {
 	UserVO getUserByName(String username);
 
 	List<UserVO> getAllUsers();
+
 }
