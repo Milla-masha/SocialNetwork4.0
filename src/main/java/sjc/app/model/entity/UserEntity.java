@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "registeruser")
+@Table(name = "user")
 public class UserEntity extends AbstractPersistable {
 
 	private String password;
@@ -12,7 +12,7 @@ public class UserEntity extends AbstractPersistable {
 	@OneToOne(mappedBy = "user")
 	private InfoUser infoUser;
 
-	@OneToOne(mappedBy = "registerUser")
+	@OneToOne(mappedBy = "userEntity")
 	private ContactUser contactUser;
 
 	public ContactUser getContactUser() {
@@ -33,9 +33,9 @@ public class UserEntity extends AbstractPersistable {
 
 	@ManyToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "friends",  joinColumns = {
-		@JoinColumn(name = "fk_user1", nullable = false, updatable = false) },
-	inverseJoinColumns = { @JoinColumn(name = "fk_user2",
-			nullable = false, updatable = false) })
+			@JoinColumn(name = "fk_user1", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "fk_user2",
+					nullable = false, updatable = false) })
 	private List<UserEntity> friends;
 
 	@OneToMany( mappedBy = "idU", fetch = FetchType.LAZY)

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "group")
+@Table(name = "groups")
 public class Group extends AbstractPersistable{
 
     @Column(name = "name")

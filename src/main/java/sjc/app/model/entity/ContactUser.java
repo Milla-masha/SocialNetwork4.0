@@ -7,15 +7,15 @@ import javax.persistence.*;
 public class ContactUser extends AbstractPersistable {
 
     @JoinColumn(name = "fk_registeruser", referencedColumnName = "id")
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    private UserEntity registerUser;
+    @OneToOne(optional = false,fetch = FetchType.LAZY)
+    private UserEntity userEntity;
 
-    public UserEntity getRegisterUser() {
-        return registerUser;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
-    public void setRegisterUser(UserEntity registerUser) {
-        this.registerUser = registerUser;
+    public void setUserEntity(UserEntity registerUser) {
+        this.userEntity = registerUser;
     }
 
     @Column(name = "mobile")
