@@ -1,18 +1,19 @@
 package sjc.app.model.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "registeruser")
-public class RegisterUser extends AbstractPersistable {
+public class UserEntity extends AbstractPersistable {
 
 	private String password;
 	private String login;
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "user",cascade = {CascadeType.ALL})
 	private InfoUser infoUser;
 
-	@OneToOne(mappedBy = "registerUser")
+	@OneToOne(mappedBy = "userEntity", cascade = {CascadeType.ALL})
 	private ContactUser contactUser;
 
 	public ContactUser getContactUser() {
@@ -36,7 +37,13 @@ public class RegisterUser extends AbstractPersistable {
 		@JoinColumn(name = "fk_user1", nullable = false, updatable = false) },
 	inverseJoinColumns = { @JoinColumn(name = "fk_user2",
 			nullable = false, updatable = false) })
-	private List<RegisterUser> friends;
+	private List<UserEntity> friends=new ArrayList<>(0);
+
+	@ManyToMany( fetch = FetchType.LAZY, mappedBy = "users")
+	private List<Group> groups=new ArrayList<>(0);
+
+	@ManyToMany( fetch = FetchType.LAZY, mappedBy = "users")
+	private List<Post> posts=new ArrayList<>(0);
 
 	@OneToMany( mappedBy = "idU", fetch = FetchType.LAZY)
 	private List<Authorities> authorities;
@@ -63,19 +70,34 @@ public class RegisterUser extends AbstractPersistable {
 		return authorities;
 	}
 
-	public RegisterUser() {
+	public UserEntity() {
 	}
 
 	public void setAuthorities(List<Authorities> authorities) {
 		this.authorities = authorities;
 	}
 
-	public List<RegisterUser> getFriends() {
+	public List<UserEntity> getFriends() {
 		return friends;
 	}
 
-	public void setFriends(List<RegisterUser> friends) {
+	public void setFriends(List<UserEntity> friends) {
 		this.friends = friends;
 	}
 
+	public List<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
+	}
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
 }

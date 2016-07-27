@@ -1,34 +1,63 @@
 package sjc.app.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
-import sjc.app.model.vo.IPost;
-import sjc.app.model.vo.impl.PostVO;
-import sjc.app.model.vo.impl.UserSmallVO;
+import org.springframework.transaction.annotation.Transactional;
+import sjc.app.model.entity.Like;
+import sjc.app.model.entity.Post;
+import sjc.app.model.vo.PostVO;
+import sjc.app.model.vo.UserSmallVO;
+import sjc.app.repository.dao.PostDao;
 import sjc.app.service.PostService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Scope(proxyMode = ScopedProxyMode.INTERFACES)
+@Transactional
 @Service
 public class PostServiceImpl implements PostService {
 
+    @Autowired
+    private PostDao postDao;
+
     @Override
-    public List<IPost> getPosts(Long userId, int offset, int limit) {
-        List<IPost> posts=new ArrayList<>();
-        for (int i=0;i<5;i++)
-        {
-            IPost post=new PostVO();
-            post.setImage("http://kaifolog.ru/uploads/posts/2014-05/1400477776_002.jpg");
-            post.setLike(10);
-            post.setDislike(21);
-            post.setText("sometext sometext sometext sometext sometext sometext sometext sometext sometext sometext sometext sometext");
-            UserSmallVO owner=new UserSmallVO();
-            owner.setAvatar("http://i2.wp.com/jewelryvirtualfair.com/wp-content/themes/kleo-child/images-themes/avatar-profile.jpg");
-            owner.setName("Masha");
-            owner.setLastName("Piton");
+    public List<PostVO> getPosts(Long userId, int offset, int limit) {
+        List<PostVO> posts = new ArrayList<>();
+        List<Post> postsEntity = postDao.getPostsUser(userId, offset, limit);
+        for (Post postEntity : postsEntity) {
+            PostVO post = new PostVO();
+            post.setImage(postEntity.getImage());
+            post.setLike(getCountLike(postEntity.getLikes()));
+            post.setDislike(getCountDisLike(postEntity.getLikes()));
+            post.setText(postEntity.getText());
+            UserSmallVO owner = new UserSmallVO();
+            owner.setAvatar(postEntity.getFkUser().getInfoUser().getAvatar());
+            owner.setName(postEntity.getFkUser().getInfoUser().getName());
+            owner.setLastName(postEntity.getFkUser().getInfoUser().getLastName());
             post.setOwner(owner);
             posts.add(post);
         }
         return posts;
+    }
+
+    public int getCountLike(List<Like> likes) {
+        int count = 0;
+        for (Like like : likes) {
+            if (like.getIsLike() == 1)
+                count++;
+        }
+        return count;
+    }
+
+    public int getCountDisLike(List<Like> likes) {
+        int count = 0;
+        for (Like like : likes) {
+            if (like.getIsLike() == 0)
+                count++;
+        }
+        return count;
     }
 }

@@ -8,14 +8,14 @@ public class ContactUser extends AbstractPersistable {
 
     @JoinColumn(name = "fk_registeruser", referencedColumnName = "id")
     @OneToOne(optional = false,fetch = FetchType.LAZY)
-    private RegisterUser registerUser;
+    private UserEntity userEntity;
 
-    public RegisterUser getRegisterUser() {
-        return registerUser;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
-    public void setRegisterUser(RegisterUser registerUser) {
-        this.registerUser = registerUser;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     @Column(name = "mobile")

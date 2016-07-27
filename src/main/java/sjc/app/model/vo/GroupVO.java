@@ -1,8 +1,6 @@
-package sjc.app.model.vo.impl;
+package sjc.app.model.vo;
 
-import sjc.app.model.vo.IGroup;
-
-public class GroupVO implements IGroup {
+public class GroupVO {
 
     String name;
     Integer folowers;

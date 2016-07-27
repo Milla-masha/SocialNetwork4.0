@@ -1,8 +1,6 @@
-package sjc.app.model.vo.impl;
+package sjc.app.model.vo;
 
-import sjc.app.model.vo.IPost;
-
-public class PostVO implements IPost{
+public class PostVO {
 
     UserSmallVO owner;
     String image;

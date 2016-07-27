@@ -1,8 +1,9 @@
 package sjc.app.service;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
+import sjc.app.model.vo.UserRegisterVO;
 
-public interface UserService extends UserDetailsService
+public interface UserService
 {
+    void addUser(UserRegisterVO user);
 
 }

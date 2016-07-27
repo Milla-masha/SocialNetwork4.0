@@ -1,13 +1,12 @@
 package sjc.app.model.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "group")
+@Table(name = "groups")
 public class Group extends AbstractPersistable{
-
     @Column(name = "name")
     private String name;
     @Column(name = "image")
@@ -19,13 +18,13 @@ public class Group extends AbstractPersistable{
             @JoinColumn(name = "fk_group", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "fk_post",
                     nullable = false, updatable = false) })
-    private List<Post> posts;
+    private List<Post> posts=new ArrayList<>(0);
     @ManyToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "group_user",  joinColumns = {
             @JoinColumn(name = "fk_group", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "fk_user",
                     nullable = false, updatable = false) })
-    private List<RegisterUser> users;
+    private List<UserEntity> users=new ArrayList<>(0);
 
     public Group() {
     }
@@ -62,11 +61,11 @@ public class Group extends AbstractPersistable{
         this.posts = posts;
     }
 
-    public List<RegisterUser> getUsers() {
+    public List<UserEntity> getUsers() {
         return users;
     }
 
-    public void setUsers(List<RegisterUser> users) {
+    public void setUsers(List<UserEntity> users) {
         this.users = users;
     }
 }

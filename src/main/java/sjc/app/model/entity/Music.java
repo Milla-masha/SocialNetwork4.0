@@ -9,7 +9,7 @@ public class Music extends AbstractPersistable {
 
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
     @OneToOne(optional = false,fetch = FetchType.LAZY)
-    private RegisterUser user;
+    private UserEntity user;
 
     public Music() {
     }
@@ -31,11 +31,11 @@ public class Music extends AbstractPersistable {
         this.name = name;
     }
 
-    public RegisterUser getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(RegisterUser user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 

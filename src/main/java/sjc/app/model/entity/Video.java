@@ -13,7 +13,7 @@ public class Video extends AbstractPersistable{
     private String preview;
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
     @ManyToOne
-    private RegisterUser fkUser;
+    private UserEntity fkUser;
 
     public Video() {
     }
@@ -42,11 +42,11 @@ public class Video extends AbstractPersistable{
         this.preview = preview;
     }
 
-    public RegisterUser getFkUser() {
+    public UserEntity getFkUser() {
         return fkUser;
     }
 
-    public void setFkUser(RegisterUser fkUser) {
+    public void setFkUser(UserEntity fkUser) {
         this.fkUser = fkUser;
     }
 }

@@ -3,7 +3,7 @@ package sjc.app.model.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "like")
+@Table(name = "likes")
 public class Like extends AbstractPersistable{
     @Column(name = "is_like")
     private int isLike;
@@ -12,7 +12,7 @@ public class Like extends AbstractPersistable{
     protected Post fkPost;
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private RegisterUser fkUser;
+    private UserEntity fkUser;
 
     public Like() {
     }
@@ -33,11 +33,11 @@ public class Like extends AbstractPersistable{
         this.fkPost = fkPost;
     }
 
-    public RegisterUser getFkUser() {
+    public UserEntity getFkUser() {
         return fkUser;
     }
 
-    public void setFkUser(RegisterUser fkUser) {
+    public void setFkUser(UserEntity fkUser) {
         this.fkUser = fkUser;
     }
 }

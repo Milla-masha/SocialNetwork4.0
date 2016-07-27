@@ -2,16 +2,20 @@ package sjc.app.service.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.InfoUser;
 import sjc.app.repository.dao.impl.InfoUserDaoImpl;
-import sjc.app.model.vo.IUserSmall;
-import sjc.app.model.vo.impl.UserSmallVO;
+import sjc.app.model.vo.UserSmallVO;
 import sjc.app.service.FriendService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Scope(proxyMode = ScopedProxyMode.INTERFACES)
+@Transactional
 @Service
 public class FriendServiceImpl  implements FriendService
 {
@@ -20,13 +24,13 @@ public class FriendServiceImpl  implements FriendService
     private InfoUserDaoImpl friendsDao;
 
     @Override
-    public List<IUserSmall> getFriends(Long userId, int offset, int limit)
+    public List<UserSmallVO> getFriends(Long userId, int offset, int limit)
     {
         List<InfoUser> infoFriend=friendsDao.getFriends(userId,offset,limit);
-        List<IUserSmall> friends= new ArrayList<>();
+        List<UserSmallVO> friends= new ArrayList<>();
         for (InfoUser user:infoFriend)
         {
-            IUserSmall friend = new UserSmallVO();
+            UserSmallVO friend = new UserSmallVO();
             friend.setName(user.getName());
             friend.setLastName(user.getLastName());
             friend.setAvatar(user.getAvatar());

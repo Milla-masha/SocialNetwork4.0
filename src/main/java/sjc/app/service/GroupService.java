@@ -1,11 +1,11 @@
 package sjc.app.service;
 
-import sjc.app.model.vo.IGroup;
+import sjc.app.model.vo.GroupVO;
 
 import java.util.List;
 
 public interface GroupService
 {
-    List<IGroup> getGroups(Long userId, int offset, int limit);
-    IGroup getGroup(Long groupId);
+    List<GroupVO> getGroups(Long userId, int offset, int limit);
+    GroupVO getGroup(Long groupId);
 }

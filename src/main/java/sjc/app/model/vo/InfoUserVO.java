@@ -1,9 +1,7 @@
-package sjc.app.model.vo.impl;
+package sjc.app.model.vo;
 import java.util.Date;
 
-import sjc.app.model.vo.IInfoUser;
-
-public class InfoUserVO implements IInfoUser {
+public class InfoUserVO {
 
     private String name;
 

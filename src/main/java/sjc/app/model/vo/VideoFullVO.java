@@ -1,9 +1,7 @@
-package sjc.app.model.vo.impl;
+package sjc.app.model.vo;
 
 
-import sjc.app.model.vo.IVideoFull;
-
-public class VideoFullVO implements IVideoFull
+public class VideoFullVO
 {
 
     String name;

@@ -1,16 +1,20 @@
 package sjc.app.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.Music;
 import sjc.app.repository.dao.MusicDao;
-import sjc.app.model.vo.IMusic;
-import sjc.app.model.vo.impl.MusicVO;
+import sjc.app.model.vo.MusicVO;
 import sjc.app.service.MusicService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Scope(proxyMode = ScopedProxyMode.INTERFACES)
+@Transactional
 @Service
 public class MusicServiceImpl implements MusicService
 {
@@ -18,13 +22,13 @@ public class MusicServiceImpl implements MusicService
     private MusicDao musicDao;
 
     @Override
-    public List<IMusic> getMusics(Long userId, int offset, int limit)
+    public List<MusicVO> getMusics(Long userId, int offset, int limit)
     {
         List<Music> musics=musicDao.getMusicsUser(userId,offset,limit);
-        List<IMusic> musicVOs=new ArrayList<>();
+        List<MusicVO> musicVOs=new ArrayList<>();
         for (Music music:musics)
         {
-         IMusic mus=new MusicVO();
+            MusicVO mus=new MusicVO();
             mus.setUrl(music.getUrl());
             mus.setName(music.getName());
             mus.setTime(music.getTime());

@@ -1,7 +1,7 @@
 package sjc.app.repository.dao.impl;
 
 import org.springframework.stereotype.Repository;
-import sjc.app.model.entity.RegisterUser;
+import sjc.app.model.entity.UserEntity;
 import sjc.app.repository.dao.UserDao;
 
 import javax.persistence.TypedQuery;
@@ -11,19 +11,19 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 @Repository
-public class UserDaoImpl extends GenericDaoImpl<RegisterUser> implements UserDao {
+public class UserDaoImpl extends GenericDaoImpl<UserEntity> implements UserDao {
 
 	@Override
-	public RegisterUser findByName(String userName) {
+	public UserEntity findByName(String userName) {
 		CriteriaBuilder cb=getEntityManager().getCriteriaBuilder();
-		CriteriaQuery<RegisterUser> c = cb.createQuery(RegisterUser.class);
-		Root<RegisterUser> registerUser = c.from(RegisterUser.class);
+		CriteriaQuery<UserEntity> c = cb.createQuery(UserEntity.class);
+		Root<UserEntity> registerUser = c.from(UserEntity.class);
 		Predicate condition = cb.equal(registerUser.get("login"), userName);
 		c.where(condition);
-		TypedQuery<RegisterUser> q = getEntityManager().createQuery(c);
+		TypedQuery<UserEntity> q = getEntityManager().createQuery(c);
 		return q.getSingleResult();
-//			return (RegisterUser) getEntityManager()
-//				.createQuery("SELECT ru FROM RegisterUser ru where ru.login= ?").setParameter(0,userName).getResultList().get(0);
+//			return (UserEntity) getEntityManager()
+//				.createQuery("SELECT ru FROM UserEntity ru where ru.login= ?").setParameter(0,userName).getResultList().get(0);
 	}
 }
 

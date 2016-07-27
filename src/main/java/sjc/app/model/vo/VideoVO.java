@@ -1,8 +1,6 @@
-package sjc.app.model.vo.impl;
+package sjc.app.model.vo;
 
-import sjc.app.model.vo.IVideo;
-
-public class VideoVO implements IVideo
+public class VideoVO
 {
     String name;
     String url;

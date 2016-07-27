@@ -1,15 +1,19 @@
 package sjc.app.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.ContactUser;
-import sjc.app.model.entity.RegisterUser;
+import sjc.app.model.entity.UserEntity;
+import sjc.app.model.vo.ContactUserVO;
+import sjc.app.model.vo.InfoUserVO;
 import sjc.app.repository.dao.UserDao;
-import sjc.app.model.vo.IInfoUser;
-import sjc.app.model.vo.impl.ContactUserVO;
-import sjc.app.model.vo.impl.InfoUserVO;
 import sjc.app.service.InfoUserService;
 
+@Scope(proxyMode = ScopedProxyMode.INTERFACES)
+@Transactional
 @Service
 public class InfoUserServiceImpl implements InfoUserService {
 
@@ -17,18 +21,17 @@ public class InfoUserServiceImpl implements InfoUserService {
     private UserDao userDao;
 
     @Override
-    public IInfoUser getInfoUserVO(Long userId)
-    {
-        RegisterUser registerUser = userDao.findById(userId);
-        ContactUser contactUser = registerUser.getContactUser();
-        IInfoUser user=new InfoUserVO();
-        ContactUserVO contact=new ContactUserVO();
-        user.setName(registerUser.getInfoUser().getName());
-        user.setLastName(registerUser.getInfoUser().getLastName());
-        user.setAvatar(registerUser.getInfoUser().getAvatar());
-        user.setAbout(registerUser.getInfoUser().getAbout());
-        user.setBirthday(registerUser.getInfoUser().getBirthday());
-        user.setCity( registerUser.getInfoUser().getCity());
+    public InfoUserVO getInfoUserVO(Long userId) {
+        UserEntity userEntity = userDao.findById(userId);
+        ContactUser contactUser = userEntity.getContactUser();
+        InfoUserVO user = new InfoUserVO();
+        ContactUserVO contact = new ContactUserVO();
+        user.setName(userEntity.getInfoUser().getName());
+        user.setLastName(userEntity.getInfoUser().getLastName());
+        user.setAvatar(userEntity.getInfoUser().getAvatar());
+        user.setAbout(userEntity.getInfoUser().getAbout());
+        user.setBirthday(userEntity.getInfoUser().getBirthday());
+        user.setCity(userEntity.getInfoUser().getCity());
         contact.setEmail(contactUser.getEmail());
         contact.setMobile(contactUser.getMobile());
         contact.setSkype(contactUser.getSkype());

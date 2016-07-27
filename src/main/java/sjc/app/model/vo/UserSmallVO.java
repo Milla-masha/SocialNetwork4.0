@@ -1,9 +1,7 @@
-package sjc.app.model.vo.impl;
+package sjc.app.model.vo;
 
 
-import sjc.app.model.vo.IUserSmall;
-
-public class UserSmallVO implements IUserSmall {
+public class UserSmallVO {
 
     String name;
     String lastName;

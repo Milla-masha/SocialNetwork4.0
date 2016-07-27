@@ -1,10 +1,8 @@
-package sjc.app.model.vo.impl;
-
-import sjc.app.model.vo.IMusic;
+package sjc.app.model.vo;
 
 import java.sql.Time;
 
-public class MusicVO implements IMusic
+public class MusicVO
 {
 
     private String name;

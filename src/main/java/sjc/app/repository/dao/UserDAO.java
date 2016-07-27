@@ -1,7 +1,7 @@
 package sjc.app.repository.dao;
-import sjc.app.model.entity.RegisterUser;
+import sjc.app.model.entity.UserEntity;
 
-public interface UserDao extends GenericDao<RegisterUser>{
+public interface UserDao extends GenericDao<UserEntity>{
 
-	RegisterUser findByName(String userName);
+	UserEntity findByName(String userName);
 }

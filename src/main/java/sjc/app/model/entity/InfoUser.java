@@ -1,6 +1,8 @@
 package sjc.app.model.entity;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -8,8 +10,8 @@ import java.util.Date;
 public class InfoUser extends AbstractPersistable {
 
     @JoinColumn(name = "fk_registeruser", referencedColumnName = "id")
-    @OneToOne(optional = false,fetch = FetchType.LAZY)
-    private RegisterUser user;
+    @OneToOne(optional = false,fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
+    private UserEntity user;
 
     public InfoUser() {
     }
@@ -35,11 +37,11 @@ public class InfoUser extends AbstractPersistable {
     @Column(name = "sex")
     private String sex;
 
-    public RegisterUser getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(RegisterUser user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 
@@ -65,6 +67,17 @@ public class InfoUser extends AbstractPersistable {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public void setBirthdayString(String birthday) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+               try {
+                   this.birthday= formatter.parse(birthday);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getAvatar() {

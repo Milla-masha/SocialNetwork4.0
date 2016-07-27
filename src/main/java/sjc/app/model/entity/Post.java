@@ -1,7 +1,7 @@
 package sjc.app.model.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -9,16 +9,13 @@ import java.util.List;
 public class Post extends AbstractPersistable {
     @Column(name = "image")
     private String image;
-    @Column(name = "fk_user")
-    private Integer fkUser;
+    @JoinColumn(name = "fk_user", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private UserEntity fkUser;
     @Column(name = "text")
     private String text;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "post_group", joinColumns = {
-            @JoinColumn(name = "fk_post", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "fk_group",
-                    nullable = false, updatable = false)})
-    private List<Group> groups;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "posts")
+    private List<Group> groups=new ArrayList<>(0);
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPost")
     private List<Like> likes;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -26,7 +23,7 @@ public class Post extends AbstractPersistable {
             @JoinColumn(name = "fk_post", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "fk_user",
                     nullable = false, updatable = false)})
-    private List<PostUser> users;
+    private List<UserEntity> users=new ArrayList<>(0);
 
     public Post() {
     }
@@ -39,11 +36,11 @@ public class Post extends AbstractPersistable {
         this.image = image;
     }
 
-    public Integer getFkUser() {
+    public UserEntity getFkUser() {
         return fkUser;
     }
 
-    public void setFkUser(Integer fkUser) {
+    public void setFkUser(UserEntity fkUser) {
         this.fkUser = fkUser;
     }
 
@@ -71,11 +68,11 @@ public class Post extends AbstractPersistable {
         this.likes = likes;
     }
 
-    public List<PostUser> getUsers() {
+    public List<UserEntity> getUsers() {
         return users;
     }
 
-    public void setUsers(List<PostUser> users) {
+    public void setUsers(List<UserEntity> users) {
         this.users = users;
     }
 }

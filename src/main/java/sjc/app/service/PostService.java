@@ -1,10 +1,10 @@
 package sjc.app.service;
 
-import sjc.app.model.vo.IPost;
+import sjc.app.model.vo.PostVO;
 
 import java.util.List;
 
 public interface PostService
 {
-    List<IPost> getPosts(Long userId, int offset, int limit);
+    List<PostVO> getPosts(Long userId, int offset, int limit);
 }

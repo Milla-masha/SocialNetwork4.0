@@ -9,7 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
-import sjc.app.service.impl.UserServiceImpl;
+import sjc.app.service.impl.UserDetailServiceImpl;
 
 import java.util.Collection;
 
@@ -17,7 +17,7 @@ import java.util.Collection;
 public class CustomAuthenticationProvider implements AuthenticationProvider
 {
     @Autowired
-    private UserServiceImpl userService;
+    private UserDetailServiceImpl userService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException

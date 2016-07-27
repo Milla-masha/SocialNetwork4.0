@@ -1,12 +1,10 @@
-package sjc.app.model.vo.impl;
+package sjc.app.model.vo;
 
-import sjc.app.model.vo.IAuthorities;
-
-public class AuthoritiesVO implements IAuthorities
+public class AuthoritiesVO
 {
     private long id;
     private String authorities;
-    private RegisterUserVO idU;
+    private UserVO idU;
 
     public AuthoritiesVO() {}
 
@@ -26,11 +24,11 @@ public class AuthoritiesVO implements IAuthorities
         this.authorities = authorities;
     }
 
-    public RegisterUserVO getIdU() {
+    public UserVO getIdU() {
         return idU;
     }
 
-    public void setIdU(RegisterUserVO idU) {
+    public void setIdU(UserVO idU) {
         this.idU = idU;
     }
 }

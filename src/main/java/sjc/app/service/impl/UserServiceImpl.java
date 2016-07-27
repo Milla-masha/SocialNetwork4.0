@@ -1,66 +1,39 @@
 package sjc.app.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import sjc.app.model.entity.InfoUser;
+import sjc.app.model.entity.UserEntity;
+import sjc.app.model.vo.UserRegisterVO;
 import sjc.app.repository.dao.UserDao;
-import sjc.app.repository.dao.impl.UserDaoImpl;
-import sjc.app.model.entity.RegisterUser;
 import sjc.app.service.UserService;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Service("userDetailsService")
-public class UserServiceImpl implements UserService {
+@Scope(proxyMode = ScopedProxyMode.INTERFACES)
+@Transactional
+@Service
+public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserDao userRepository;
-    @Autowired
-    private UserService userService;
-    static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-    public UserServiceImpl() {
-        userRepository = new UserDaoImpl();
-    }
 
     @Override
-    public User loadUserByUsername(String userName) throws UsernameNotFoundException {
-        RegisterUser registerUser = userRepository.findByName(userName);
-        if (registerUser == null) {
-            throw new UsernameNotFoundException("No such user: " + userName);
-        } else if (registerUser.getAuthorities().isEmpty()) {
-            throw new UsernameNotFoundException("User " + userName + " has no authorities");
-        }
-
-        boolean accountNonExpired = true;
-        boolean credentialsNonExpired = true;
-        boolean accountNonLocked = true;
-
-        List<String> roles = new ArrayList<>();
-        for (int i = 0; i < registerUser.getAuthorities().size(); i++) {
-            roles.add(registerUser.getAuthorities().iterator().next().getAuthorities());
-        }
-        return new User(
-                registerUser.getLogin(),
-                registerUser.getPassword().toLowerCase(),
-                true,
-                accountNonExpired,
-                credentialsNonExpired,
-                accountNonLocked,
-                getGrantedAuthorities(roles));
-    }
-
-    public static List<GrantedAuthority> getGrantedAuthorities(List<String> roles) {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for (String role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
-        return authorities;
+    public void addUser(UserRegisterVO user) {
+        UserEntity userEntity =new UserEntity();
+        System.out.println(user.getName());
+        userEntity.setLogin(user.getLogin());
+        userEntity.setPassword(user.getPassword());
+        InfoUser infoUser=new InfoUser();
+        infoUser.setName(user.getName());
+        infoUser.setLastName(user.getLastName());
+        if (user.getSex().equals("1"))
+            infoUser.setSex("Male");
+        else infoUser.setSex("Female");
+        infoUser.setBirthdayString(user.getBday());
+        infoUser.setUser(userEntity);
+        userEntity.setInfoUser(infoUser);
+        userRepository.save(userEntity);
     }
 }
