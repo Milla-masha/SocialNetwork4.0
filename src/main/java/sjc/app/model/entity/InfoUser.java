@@ -8,7 +8,9 @@ import java.util.Date;
 public class InfoUser extends AbstractPersistable {
 
     @JoinColumn(name = "fk_registeruser", referencedColumnName = "id")
+
     @OneToOne(optional = false,fetch = FetchType.LAZY)
+
     private UserEntity user;
 
     public InfoUser() {

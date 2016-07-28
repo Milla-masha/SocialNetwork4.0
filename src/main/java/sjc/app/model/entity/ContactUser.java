@@ -3,7 +3,7 @@ package sjc.app.model.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "contact_user")
+@Table(name = "user_contact_info")
 public class ContactUser extends AbstractPersistable {
 
     @JoinColumn(name = "fk_registeruser", referencedColumnName = "id")

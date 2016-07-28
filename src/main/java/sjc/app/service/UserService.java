@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.UserEntity;
 import sjc.app.model.vo.UserVO;
 
-import java.util.List;
+import java.util.Collection;
 
 @Transactional
 public interface UserService extends UserDetailsService {
@@ -16,6 +16,8 @@ public interface UserService extends UserDetailsService {
 
 	UserVO getUserByName(String username);
 
-	List<UserVO> getAllUsers();
+    Collection<UserVO> getAllUsers();
+
+	Collection<UserVO> findFriends(Long userId);
 
 }

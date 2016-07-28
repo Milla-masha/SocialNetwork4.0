@@ -14,6 +14,7 @@ sjc\app\service\impl\VideoServiceImpl.class
 sjc\app\dao\impl\GenericDaoImpl.class
 sjc\app\dao\MusicDao.class
 sjc\app\rest\impl\UserEndpointImpl.class
+sjc\app\dao\utils\HibernateUtil.class
 sjc\app\dao\impl\ContactUserDaoImpl.class
 sjc\app\model\entity\Post.class
 sjc\app\service\FriendService.class

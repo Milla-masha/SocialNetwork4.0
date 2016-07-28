@@ -14,6 +14,19 @@ public class Friends extends AbstractPersistable {
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity friend2;
 
+    @Column(name = "status")
+    private int status;
+
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+
     public UserEntity getFriend1() {
         return friend1;
     }

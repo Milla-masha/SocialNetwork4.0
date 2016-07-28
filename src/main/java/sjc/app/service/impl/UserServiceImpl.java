@@ -13,6 +13,7 @@ import sjc.app.model.vo.UserVO;
 import sjc.app.service.UserService;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service("userDetailsService")
@@ -97,6 +98,15 @@ public class UserServiceImpl implements UserService {
             userVOs.add(userVO);
         }
         return userVOs;
+    }
+
+    @Override
+    public Collection<UserVO> findFriends(Long userId) {
+        UserEntity user = userRepository.findById(userId);
+
+
+
+        return null;
     }
 
 

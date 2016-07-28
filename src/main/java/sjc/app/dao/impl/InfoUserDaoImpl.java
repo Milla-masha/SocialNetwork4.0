@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import sjc.app.dao.InfoUserDao;
 import sjc.app.model.entity.InfoUser;
 
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -17,18 +16,20 @@ public class InfoUserDaoImpl extends GenericDaoImpl<InfoUser> implements InfoUse
     @Override
     public List<InfoUser> getFriends(Long idUser, int offset, int limit) {
         CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<InfoUser> criteriaQuery = criteriaBuilder.createQuery(InfoUser.class);
-        Root<InfoUser> users = criteriaQuery.from(InfoUser.class);
 
+        CriteriaQuery<InfoUser> criteria = criteriaBuilder.createQuery(InfoUser.class);
 
-        Predicate condition = criteriaBuilder.equal(users.get("user"), idUser);
-        criteriaQuery.where(condition);
-        TypedQuery<InfoUser> q = getEntityManager().createQuery(criteriaQuery);
+        Root<InfoUser> user = criteria.from(InfoUser.class);
+        Predicate condition = criteriaBuilder.equal(user.get("user"), idUser);
+        criteria.multiselect(user);
+        criteria.where(condition);
+
+        List<InfoUser> users = getEntityManager().createQuery( criteria ).getResultList();
+
+       /* TypedQuery<InfoUser> q = getEntityManager().createQuery(criteria);
+
         q.setFirstResult(offset);
-        q.setMaxResults(limit);
-
-
-
-        return q.getResultList();
+        q.setMaxResults(limit);*/
+        return users; //q.getResultList();
     }
 }

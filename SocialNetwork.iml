@@ -18,6 +18,7 @@
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset" name="Spring Application Context" removed="false">
+          <dependency>fileset</dependency>
           <file>file://$MODULE_DIR$/src/main/resources/WEB-INF/app-data.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/app-data.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/application-context.xml</file>
@@ -25,6 +26,8 @@
           <file>file://$MODULE_DIR$/src/main/resources/WEB-INF/app-data.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring-security.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/rest-dispatcher-servlet-security.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/META-INF/spring/rest-dispatcher-servlet-security.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/sjc/app/rest/authentication/provider/CustomAuthenticationProvider.java</file>
         </fileset>
       </configuration>
     </facet>
@@ -42,7 +45,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="" />
         <datasource-mapping>
-          <factory-entry name="entityManagerFactory" value="5690c49a-b57a-4cff-a707-24a685b2ef4e" />
+          <factory-entry name="entityManagerFactory" value="4a6034f5-45c6-4638-a946-c3d13b381c3f" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/webapp/WEB-INF/persistence.xml" />
       </configuration>

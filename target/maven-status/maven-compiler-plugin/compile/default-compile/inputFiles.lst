@@ -38,6 +38,7 @@ E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\rest\GroupEndpoint.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\dao\InfoUserDao.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\rest\MusicEndpoint.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\rest\impl\FriendEndpointImpl.java
+E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\dao\utils\HibernateUtil.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\rest\FriendEndpoint.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\MusicService.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\vo\MusicVO.java
