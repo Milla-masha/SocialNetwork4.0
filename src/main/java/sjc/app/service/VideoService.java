@@ -8,4 +8,5 @@ import java.util.List;
 public interface VideoService {
     List<VideoVO> getVideos(Long userId, int offset, int limit);
     VideoFullVO getVideo(Long videoId);
+
 }

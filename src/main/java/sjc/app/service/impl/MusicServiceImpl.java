@@ -3,7 +3,7 @@ package sjc.app.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sjc.app.dao.MusicDao;
-import sjc.app.model.entity.Music;
+import sjc.app.model.entity.impl.MusicEntityImpl;
 import sjc.app.model.vo.MusicVO;
 import sjc.app.service.MusicService;
 
@@ -17,9 +17,9 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public List<MusicVO> getMusics(Long userId, int offset, int limit) {
-        List<Music> musics = musicDao.getMusicsUser(userId, offset, limit);
+        List<MusicEntityImpl> musics = musicDao.getMusicsUser(userId, offset, limit);
         List<MusicVO> musicVOs = new ArrayList<>();
-        for (Music music : musics) {
+        for (MusicEntityImpl music : musics) {
             MusicVO mus = new MusicVO();
             mus.setUrl(music.getUrl());
             mus.setName(music.getName());

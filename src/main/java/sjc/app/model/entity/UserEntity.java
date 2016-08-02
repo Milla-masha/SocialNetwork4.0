@@ -1,81 +1,72 @@
 package sjc.app.model.entity;
 
-import javax.persistence.*;
+import sjc.app.model.entity.impl.AuthoritiesImpl;
+import sjc.app.model.entity.impl.UserEntityImpl;
+
+import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "user")
-public class UserEntity extends AbstractPersistable {
+/**
+ * Created by psycl on 29.07.2016.
+ */
 
-	private String password;
-	private String login;
-	@OneToOne(mappedBy = "user")
-	private InfoUser infoUser;
 
-	@OneToOne(mappedBy = "userEntity")
-	private ContactUser contactUser;
+public interface UserEntity {
+    public List<UserEntityImpl> getFriends();
 
-	public ContactUser getContactUser() {
-		return contactUser;
-	}
+    public void setFriends(List<UserEntityImpl> friends);
 
-	public void setContactUser(ContactUser contactUser) {
-		this.contactUser = contactUser;
-	}
+    public void setAuthorities(List<AuthoritiesImpl> authorities);
 
-	public InfoUser getInfoUser() {
-		return infoUser;
-	}
+    public List<AuthoritiesImpl> getAuthorities();
 
-	public void setInfoUser(InfoUser infoUser) {
-		this.infoUser = infoUser;
-	}
+    public void setLogin(String login);
 
-	@ManyToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "friends",  joinColumns = {
-			@JoinColumn(name = "fk_user1", nullable = false, updatable = false) },
-			inverseJoinColumns = { @JoinColumn(name = "fk_user2",
-					nullable = false, updatable = false) })
-	private List<UserEntity> friends;
+    public String getLogin();
 
-	@OneToMany( mappedBy = "idU", fetch = FetchType.LAZY)
-	private List<Authorities> authorities;
+    public String getPassword();
 
-	@Column(name = "password")
-	public String getPassword() {
-		return password;
-	}
+    public void setPassword(String password);
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getName();
 
-	@Column(name = "login")
-	public String getLogin() {
-		return login;
-	}
+    public void setName(String name);
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    public String getLastName();
 
-	public List<Authorities> getAuthorities() {
-		return authorities;
-	}
+    public void setLastName(String lastName);
 
-	public UserEntity() {
-	}
+    public Date getBirthday();
 
-	public void setAuthorities(List<Authorities> authorities) {
-		this.authorities = authorities;
-	}
+    public void setBirthday(Date birthday);
 
-	public List<UserEntity> getFriends() {
-		return friends;
-	}
+    public String getAvatar();
 
-	public void setFriends(List<UserEntity> friends) {
-		this.friends = friends;
-	}
+    public void setAvatar(String avatar);
+
+    public String getCity();
+
+    public void setCity(String city);
+
+    public String getAbout();
+
+    public void setAbout(String about);
+
+    public String getSex();
+
+    public void setSex(String sex);
+
+    public String getMobile();
+
+    public void setMobile(String mobile);
+
+    public String getSkype();
+
+    public void setSkype(String skype);
+
+    public String getEmail();
+
+    public void setEmail(String email);
+
 
 }

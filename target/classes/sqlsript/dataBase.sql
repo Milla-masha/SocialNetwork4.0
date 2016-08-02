@@ -101,13 +101,13 @@ INSERT INTO `friends` VALUES (1,1,2),(2,2,1);
 UNLOCK TABLES;
 
 --
--- Table structure for table `group`
+-- Table structure for table `groupEntityImpl`
 --
 
-DROP TABLE IF EXISTS `group`;
+DROP TABLE IF EXISTS `groupEntityImpl`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `group` (
+CREATE TABLE `groupEntityImpl` (
   `id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
@@ -117,12 +117,12 @@ CREATE TABLE `group` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `group`
+-- Dumping data for table `groupEntityImpl`
 --
 
-LOCK TABLES `group` WRITE;
-/*!40000 ALTER TABLE `group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `group` ENABLE KEYS */;
+LOCK TABLES `groupEntityImpl` WRITE;
+/*!40000 ALTER TABLE `groupEntityImpl` DISABLE KEYS */;
+/*!40000 ALTER TABLE `groupEntityImpl` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -140,7 +140,7 @@ CREATE TABLE `group_user` (
   KEY `fk_user_idx` (`fk_user`),
   KEY `fk_group_idx` (`fk_group`),
   CONSTRAINT `fk_user` FOREIGN KEY (`fk_user`) REFERENCES `registeruser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_group` FOREIGN KEY (`fk_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_group` FOREIGN KEY (`fk_group`) REFERENCES `groupEntityImpl` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -255,7 +255,7 @@ CREATE TABLE `post_group` (
   KEY `fk_postgr_idx` (`fk_post`),
   KEY `fk_grouppo_idx` (`fk_group`),
   CONSTRAINT `fk_postgr` FOREIGN KEY (`fk_post`) REFERENCES `post` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_grouppo` FOREIGN KEY (`fk_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_grouppo` FOREIGN KEY (`fk_group`) REFERENCES `groupEntityImpl` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

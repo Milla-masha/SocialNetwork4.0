@@ -1,7 +1,7 @@
 package sjc.app.dao.impl;
 
 import org.springframework.stereotype.Repository;
-import sjc.app.model.entity.AbstractPersistable;
+import sjc.app.model.entity.impl.AbstractPersistable;
 import sjc.app.dao.GenericDao;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

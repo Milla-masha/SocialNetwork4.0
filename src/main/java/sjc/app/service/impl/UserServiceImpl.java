@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.dao.UserDao;
-import sjc.app.model.entity.UserEntity;
+import sjc.app.model.entity.impl.UserEntityImpl;
 import sjc.app.model.vo.UserVO;
 import sjc.app.service.UserService;
 
@@ -21,76 +22,41 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userRepository;
+    @Autowired
+    private EntityToVOServiceImpl entityToVOService;
 
     public UserServiceImpl() {
-        userRepository = new UserDao() {
 
-            @Override
-            public UserEntity findByName(String userName) {
-                return null;
-            }
-
-            @Override
-            public UserEntity save(UserEntity obj) {
-                return null;
-            }
-
-            @Override
-            public void update(UserEntity obj) {
-
-            }
-
-            @Override
-            public List<UserEntity> findAll() {
-                return null;
-            }
-
-            @Override
-            public UserEntity findById(Long id) {
-                return null;
-            }
-
-            @Override
-            public void delete(Long id) {
-
-            }
-
-            @Override
-            public void delete(UserEntity obj) {
-
-            }
-        };
     }
 
-
     @Override
-    public UserEntity loadUserByCredentials(String login, String password) {
+    public UserEntityImpl loadUserByCredentials(String login, String password) {
         return null;
     }
 
-    public UserEntity getUserByID(Long userId) {
+    public UserVO getUserByID(Long userId) {
 
-        UserEntity userEntity = userRepository.findById(new Long(userId));
-
-        return userEntity;
+        UserEntityImpl userEntity = userRepository.findById(new Long(userId));
+        UserVO userVO = new UserVO(userEntity.getId(), userEntity.getPassword(), userEntity.getLogin(), userEntity.getAuthorities(), userEntity.getMobile(), userEntity.getSkype(), userEntity.getEmail(), userEntity.getName(), userEntity.getLastName(), userEntity.getBirthday(), userEntity.getAvatar(), userEntity.getCity(), userEntity.getAbout(), userEntity.getSex()/*,userEntity.getFriends()*/);
+        return userVO;
     }
 
     @Override
     public UserVO getUserByName(String userName) {
-        UserEntity userEntity = userRepository.findByName(userName);
+        /*UserEntityImpl userEntity = userRepository.findById(userName);
         UserVO userVO = new UserVO(userEntity.getId(), userEntity.getPassword(), userEntity.getLogin());
-        return userVO;
+        return userVO;*/
+        return null;
     }
 
     @Override
     @Transactional
     public List<UserVO> getAllUsers() {
-        List<UserEntity> userEntities = userRepository.findAll();
-        //	System.out.println(userEntities.get(0).getName());
+        List<UserEntityImpl> userEntities = userRepository.findAll();
         List<UserVO> userVOs = new ArrayList<UserVO>();
-        for (UserEntity user : userEntities) {
+        for (UserEntityImpl user : userEntities) {
             List<UserVO> friendsVO = new ArrayList<UserVO>();
-            for (UserEntity friend : user.getFriends()) {
+            for (UserEntityImpl friend : user.getFriends()) {
                 UserVO friendVO = new UserVO(friend.getId(), friend.getPassword(), friend.getLogin());
                 friendsVO.add(friendVO);
             }
@@ -102,21 +68,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Collection<UserVO> findFriends(Long userId) {
-        UserEntity user = userRepository.findById(userId);
-
-
+        UserEntityImpl user = userRepository.findById(userId);
 
         return null;
     }
 
+    @Override
+    public Collection<UserVO> findFriends(Long idUser, int offset, int limit) {
+        Collection<UserEntityImpl> users = userRepository.getFriends(idUser, offset, limit);
+
+
+        return entityToVOService.userEntity2UserVo(users);
+
+    }
+
 
     @Override
-    public User loadUserByUsername(String userName) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findByName(userName);
+    public User loadUserByUsername(Long id) throws UsernameNotFoundException {
+        UserEntityImpl userEntity = userRepository.findById(id);
         if (userEntity == null) {
-            throw new UsernameNotFoundException("No such user: " + userName);
+            throw new UsernameNotFoundException("No such user: " + id);
         } else if (userEntity.getAuthorities().isEmpty()) {
-            throw new UsernameNotFoundException("User " + userName + " has no authorities");
+            throw new UsernameNotFoundException("User " + id + " has no authorities");
         }
 
         boolean accountNonExpired = true;
@@ -143,5 +116,10 @@ public class UserServiceImpl implements UserService {
             authorities.add(new SimpleGrantedAuthority(role));
         }
         return authorities;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }

@@ -1,13 +1,13 @@
 package sjc.app.dao;
 
 
-import sjc.app.model.entity.UserEntity;
+import sjc.app.model.entity.impl.UserEntityImpl;
 
-public interface UserDao extends GenericDao<UserEntity> {
+import java.util.Collection;
 
-    //UserEntity findByCredentials(String login, String password);
+public interface UserDao extends GenericDao<UserEntityImpl> {
 
-   // UserEntity findByCredentials(String login, String password);
+    UserEntityImpl findById(Long id);
 
-    UserEntity findByName(String userName);
+    Collection<UserEntityImpl> getFriends(Long idUser, int offset, int limit);
 }
