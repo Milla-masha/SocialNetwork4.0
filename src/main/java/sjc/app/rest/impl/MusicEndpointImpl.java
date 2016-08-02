@@ -18,10 +18,10 @@ public class MusicEndpointImpl implements MusicEndpoint {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value ="/{idUser}&offset={offset}&limit={limit}")
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public Response getMusic(@PathVariable Long idUser,@PathVariable Integer offset,@PathVariable Integer limit) {
-        return Response.ok(musicService.getMusics(idUser,offset,limit)).build();
+    public Response getMusic(@RequestParam Long userId,@RequestParam Integer offset,@RequestParam Integer limit) {
+        return Response.ok(musicService.getMusics(userId,offset,limit)).build();
     }
 
 

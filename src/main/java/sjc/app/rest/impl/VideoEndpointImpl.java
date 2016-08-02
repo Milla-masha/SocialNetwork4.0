@@ -17,17 +17,17 @@ public class VideoEndpointImpl implements VideoEndpoint
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value ="/{idUser}&offset={offset}&limit={limit}")
+    @RequestMapping( method = RequestMethod.GET)
     @ResponseBody
-    public Response getVideos(@PathVariable Long idUser, @PathVariable Integer offset, @PathVariable Integer limit) {
-        return Response.ok(videoService.getVideos(idUser,offset,limit)).build();
+    public Response getVideos(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit) {
+        return Response.ok(videoService.getVideos(userId,offset,limit)).build();
     }
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value ="/{idVideo}")
+    @RequestMapping(method = RequestMethod.GET, value = "/{videoId}")
     @ResponseBody
-    public Response getVideo(@PathVariable Long idVideo) {
-        return Response.ok(videoService.getVideo(idVideo)).build();
+    public Response getVideo(@PathVariable Long videoId) {
+        return Response.ok(videoService.getVideo(videoId)).build();
     }
 }

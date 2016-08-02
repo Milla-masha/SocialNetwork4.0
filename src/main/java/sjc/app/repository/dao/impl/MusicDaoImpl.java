@@ -10,6 +10,11 @@ import java.util.List;
 
 @Repository
 public class MusicDaoImpl extends GenericDaoImpl<Music> implements MusicDao {
+
+    public MusicDaoImpl() {
+        super(Music.class);
+    }
+
     @Override
     public List<Music> getMusicsUser(Long idUser, int offset, int limit) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();

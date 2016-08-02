@@ -17,17 +17,17 @@ public class GroupEndpointImpl implements GroupEndpoint{
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value ="/{idUser}&offset={offset}&limit={limit}")
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public Response getGroups(@PathVariable Long idUser,@PathVariable Integer offset,@PathVariable Integer limit) {
-        return Response.ok(groupService.getGroups(idUser,offset,limit)).build();
+    public Response getGroups(@RequestParam Long userId,@RequestParam Integer offset,@RequestParam Integer limit) {
+        return Response.ok(groupService.getGroups(userId,offset,limit)).build();
     }
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value ="/{idGroup}")
+    @RequestMapping(method = RequestMethod.GET, value ="/{droupId}")
     @ResponseBody
-    public Response getGroup(@PathVariable Long idGroup) {
-        return Response.ok(groupService.getGroup(idGroup)).build();
+    public Response getGroup(@PathVariable Long groupId) {
+        return Response.ok(groupService.getGroup(groupId)).build();
     }
 }

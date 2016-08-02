@@ -4,6 +4,6 @@ import sjc.app.model.vo.UserRegisterVO;
 
 public interface UserService
 {
-    void addUser(UserRegisterVO user);
+    boolean addUser(UserRegisterVO user);
 
 }

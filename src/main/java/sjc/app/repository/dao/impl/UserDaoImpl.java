@@ -13,6 +13,10 @@ import javax.persistence.criteria.Root;
 @Repository
 public class UserDaoImpl extends GenericDaoImpl<UserEntity> implements UserDao {
 
+	public UserDaoImpl() {
+		super(UserEntity.class);
+	}
+
 	@Override
 	public UserEntity findByName(String userName) {
 		CriteriaBuilder cb=getEntityManager().getCriteriaBuilder();
@@ -22,8 +26,7 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntity> implements UserDao {
 		c.where(condition);
 		TypedQuery<UserEntity> q = getEntityManager().createQuery(c);
 		return q.getSingleResult();
-//			return (UserEntity) getEntityManager()
-//				.createQuery("SELECT ru FROM UserEntity ru where ru.login= ?").setParameter(0,userName).getResultList().get(0);
 	}
+
 }
 

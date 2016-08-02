@@ -10,6 +10,7 @@ public class UserEntity extends AbstractPersistable {
 
 	private String password;
 	private String login;
+	private int enabled;
 	@OneToOne(mappedBy = "user",cascade = {CascadeType.ALL})
 	private InfoUser infoUser;
 
@@ -38,6 +39,13 @@ public class UserEntity extends AbstractPersistable {
 	inverseJoinColumns = { @JoinColumn(name = "fk_user2",
 			nullable = false, updatable = false) })
 	private List<UserEntity> friends=new ArrayList<>(0);
+
+	@ManyToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "black_list",  joinColumns = {
+			@JoinColumn(name = "fk_user_owner", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "fk_user_black",
+					nullable = false, updatable = false) })
+	private List<UserEntity> blackListUsers=new ArrayList<>(0);
 
 	@ManyToMany( fetch = FetchType.LAZY, mappedBy = "users")
 	private List<Group> groups=new ArrayList<>(0);
@@ -99,5 +107,22 @@ public class UserEntity extends AbstractPersistable {
 
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+
+	public List<UserEntity> getBlackListUsers() {
+		return blackListUsers;
+	}
+
+	public void setBlackListUsers(List<UserEntity> blackListUsers) {
+		this.blackListUsers = blackListUsers;
+	}
+
+	@Column(name="enabled")
+	public int getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
 	}
 }

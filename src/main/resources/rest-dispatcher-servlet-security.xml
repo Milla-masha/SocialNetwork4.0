@@ -11,16 +11,16 @@
 
 
     <http pattern="/oauth/token" create-session="stateless" use-expressions="false"
-          authentication-manager-ref="clientAuthenticationManager"
-          xmlns="http://www.springframework.org/schema/security">
-        <intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" />
-        <csrf disabled="true"/>
-        <anonymous enabled="false" />
-        <http-basic entry-point-ref="clientAuthenticationEntryPoint" />
-        <custom-filter ref="clientCredentialsTokenEndpointFilter"
-                       after="BASIC_AUTH_FILTER" />
-        <access-denied-handler ref="oauthAccessDeniedHandler" />
-    </http>
+                 authentication-manager-ref="clientAuthenticationManager"
+                 xmlns="http://www.springframework.org/schema/security">
+    <intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" />
+    <csrf disabled="false"/>
+    <anonymous enabled="false" />
+    <http-basic entry-point-ref="clientAuthenticationEntryPoint" />
+    <custom-filter ref="clientCredentialsTokenEndpointFilter"
+                   after="BASIC_AUTH_FILTER" />
+    <access-denied-handler ref="oauthAccessDeniedHandler" />
+</http>
 
     <!-- The OAuth2 protected resources are separated out into their own block
         so we can deal with authorization and error handling separately. This isn't
@@ -30,8 +30,8 @@
           access-decision-manager-ref="accessDecisionManager"
           xmlns="http://www.springframework.org/schema/security">
         <anonymous enabled="false" />
-        <csrf disabled="true"/>
-        <intercept-url pattern="/test/*" access="ROLE_USER" />
+        <csrf disabled="false"/>
+        <intercept-url pattern="/test/*" access="ROLE_CLIENT" />
         <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
         <access-denied-handler ref="oauthAccessDeniedHandler" />
     </http>

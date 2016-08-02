@@ -5,5 +5,10 @@ import sjc.app.model.entity.ContactUser;
 import sjc.app.repository.dao.ContactUserDao;
 
 @Repository
-public class ContactUserDaoImpl extends GenericDaoImpl<ContactUser> implements ContactUserDao {
+public class ContactUserDaoImpl extends GenericDaoImpl<ContactUser> implements ContactUserDao
+{
+    public ContactUserDaoImpl()
+    {
+        super(ContactUser.class);
+    }
 }

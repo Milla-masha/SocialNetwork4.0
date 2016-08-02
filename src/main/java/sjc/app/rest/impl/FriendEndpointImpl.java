@@ -19,9 +19,9 @@ public class FriendEndpointImpl implements FriendEndpoint
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value ="/{idUser}&offset={offset}&limit={limit}")
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public Response getFriend(@PathVariable Long idUser,@PathVariable Integer offset,@PathVariable Integer limit) {
-        return Response.ok(friendService.getFriends(idUser,offset,limit)).build();
+    public Response getFriend(@RequestParam Long userId,@RequestParam Integer offset,@RequestParam Integer limit) {
+        return Response.ok(friendService.getFriends(userId,offset,limit)).build();
     }
 }

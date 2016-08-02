@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.Video;
 import sjc.app.model.vo.VideoFullVO;
-import sjc.app.model.vo.VideoVO;
-import sjc.app.repository.dao.MusicDao;
 import sjc.app.repository.dao.VideoDao;
 import sjc.app.service.VideoService;
 
@@ -24,11 +22,11 @@ public class VideoServiceImpl implements VideoService {
     private VideoDao videoDao;
 
     @Override
-    public List<VideoVO> getVideos(Long userId, int offset, int limit) {
+    public List<VideoFullVO> getVideos(Long userId, int offset, int limit) {
         List<Video> videosEntity=videoDao.getVideosUser(userId,offset,limit);
-        List<VideoVO> videos = new ArrayList<>();
+        List<VideoFullVO> videos = new ArrayList<>();
         for (Video videoEntity:videosEntity) {
-            VideoVO video = new VideoVO();
+            VideoFullVO video = new VideoFullVO();
             video.setName(videoEntity.getName());
             video.setPreView(videoEntity.getPreview());
             video.setUrl(videoEntity.getUrl());

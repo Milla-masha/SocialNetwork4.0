@@ -26,6 +26,27 @@ public class InfoUserServiceImpl implements InfoUserService {
         ContactUser contactUser = userEntity.getContactUser();
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
+        user.setId(userEntity.getId());
+        user.setName(userEntity.getInfoUser().getName());
+        user.setLastName(userEntity.getInfoUser().getLastName());
+        user.setAvatar(userEntity.getInfoUser().getAvatar());
+        user.setAbout(userEntity.getInfoUser().getAbout());
+        user.setBirthday(userEntity.getInfoUser().getBirthday());
+        user.setCity(userEntity.getInfoUser().getCity());
+        contact.setEmail(contactUser.getEmail());
+        contact.setMobile(contactUser.getMobile());
+        contact.setSkype(contactUser.getSkype());
+        user.setContactUser(contact);
+        return user;
+    }
+
+    @Override
+    public InfoUserVO getInfoUserVO(String login) {
+        UserEntity userEntity = userDao.findByName(login);
+        ContactUser contactUser = userEntity.getContactUser();
+        InfoUserVO user = new InfoUserVO();
+        ContactUserVO contact = new ContactUserVO();
+        user.setId(userEntity.getId());
         user.setName(userEntity.getInfoUser().getName());
         user.setLastName(userEntity.getInfoUser().getLastName());
         user.setAvatar(userEntity.getInfoUser().getAvatar());

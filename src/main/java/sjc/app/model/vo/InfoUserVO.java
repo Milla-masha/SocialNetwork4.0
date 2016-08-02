@@ -3,6 +3,8 @@ import java.util.Date;
 
 public class InfoUserVO {
 
+    private Long id;
+
     private String name;
 
     private String lastName;
@@ -17,7 +19,8 @@ public class InfoUserVO {
 
     private ContactUserVO contactUser;
 
-    public InfoUserVO(String name, String lastName, Date birthday, String avatar, String city, String about, ContactUserVO contactUser) {
+    public InfoUserVO(Long id,String name, String lastName, Date birthday, String avatar, String city, String about, ContactUserVO contactUser) {
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.birthday = birthday;
@@ -28,6 +31,14 @@ public class InfoUserVO {
     }
 
     public InfoUserVO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

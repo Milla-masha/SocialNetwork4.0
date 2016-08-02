@@ -11,8 +11,10 @@ import sjc.app.service.InfoUserService;
 import sjc.app.service.UserService;
 import sjc.app.rest.UserEndpoint;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/users")
@@ -34,8 +36,17 @@ public class UserEndpointImpl implements UserEndpoint
 
 	@Override
 	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(method = RequestMethod.GET, path = "/profile")
+	@ResponseBody
+	public Response getProfileAutorize(HttpServletRequest request) {
+		Principal principal = request.getUserPrincipal();
+		return Response.ok(infoUserService.getInfoUserVO(principal.getName())).build();
+	}
+
+	@Override
+	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-	@JsonBackReference("UserRegisterVO")
+//	@JsonBackReference("UserRegisterVO")
 	@ResponseBody
 	public Response addUser(@RequestBody UserRegisterVO userRegister)
 	{

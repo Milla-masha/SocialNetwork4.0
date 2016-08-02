@@ -13,7 +13,7 @@ import sjc.app.service.impl.UserDetailServiceImpl;
 
 import java.util.Collection;
 
-@Component
+@Component("customAuthenticationProvider")
 public class CustomAuthenticationProvider implements AuthenticationProvider
 {
     @Autowired

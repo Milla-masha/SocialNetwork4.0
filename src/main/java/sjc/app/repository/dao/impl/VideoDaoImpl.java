@@ -15,6 +15,10 @@ import java.util.List;
 @Repository
 public class VideoDaoImpl  extends GenericDaoImpl<Video> implements VideoDao {
 
+    public VideoDaoImpl() {
+        super(Video.class);
+    }
+
     @Override
     public List<Video> getVideosUser(Long idUser, int offset, int limit) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();

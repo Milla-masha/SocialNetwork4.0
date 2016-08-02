@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.InfoUser;
+import sjc.app.repository.dao.FriendDao;
 import sjc.app.repository.dao.impl.InfoUserDaoImpl;
 import sjc.app.model.vo.UserSmallVO;
 import sjc.app.service.FriendService;
@@ -21,7 +22,7 @@ public class FriendServiceImpl  implements FriendService
 {
 
     @Autowired
-    private InfoUserDaoImpl friendsDao;
+    private FriendDao friendsDao;
 
     @Override
     public List<UserSmallVO> getFriends(Long userId, int offset, int limit)

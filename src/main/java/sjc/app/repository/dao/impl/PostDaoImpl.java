@@ -13,6 +13,10 @@ import java.util.List;
 @Repository
 public class PostDaoImpl extends GenericDaoImpl<Post> implements PostDao
 {
+    public PostDaoImpl() {
+        super(Post.class);
+    }
+
     @Override
     public List<Post> getPostsUser(Long idUser, int offset, int limit) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();

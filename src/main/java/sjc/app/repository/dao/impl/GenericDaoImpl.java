@@ -17,24 +17,12 @@ import java.util.List;
 public abstract class GenericDaoImpl<T extends AbstractPersistable> implements GenericDao<T> {
 
     private final Class<T> persistentClass;
-
-    public Class<T> getPersistentClass() {
-        return persistentClass;
-    }
-
     @PersistenceContext
     private EntityManager entityManager;
-
-    @SuppressWarnings("unchecked")
-    public GenericDaoImpl() {
-        this.persistentClass = (Class<T>) ((ParameterizedType)
-                getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-    }
 
     public GenericDaoImpl(final Class<T> persistentClass) {
         this.persistentClass = persistentClass;
     }
-
 
     public EntityManager getEntityManager() {
         return entityManager;
@@ -70,8 +58,7 @@ public abstract class GenericDaoImpl<T extends AbstractPersistable> implements G
 
     @Override
     public T findById(Long id) {
-        final T result = getEntityManager().find(persistentClass, id);
-        return result;
+        return getEntityManager().find(persistentClass, id);
     }
 
     @Override
