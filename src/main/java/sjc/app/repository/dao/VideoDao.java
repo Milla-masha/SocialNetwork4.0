@@ -1,11 +1,11 @@
 package sjc.app.repository.dao;
 
 
-import sjc.app.model.entity.Video;
+import sjc.app.model.entity.VideoEntityImpl;
 
 import java.util.List;
 
-public interface VideoDao extends GenericDao<Video>
+public interface VideoDao extends GenericDao<VideoEntityImpl>
 {
-    List<Video> getVideosUser(Long idUser, int offset, int limit);
+    List<VideoEntityImpl> getVideosUser(Long idUser, int offset, int limit);
 }

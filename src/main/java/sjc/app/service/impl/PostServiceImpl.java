@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sjc.app.model.entity.Like;
-import sjc.app.model.entity.Post;
+import sjc.app.model.entity.LikeEntityImpl;
+import sjc.app.model.entity.PostUserEntityImpl;
 import sjc.app.model.vo.PostVO;
 import sjc.app.model.vo.UserSmallVO;
 import sjc.app.repository.dao.PostDao;
@@ -26,36 +26,36 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostVO> getPosts(Long userId, int offset, int limit) {
         List<PostVO> posts = new ArrayList<>();
-        List<Post> postsEntity = postDao.getPostsUser(userId, offset, limit);
-        for (Post postEntity : postsEntity) {
+        List<PostUserEntityImpl> postsEntity = postDao.getPostsUser(userId, offset, limit);
+        for (PostUserEntityImpl postEntity : postsEntity) {
             PostVO post = new PostVO();
             post.setImage(postEntity.getImage());
             post.setLike(getCountLike(postEntity.getLikes()));
             post.setDislike(getCountDisLike(postEntity.getLikes()));
             post.setText(postEntity.getText());
             UserSmallVO owner = new UserSmallVO();
-            owner.setAvatar(postEntity.getFkUser().getInfoUser().getAvatar());
-            owner.setName(postEntity.getFkUser().getInfoUser().getName());
-            owner.setLastName(postEntity.getFkUser().getInfoUser().getLastName());
+            owner.setAvatar(postEntity.getUser().getAvatar());
+            owner.setName(postEntity.getUser().getName());
+            owner.setLastName(postEntity.getUser().getLastName());
             post.setOwner(owner);
             posts.add(post);
         }
         return posts;
     }
 
-    public int getCountLike(List<Like> likes) {
+    public int getCountLike(List<LikeEntityImpl> likes) {
         int count = 0;
-        for (Like like : likes) {
+        for (LikeEntityImpl like : likes) {
             if (like.getIsLike() == 1)
                 count++;
         }
         return count;
     }
 
-    public int getCountDisLike(List<Like> likes) {
+    public int getCountDisLike(List<LikeEntityImpl> likes) {
         int count = 0;
-        for (Like like : likes) {
-            if (like.getIsLike() == 0)
+        for (LikeEntityImpl like : likes) {
+            if (like.getIsLike()== 0)
                 count++;
         }
         return count;

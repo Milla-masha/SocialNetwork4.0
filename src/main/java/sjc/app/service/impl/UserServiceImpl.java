@@ -5,10 +5,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sjc.app.model.entity.Authorities;
-import sjc.app.model.entity.ContactUser;
-import sjc.app.model.entity.InfoUser;
-import sjc.app.model.entity.UserEntity;
+import sjc.app.model.entity.RoleEntityImpl;
+import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.UserRegisterVO;
 import sjc.app.repository.dao.UserDao;
 import sjc.app.service.UserService;
@@ -26,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addUser(UserRegisterVO user) {
-        UserEntity userEntity = new UserEntity();
+        UserEntityImpl userEntity = new UserEntityImpl();
 //        try {userRepository.findByName(user.getLogin());
 //        return false;}
 //        catch (NoResultException p)
@@ -34,27 +32,21 @@ public class UserServiceImpl implements UserService {
         System.out.println(user.getName());
         userEntity.setLogin(user.getLogin());
         userEntity.setPassword(user.getPassword());
-        InfoUser infoUser = new InfoUser();
-        infoUser.setName(user.getName());
-        infoUser.setLastName(user.getLastName());
+        userEntity.setName(user.getName());
+        userEntity.setLastName(user.getLastName());
         if (user.getSex().equals("1"))
-            infoUser.setSex("Male");
-        else infoUser.setSex("Female");
-        infoUser.setBirthdayString(user.getBday());
-        infoUser.setUser(userEntity);
-        userEntity.setInfoUser(infoUser);
-        ContactUser contactUser = new ContactUser();
-        contactUser.setEmail(user.getEmail());
-        contactUser.setUserEntity(userEntity);
-        userEntity.setContactUser(contactUser);
-        List<Authorities> authorities = new ArrayList<>();
-        Authorities authority = new Authorities();
-        authority.setIdU(userEntity);
-        authority.setAuthorities("ROLE_CLIENT");
+            userEntity.setSex("Male");
+        else userEntity.setSex("Female");
+        userEntity.setBirthdateString(user.getBday());
+        userEntity.setEmail(user.getEmail());
+        List<RoleEntityImpl> authorities = new ArrayList<>();
+        RoleEntityImpl authority = new RoleEntityImpl();
+        authority.setUser(userEntity);
+        authority.setRole("ROLE_CLIENT");
         authorities.add(authority);
         userEntity.setAuthorities(authorities);
         userEntity.setEnabled(1);
         userRepository.save(userEntity);
-        return true;//}
+        return true;
     }
 }

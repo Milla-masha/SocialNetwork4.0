@@ -1,10 +1,10 @@
 package sjc.app.repository.dao;
 
-import sjc.app.model.entity.Music;
+import sjc.app.model.entity.MusicEntityImpl;
 
 import java.util.List;
 
-public interface MusicDao extends GenericDao<Music>
+public interface MusicDao extends GenericDao<MusicEntityImpl>
 {
-    List<Music> getMusicsUser(Long idUser, int offset, int limit);
+    List<MusicEntityImpl> getMusicsUser(Long idUser, int offset, int limit);
 }

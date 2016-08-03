@@ -6,9 +6,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sjc.app.model.entity.InfoUser;
+import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.repository.dao.FriendDao;
-import sjc.app.repository.dao.impl.InfoUserDaoImpl;
 import sjc.app.model.vo.UserSmallVO;
 import sjc.app.service.FriendService;
 
@@ -27,9 +26,9 @@ public class FriendServiceImpl  implements FriendService
     @Override
     public List<UserSmallVO> getFriends(Long userId, int offset, int limit)
     {
-        List<InfoUser> infoFriend=friendsDao.getFriends(userId,offset,limit);
+        List<UserEntityImpl> infoFriend=friendsDao.getFriends(userId,offset,limit);
         List<UserSmallVO> friends= new ArrayList<>();
-        for (InfoUser user:infoFriend)
+        for (UserEntityImpl user:infoFriend)
         {
             UserSmallVO friend = new UserSmallVO();
             friend.setName(user.getName());

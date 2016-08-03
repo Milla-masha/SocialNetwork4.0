@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import sjc.app.repository.dao.UserDao;
 import sjc.app.repository.dao.impl.UserDaoImpl;
-import sjc.app.model.entity.UserEntity;
+import sjc.app.model.entity.UserEntityImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public User loadUserByUsername(String userName) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findByName(userName);
+        UserEntityImpl userEntity = userRepository.findByName(userName);
         if (userEntity == null) {
             throw new UsernameNotFoundException("No such user: " + userName);
         } else if (userEntity.getAuthorities().isEmpty()) {
@@ -40,7 +40,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         List<String> roles = new ArrayList<>();
         for (int i = 0; i < userEntity.getAuthorities().size(); i++) {
-            roles.add(userEntity.getAuthorities().iterator().next().getAuthorities());
+            roles.add(userEntity.getAuthorities().iterator().next().getRole());
         }
         return new User(
                 userEntity.getLogin(),

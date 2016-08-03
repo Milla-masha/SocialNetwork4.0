@@ -1,20 +1,19 @@
 package sjc.app.model.entity;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "likes")
-public class Like extends AbstractPersistable{
+public class LikeEntityImpl extends AbstractPersistable{
     @Column(name = "is_like")
     private int isLike;
     @JoinColumn(name = "fk_post", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    protected Post fkPost;
+    protected PostEntityImpl fkPost;
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private UserEntity fkUser;
+    private UserEntityImpl fkUser;
 
-    public Like() {
+    public LikeEntityImpl() {
     }
 
     public int getIsLike() {
@@ -25,19 +24,19 @@ public class Like extends AbstractPersistable{
         this.isLike = isLike;
     }
 
-    public Post getFkPost() {
+    public PostEntityImpl getFkPost() {
         return fkPost;
     }
 
-    public void setFkPost(Post fkPost) {
+    public void setFkPost(PostEntityImpl fkPost) {
         this.fkPost = fkPost;
     }
 
-    public UserEntity getFkUser() {
+    public UserEntityImpl getFkUser() {
         return fkUser;
     }
 
-    public void setFkUser(UserEntity fkUser) {
+    public void setFkUser(UserEntityImpl fkUser) {
         this.fkUser = fkUser;
     }
 }

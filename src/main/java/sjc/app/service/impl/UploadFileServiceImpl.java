@@ -18,11 +18,13 @@ import java.io.InputStream;
 @Service
 public class UploadFileServiceImpl implements UploadfileService {
     private static final String ACCESS_TOKEN = "KF3sKUHJzGwAAAAAAAAFdmW6xalOLAW1tfL-4m8gZlAvofyLSsBnyTDoXBNU7U7B";
+    private static final String CLIENT_IDENTIFIER="dropbox/java-tutorial";
+    private static final String USER_LOKALE="en_US";
     DbxClientV2 client;
 
     @Override
     public String UploadFile(String name, MultipartFile file) {
-        DbxRequestConfig config = new DbxRequestConfig("dropbox/java-tutorial", "en_US");
+        DbxRequestConfig config = new DbxRequestConfig(CLIENT_IDENTIFIER, USER_LOKALE);
         client = new DbxClientV2(config, ACCESS_TOKEN);
         if (!file.isEmpty()) {
             try {

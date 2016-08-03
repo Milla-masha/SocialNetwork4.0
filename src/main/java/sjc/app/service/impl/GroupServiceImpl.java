@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sjc.app.model.entity.Group;
+import sjc.app.model.entity.GroupEntityImpl;
 import sjc.app.model.vo.GroupVO;
 import sjc.app.repository.dao.GroupDao;
 import sjc.app.service.GroupService;
@@ -24,8 +24,8 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupVO> getGroups(Long userId, int offset, int limit) {
         List<GroupVO> groups = new ArrayList<>();
-        List<Group> groupsEnt=groupDao.getGroupsUser(userId,offset,limit);
-        for (Group groupEnt:groupsEnt)
+        List<GroupEntityImpl> groupsEnt=groupDao.getGroupsUser(userId,offset,limit);
+        for (GroupEntityImpl groupEnt:groupsEnt)
         {
             GroupVO group = new GroupVO();
             group.setName(groupEnt.getName());
@@ -39,7 +39,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupVO getGroup(Long groupId) {
         GroupVO group=new GroupVO();
-        Group groupEntity=groupDao.findById(groupId);
+        GroupEntityImpl groupEntity=groupDao.findById(groupId);
         group.setName(groupEntity.getName());
         group.setFolowers(groupEntity.getUsers().size());
         group.setImage(groupEntity.getImage());

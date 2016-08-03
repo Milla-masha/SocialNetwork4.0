@@ -6,16 +6,14 @@ public class MusicVO
 {
 
     private String name;
-    private Time time;
     private String url;
 
     public MusicVO() {
     }
 
-    public MusicVO(String url, String name, Time time) {
+    public MusicVO(String url, String name) {
         this.url = url;
         this.name = name;
-        this.time = time;
     }
 
     public String getUrl() {
@@ -32,14 +30,6 @@ public class MusicVO
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
     }
 
 }

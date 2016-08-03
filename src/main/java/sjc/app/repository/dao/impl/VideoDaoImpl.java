@@ -1,32 +1,29 @@
 package sjc.app.repository.dao.impl;
 
 import org.springframework.stereotype.Repository;
-import sjc.app.model.entity.Music;
-import sjc.app.model.entity.Video;
+import sjc.app.model.entity.VideoEntityImpl;
+import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.repository.dao.VideoDao;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository
-public class VideoDaoImpl  extends GenericDaoImpl<Video> implements VideoDao {
+public class VideoDaoImpl  extends GenericDaoImpl<VideoEntityImpl> implements VideoDao {
 
     public VideoDaoImpl() {
-        super(Video.class);
+        super(VideoEntityImpl.class);
     }
 
     @Override
-    public List<Video> getVideosUser(Long idUser, int offset, int limit) {
+    public List<VideoEntityImpl> getVideosUser(Long idUser, int offset, int limit) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<Video> c = cb.createQuery(Video.class);
-        Root<Video> video = c.from(Video.class);
-        Predicate condition = cb.equal(video.get("fkUser"), idUser);
-        c.where(condition);
-        TypedQuery<Video> q = getEntityManager().createQuery(c);
+        CriteriaQuery<VideoEntityImpl> criteriaQuery = cb.createQuery(VideoEntityImpl.class);
+        Root<VideoEntityImpl> root = criteriaQuery.from(VideoEntityImpl.class);
+        Join<UserEntityImpl, VideoEntityImpl> usersJoin = root.join("users");
+        criteriaQuery.select(usersJoin).where(cb.equal(usersJoin.get("id"), idUser));
+        TypedQuery<VideoEntityImpl> q = getEntityManager().createQuery(criteriaQuery);
         q.setFirstResult(offset);
         q.setMaxResults(limit);
         return q.getResultList();

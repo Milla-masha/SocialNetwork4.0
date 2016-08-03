@@ -5,8 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sjc.app.model.entity.ContactUser;
-import sjc.app.model.entity.UserEntity;
+import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.ContactUserVO;
 import sjc.app.model.vo.InfoUserVO;
 import sjc.app.repository.dao.UserDao;
@@ -22,40 +21,38 @@ public class InfoUserServiceImpl implements InfoUserService {
 
     @Override
     public InfoUserVO getInfoUserVO(Long userId) {
-        UserEntity userEntity = userDao.findById(userId);
-        ContactUser contactUser = userEntity.getContactUser();
+        UserEntityImpl userEntity = userDao.findById(userId);
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
         user.setId(userEntity.getId());
-        user.setName(userEntity.getInfoUser().getName());
-        user.setLastName(userEntity.getInfoUser().getLastName());
-        user.setAvatar(userEntity.getInfoUser().getAvatar());
-        user.setAbout(userEntity.getInfoUser().getAbout());
-        user.setBirthday(userEntity.getInfoUser().getBirthday());
-        user.setCity(userEntity.getInfoUser().getCity());
-        contact.setEmail(contactUser.getEmail());
-        contact.setMobile(contactUser.getMobile());
-        contact.setSkype(contactUser.getSkype());
+        user.setName(userEntity.getName());
+        user.setLastName(userEntity.getLastName());
+        user.setAvatar(userEntity.getAvatar());
+        user.setAbout(userEntity.getAbout());
+        user.setBirthday(userEntity.getBirthdate());
+        user.setCity(userEntity.getCity());
+        contact.setEmail(userEntity.getEmail());
+        contact.setMobile(userEntity.getMobileString());
+        contact.setSkype(userEntity.getSkype());
         user.setContactUser(contact);
         return user;
     }
 
     @Override
     public InfoUserVO getInfoUserVO(String login) {
-        UserEntity userEntity = userDao.findByName(login);
-        ContactUser contactUser = userEntity.getContactUser();
+        UserEntityImpl userEntity = userDao.findByName(login);
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
         user.setId(userEntity.getId());
-        user.setName(userEntity.getInfoUser().getName());
-        user.setLastName(userEntity.getInfoUser().getLastName());
-        user.setAvatar(userEntity.getInfoUser().getAvatar());
-        user.setAbout(userEntity.getInfoUser().getAbout());
-        user.setBirthday(userEntity.getInfoUser().getBirthday());
-        user.setCity(userEntity.getInfoUser().getCity());
-        contact.setEmail(contactUser.getEmail());
-        contact.setMobile(contactUser.getMobile());
-        contact.setSkype(contactUser.getSkype());
+        user.setName(userEntity.getName());
+        user.setLastName(userEntity.getLastName());
+        user.setAvatar(userEntity.getAvatar());
+        user.setAbout(userEntity.getAbout());
+        user.setBirthday(userEntity.getBirthdate());
+        user.setCity(userEntity.getCity());
+        contact.setEmail(userEntity.getEmail());
+        contact.setMobile(userEntity.getMobileString());
+        contact.setSkype(userEntity.getSkype());
         user.setContactUser(contact);
         return user;
     }

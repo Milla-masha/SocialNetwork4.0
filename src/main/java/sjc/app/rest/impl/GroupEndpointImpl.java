@@ -25,7 +25,7 @@ public class GroupEndpointImpl implements GroupEndpoint{
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value ="/{droupId}")
+    @RequestMapping(method = RequestMethod.GET, value ="/{groupId}")
     @ResponseBody
     public Response getGroup(@PathVariable Long groupId) {
         return Response.ok(groupService.getGroup(groupId)).build();

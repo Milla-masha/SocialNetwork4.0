@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sjc.app.model.entity.InfoUser;
+import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.UserSmallVO;
 import sjc.app.repository.dao.BlackListDao;
 import sjc.app.service.BlackListService;
@@ -24,9 +24,9 @@ public class BlackListServiceImpl implements BlackListService
     @Override
     public List<UserSmallVO> getBlackList(Long userId, int offset, int limit)
     {
-        List<InfoUser> infoBlack=blackListDao.getBlackList(userId,offset,limit);
+        List<UserEntityImpl> infoBlack=blackListDao.getBlackList(userId,offset,limit);
         List<UserSmallVO> blackList= new ArrayList<>();
-        for (InfoUser user:infoBlack)
+        for (UserEntityImpl user:infoBlack)
         {
             UserSmallVO blackUser = new UserSmallVO();
             blackUser.setName(user.getName());

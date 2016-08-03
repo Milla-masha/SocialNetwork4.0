@@ -1,11 +1,11 @@
 package sjc.app.repository.dao;
 
 
-import sjc.app.model.entity.Group;
+import sjc.app.model.entity.GroupEntityImpl;
 
 import java.util.List;
 
-public interface GroupDao extends GenericDao<Group>
+public interface GroupDao extends GenericDao<GroupEntityImpl>
 {
-    List<Group> getGroupsUser(Long idUser, int offset, int limit);
+    List<GroupEntityImpl> getGroupsUser(Long idUser, int offset, int limit);
 }

@@ -1,10 +1,10 @@
 package sjc.app.repository.dao;
 
-import sjc.app.model.entity.InfoUser;
+import sjc.app.model.entity.UserEntityImpl;
 
 import java.util.List;
 
 public interface FriendDao
 {
-    List<InfoUser> getFriends(Long idUser, int offset, int limit);
+    List<UserEntityImpl> getFriends(Long idUser, int offset, int limit);
 }
