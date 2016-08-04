@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="588618677">
+  <component name="DataSourceManagerImpl" format="xml" hash="4112161549">
     <data-source source="LOCAL" name="MySQL - heroku_f9c05e4a1ccae7a@us-cdbr-iron-east-04.cleardb.net" uuid="5690c49a-b57a-4cff-a707-24a685b2ef4e">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -15,11 +15,11 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="MySQL - socialnetwork@localhost" uuid="4a6034f5-45c6-4638-a946-c3d13b381c3f">
+    <data-source source="LOCAL" name="MySQL - social_network@localhost" uuid="4a6034f5-45c6-4638-a946-c3d13b381c3f">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/socialnetwork</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/social_network</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />

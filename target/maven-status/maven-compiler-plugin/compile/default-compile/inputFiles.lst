@@ -2,6 +2,7 @@ E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\dao\impl\MusicDaoImpl.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\vo\VideoVO.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\LikeEntity.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\UserEntity.java
+E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\chat\OutputMessage.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\MusicEntity.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\impl\PostGroup.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\vo\InfoUserVO.java
@@ -9,14 +10,19 @@ E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\impl\AbstractPers
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\vo\GroupVO.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\impl\UserEntityImpl.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\dao\UserDao.java
+E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\rest\authentication\filter\CustomCorsFilter.java
+E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\chat\WebSocketOutMessageListener.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\Authorities.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\impl\VideoEntityImpl.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\rest\impl\VideoEndpoint.java
+E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\chat\ChatHandler.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\GroupEntity.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\vo\AuthoritiesVO.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\FriendService.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\VideoService.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\GroupService.java
+E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\Configuration\AppConfig.java
+E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\chat\Message.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\dao\GenericDao.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\impl\UserServiceImpl.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\dao\MusicDao.java
@@ -25,8 +31,8 @@ E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\impl\GroupServiceImpl.
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\vo\VideoFullVO.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\impl\GroupEntityImpl.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\vo\UserSmallVO.java
-E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\InfoUserService.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\PostService.java
+E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\Configuration\WebSocketConfig.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\rest\impl\FriendEndpoint.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\impl\EntityToVOServiceImpl.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\vo\UserVO.java
@@ -42,7 +48,6 @@ E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\vo\MusicVO.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\dao\impl\GenericDaoImpl.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\impl\PostServiceImpl.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\rest\impl\GroupEndpoint.java
-E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\rest\authentication\filter\SimpleCORSFilter.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\impl\VideoServiceImpl.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\rest\authentication\provider\CustomAuthenticationProvider.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\EntityToVOService.java
@@ -54,6 +59,7 @@ E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\impl\MusicEntityI
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\dao\impl\UserDaoImpl.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\service\UserService.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\vo\ContactUserVO.java
+E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\chat\ChatController.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\impl\LikeEntityImpl.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\model\entity\impl\PostUser.java
 E:\MY\EXPOSIT\socialnetwork\src\main\java\sjc\app\rest\impl\UserEndpoint.java
