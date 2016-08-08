@@ -1,12 +1,14 @@
 package sjc.app.model.entity;
 
+import sjc.app.model.entity.interfaces.GroupEntity;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "groups")
-public class GroupEntityImpl extends AbstractPersistable{
+public class GroupEntityImpl extends AbstractPersistable implements GroupEntity {
 
     private String name;
     private ImageEntityImpl image;
@@ -19,10 +21,11 @@ public class GroupEntityImpl extends AbstractPersistable{
     }
 
     @Column(name = "name")
+    @Override
     public String getName() {
         return name;
     }
-
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -30,19 +33,21 @@ public class GroupEntityImpl extends AbstractPersistable{
     @Access(AccessType.PROPERTY)
     @JoinColumn(name = "fk_media", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @Override
     public ImageEntityImpl getImage() {
         return image;
     }
-
+    @Override
     public void setImage(ImageEntityImpl image) {
         this.image = image;
     }
 
     @Column(name = "description")
+    @Override
     public String getDescription() {
         return description;
     }
-
+    @Override
     public void setDescription(String description) {
         this.description = description;
     }
@@ -53,20 +58,22 @@ public class GroupEntityImpl extends AbstractPersistable{
             @JoinColumn(name = "fk_group", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "fk_user",
                     nullable = false, updatable = false) })
+    @Override
     public List<UserEntityImpl> getUsers() {
         return users;
     }
-
+    @Override
     public void setUsers(List<UserEntityImpl> users) {
         this.users = users;
     }
 
     @Access(AccessType.PROPERTY)
     @OneToMany( fetch = FetchType.LAZY, mappedBy = "group")
+    @Override
     public List<PostGroupEntityImpl> getPosts() {
         return posts;
     }
-
+    @Override
     public void setPosts(List<PostGroupEntityImpl> posts) {
         this.posts = posts;
     }
@@ -75,10 +82,11 @@ public class GroupEntityImpl extends AbstractPersistable{
     @Access(AccessType.PROPERTY)
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @Override
     public UserEntityImpl getOwner() {
         return owner;
     }
-
+    @Override
     public void setOwner(UserEntityImpl owner) {
         this.owner = owner;
     }

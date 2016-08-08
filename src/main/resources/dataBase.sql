@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.6.23, for Win32 (x86)
 --
--- Host: localhost    Database: socialnetwork
+-- Host: localhost    Database: social_network
 -- ------------------------------------------------------
 -- Server version	5.5.23
 
@@ -16,59 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `authorities`
+-- Table structure for table `blacklist`
 --
 
-DROP TABLE IF EXISTS `authorities`;
+DROP TABLE IF EXISTS `blacklist`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `authorities` (
-  `id` int(10) NOT NULL,
-  `idU` int(10) DEFAULT NULL,
-  `authorities` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_u_idx` (`idU`),
-  CONSTRAINT `fk_ua` FOREIGN KEY (`idU`) REFERENCES `registeruser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+CREATE TABLE `blacklist` (
+  `fk_iduser` int(11) NOT NULL,
+  `fk_idblackuser` int(11) DEFAULT NULL,
+  PRIMARY KEY (`fk_iduser`),
+  KEY `fk_user_blackuser_idx` (`fk_idblackuser`),
+  CONSTRAINT `fk_user_blackuser` FOREIGN KEY (`fk_idblackuser`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_owner` FOREIGN KEY (`fk_iduser`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `authorities`
+-- Dumping data for table `blacklist`
 --
 
-LOCK TABLES `authorities` WRITE;
-/*!40000 ALTER TABLE `authorities` DISABLE KEYS */;
-INSERT INTO `authorities` VALUES (1,1,'ROLE_CLIENT'),(2,2,'ROLE_CLIENT');
-/*!40000 ALTER TABLE `authorities` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `contact_user`
---
-
-DROP TABLE IF EXISTS `contact_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `contact_user` (
-  `id` int(11) NOT NULL,
-  `mobile` varchar(13) DEFAULT NULL,
-  `skype` varchar(30) DEFAULT NULL,
-  `email` varchar(30) DEFAULT NULL,
-  `fk_registeruser` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_contact_info_idx` (`fk_registeruser`),
-  CONSTRAINT `fk_contact_register` FOREIGN KEY (`fk_registeruser`) REFERENCES `registeruser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `contact_user`
---
-
-LOCK TABLES `contact_user` WRITE;
-/*!40000 ALTER TABLE `contact_user` DISABLE KEYS */;
-INSERT INTO `contact_user` VALUES (1,'375292857510','Milla-masha','Milla-masha@mail.ru',1);
-/*!40000 ALTER TABLE `contact_user` ENABLE KEYS */;
+LOCK TABLES `blacklist` WRITE;
+/*!40000 ALTER TABLE `blacklist` DISABLE KEYS */;
+INSERT INTO `blacklist` VALUES (1,2);
+/*!40000 ALTER TABLE `blacklist` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -79,14 +50,12 @@ DROP TABLE IF EXISTS `friends`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `friends` (
-  `id` int(11) NOT NULL,
   `fk_user1` int(11) NOT NULL,
-  `fk_user2` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_friends1_idx` (`fk_user1`),
-  KEY `fk_friends2_idx` (`fk_user2`),
-  CONSTRAINT `fk_friends1` FOREIGN KEY (`fk_user1`) REFERENCES `registeruser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_friends2` FOREIGN KEY (`fk_user2`) REFERENCES `registeruser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `fk_user2` int(11) DEFAULT NULL,
+  KEY `friends_user_id__fk` (`fk_user1`),
+  KEY `friends_user_id__fk2` (`fk_user2`),
+  CONSTRAINT `friends_user_id__fk` FOREIGN KEY (`fk_user1`) REFERENCES `users` (`id`),
+  CONSTRAINT `friends_user_id__fk2` FOREIGN KEY (`fk_user2`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -96,33 +65,8 @@ CREATE TABLE `friends` (
 
 LOCK TABLES `friends` WRITE;
 /*!40000 ALTER TABLE `friends` DISABLE KEYS */;
-INSERT INTO `friends` VALUES (1,1,2),(2,2,1);
+INSERT INTO `friends` VALUES (2,1),(1,2),(1,2);
 /*!40000 ALTER TABLE `friends` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `group`
---
-
-DROP TABLE IF EXISTS `group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `group` (
-  `id` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `description` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `group`
---
-
-LOCK TABLES `group` WRITE;
-/*!40000 ALTER TABLE `group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `group` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -133,14 +77,12 @@ DROP TABLE IF EXISTS `group_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `group_user` (
-  `id` int(11) NOT NULL,
-  `fk_user` int(11) NOT NULL,
   `fk_group` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_user_idx` (`fk_user`),
-  KEY `fk_group_idx` (`fk_group`),
-  CONSTRAINT `fk_user` FOREIGN KEY (`fk_user`) REFERENCES `registeruser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_group` FOREIGN KEY (`fk_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `fk_user` int(11) NOT NULL,
+  PRIMARY KEY (`fk_group`),
+  KEY `fk_gu_user_idx` (`fk_user`),
+  CONSTRAINT `fk_gu_group` FOREIGN KEY (`fk_group`) REFERENCES `groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_gu_user` FOREIGN KEY (`fk_user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -150,209 +92,253 @@ CREATE TABLE `group_user` (
 
 LOCK TABLES `group_user` WRITE;
 /*!40000 ALTER TABLE `group_user` DISABLE KEYS */;
+INSERT INTO `group_user` VALUES (1,1);
 /*!40000 ALTER TABLE `group_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `info_user`
+-- Table structure for table `groups`
 --
 
-DROP TABLE IF EXISTS `info_user`;
+DROP TABLE IF EXISTS `groups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `info_user` (
+CREATE TABLE `groups` (
   `id` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `last_name` varchar(45) NOT NULL,
-  `birthday` date DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT NULL,
-  `city` varchar(45) DEFAULT NULL,
-  `about` varchar(1000) DEFAULT NULL,
-  `sex` varchar(10) NOT NULL,
-  `fk_registeruser` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_regus_idx` (`fk_registeruser`),
-  CONSTRAINT `fk_regus` FOREIGN KEY (`fk_registeruser`) REFERENCES `registeruser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `info_user`
---
-
-LOCK TABLES `info_user` WRITE;
-/*!40000 ALTER TABLE `info_user` DISABLE KEYS */;
-INSERT INTO `info_user` VALUES (1,'Masha','Tsilulko','2001-01-20','http://i2.wp.com/jewelryvirtualfair.com/wp-content/themes/kleo-child/images-themes/avatar-profile.jpg','Grodno','I like to do something. When I have free time I do something.','Female',1);
-/*!40000 ALTER TABLE `info_user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `music`
---
-
-DROP TABLE IF EXISTS `music`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `music` (
-  `id` int(11) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `time` time DEFAULT NULL,
+  `name` varchar(25) DEFAULT NULL,
+  `fk_media` int(11) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `fk_user` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_music_user_idx` (`fk_user`),
-  CONSTRAINT `fk_music_user` FOREIGN KEY (`fk_user`) REFERENCES `registeruser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_group_user_kf_idx` (`fk_user`),
+  KEY `fk_group_media_idx` (`fk_media`),
+  CONSTRAINT `fk_group_media` FOREIGN KEY (`fk_media`) REFERENCES `media` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_group_user_fk` FOREIGN KEY (`fk_user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `music`
+-- Dumping data for table `groups`
 --
 
-LOCK TABLES `music` WRITE;
-/*!40000 ALTER TABLE `music` DISABLE KEYS */;
-INSERT INTO `music` VALUES (1,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','1Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(2,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','2Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(3,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','3Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(4,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','4Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(5,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','5Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(6,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','6Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(7,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','7Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(8,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','8Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(9,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','9Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(10,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','10Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(11,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','11Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(12,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','12Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(13,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','13Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(14,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','14Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1),(15,'https://psv4.vk.me/c536111/u68934930/audios/859676a20c91.mp3','15Subsonik–Inside Your Mind (feat. Essence)','00:06:22',1);
-/*!40000 ALTER TABLE `music` ENABLE KEYS */;
+LOCK TABLES `groups` WRITE;
+/*!40000 ALTER TABLE `groups` DISABLE KEYS */;
+INSERT INTO `groups` VALUES (1,'name',6,'slfjwfwenfg',1);
+/*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `post`
+-- Table structure for table `likes`
 --
 
-DROP TABLE IF EXISTS `post`;
+DROP TABLE IF EXISTS `likes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `post` (
+CREATE TABLE `likes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `image` varchar(255) DEFAULT NULL,
+  `is_like` int(1) DEFAULT '1',
   `fk_user` int(11) DEFAULT NULL,
-  `text` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `post`
---
-
-LOCK TABLES `post` WRITE;
-/*!40000 ALTER TABLE `post` DISABLE KEYS */;
-/*!40000 ALTER TABLE `post` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `post_group`
---
-
-DROP TABLE IF EXISTS `post_group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `post_group` (
-  `id` int(11) NOT NULL,
-  `fk_post` int(11) NOT NULL,
-  `fk_group` int(11) NOT NULL,
+  `fk_post` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_postgr_idx` (`fk_post`),
-  KEY `fk_grouppo_idx` (`fk_group`),
-  CONSTRAINT `fk_postgr` FOREIGN KEY (`fk_post`) REFERENCES `post` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_grouppo` FOREIGN KEY (`fk_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_like_user_idx` (`fk_user`),
+  KEY `fk_like_post_idx` (`fk_post`),
+  CONSTRAINT `fk_like_post` FOREIGN KEY (`fk_post`) REFERENCES `posts` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_like_user` FOREIGN KEY (`fk_user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `post_group`
+-- Dumping data for table `likes`
 --
 
-LOCK TABLES `post_group` WRITE;
-/*!40000 ALTER TABLE `post_group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `post_group` ENABLE KEYS */;
+LOCK TABLES `likes` WRITE;
+/*!40000 ALTER TABLE `likes` DISABLE KEYS */;
+INSERT INTO `likes` VALUES (1,1,1,1),(2,1,1,2),(3,1,1,3);
+/*!40000 ALTER TABLE `likes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `post_user`
+-- Table structure for table `media`
 --
 
-DROP TABLE IF EXISTS `post_user`;
+DROP TABLE IF EXISTS `media`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `post_user` (
-  `id` int(11) NOT NULL,
-  `fk_post` int(11) NOT NULL,
-  `fk_user` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_post_idx` (`fk_post`),
-  KEY `fk_user_idx` (`fk_user`),
-  CONSTRAINT `fk_postus` FOREIGN KEY (`fk_post`) REFERENCES `post` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_userpo` FOREIGN KEY (`fk_user`) REFERENCES `registeruser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `post_user`
---
-
-LOCK TABLES `post_user` WRITE;
-/*!40000 ALTER TABLE `post_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `post_user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `registeruser`
---
-
-DROP TABLE IF EXISTS `registeruser`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `registeruser` (
+CREATE TABLE `media` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `password` varchar(45) DEFAULT NULL,
-  `login` varchar(45) DEFAULT NULL,
-  `enabled` int(2) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `registeruser`
---
-
-LOCK TABLES `registeruser` WRITE;
-/*!40000 ALTER TABLE `registeruser` DISABLE KEYS */;
-INSERT INTO `registeruser` VALUES (1,'user','user',1),(2,'user1','user1',1);
-/*!40000 ALTER TABLE `registeruser` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `video`
---
-
-DROP TABLE IF EXISTS `video`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `video` (
-  `id` int(11) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
-  `url` varchar(255) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `discriminator` varchar(5) DEFAULT NULL,
   `preview` varchar(255) DEFAULT NULL,
-  `fk_user` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_video_user_idx` (`fk_user`),
-  CONSTRAINT `fk_video_user` FOREIGN KEY (`fk_user`) REFERENCES `registeruser` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `media`
+--
+
+LOCK TABLES `media` WRITE;
+/*!40000 ALTER TABLE `media` DISABLE KEYS */;
+INSERT INTO `media` VALUES (1,'rgh','http/','MUSIC',''),(2,'setja','http/','MUSIC',NULL),(3,NULL,'http://i2.wp.com/jewelryvirtualfair.com/wp-content/themes/kleo-child/images-themes/avatar-profile.jpg','IMAGE',NULL),(4,NULL,'http://i2.wp.com/jewelryvirtualfair.com/wp-content/themes/kleo-child/images-themes/avatar-profile.jpg','IMAGE',NULL),(5,NULL,'https://www.dropbox.com/s/bw5whye773f3x90/WavLibraryNet_Sound16357.mp3?dl=0','MUSIC',NULL),(6,NULL,'http://madcar.ru/images/cars/Chrysler_300C_2006_15.jpg','IMAGE',NULL),(7,NULL,'https://www.dropbox.com/s/bw5whye773f3x90/WavLibraryNet_Sound16357.mp3?dl=0','MUSIC',NULL),(8,NULL,'https://www.dropbox.com/s/0ax25avi8ehj6q9/avatar.jpg?dl=0','IMAGE',NULL),(9,NULL,'https://www.dropbox.com/s/0ax25avi8ehj6q9/avatar.jpg?dl=0','IMAGE',NULL),(10,NULL,'https://www.dropbox.com/s/0ax25avi8ehj6q9/avatar.jpg?dl=0','IMAGE',NULL),(11,NULL,'https://www.dropbox.com/s/0ax25avi8ehj6q9/avatar.jpg?dl=0','IMAGE',NULL);
+/*!40000 ALTER TABLE `media` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `media_groups`
+--
+
+DROP TABLE IF EXISTS `media_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `media_groups` (
+  `fk_media` int(11) NOT NULL,
+  `fk_groups` int(11) NOT NULL,
+  PRIMARY KEY (`fk_media`),
+  KEY `fk_mg_groups_idx` (`fk_groups`),
+  CONSTRAINT `fk_mg_groups` FOREIGN KEY (`fk_groups`) REFERENCES `groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_mg_media` FOREIGN KEY (`fk_media`) REFERENCES `media` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `video`
+-- Dumping data for table `media_groups`
 --
 
-LOCK TABLES `video` WRITE;
-/*!40000 ALTER TABLE `video` DISABLE KEYS */;
-INSERT INTO `video` VALUES (1,'Master of movie','https://cs510415.vk.me/u936877/videos/eb468554e0.480.mp4','https://gruhnb.files.wordpress.com/2014/11/master-of-the-house.jpg',1),(2,'Master of movie','https://cs510415.vk.me/u936877/videos/eb468554e0.480.mp4','https://gruhnb.files.wordpress.com/2014/11/master-of-the-house.jpg',1),(3,'Master of movie','https://cs510415.vk.me/u936877/videos/eb468554e0.480.mp4','https://gruhnb.files.wordpress.com/2014/11/master-of-the-house.jpg',2),(4,'Master of movie','https://cs510415.vk.me/u936877/videos/eb468554e0.480.mp4','https://gruhnb.files.wordpress.com/2014/11/master-of-the-house.jpg',1),(5,'Master of movie','https://cs510415.vk.me/u936877/videos/eb468554e0.480.mp4','https://gruhnb.files.wordpress.com/2014/11/master-of-the-house.jpg',2),(6,'Master of movie','https://cs510415.vk.me/u936877/videos/eb468554e0.480.mp4','https://gruhnb.files.wordpress.com/2014/11/master-of-the-house.jpg',1),(7,'Master of movie','https://cs510415.vk.me/u936877/videos/eb468554e0.480.mp4','https://gruhnb.files.wordpress.com/2014/11/master-of-the-house.jpg',1);
-/*!40000 ALTER TABLE `video` ENABLE KEYS */;
+LOCK TABLES `media_groups` WRITE;
+/*!40000 ALTER TABLE `media_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `media_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'socialnetwork'
+-- Table structure for table `media_users`
+--
+
+DROP TABLE IF EXISTS `media_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `media_users` (
+  `fk_media` int(11) NOT NULL,
+  `fk_users` int(11) NOT NULL,
+  PRIMARY KEY (`fk_media`),
+  KEY `fk_mu_users_idx` (`fk_users`),
+  CONSTRAINT `fk_mu_media` FOREIGN KEY (`fk_media`) REFERENCES `media` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_mu_users` FOREIGN KEY (`fk_users`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `media_users`
+--
+
+LOCK TABLES `media_users` WRITE;
+/*!40000 ALTER TABLE `media_users` DISABLE KEYS */;
+INSERT INTO `media_users` VALUES (1,1),(2,1);
+/*!40000 ALTER TABLE `media_users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `posts`
+--
+
+DROP TABLE IF EXISTS `posts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `posts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `text` text NOT NULL,
+  `discriminator` varchar(5) NOT NULL,
+  `fk_media` int(11) DEFAULT NULL,
+  `fk_group` int(11) DEFAULT NULL,
+  `fk_user` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_post_user_idx` (`fk_user`),
+  KEY `fk_post_group` (`fk_group`),
+  KEY `fk_post_media_idx` (`fk_media`),
+  CONSTRAINT `fk_post_group` FOREIGN KEY (`fk_group`) REFERENCES `groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_post_media` FOREIGN KEY (`fk_media`) REFERENCES `media` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_post_user` FOREIGN KEY (`fk_user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `posts`
+--
+
+LOCK TABLES `posts` WRITE;
+/*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+INSERT INTO `posts` VALUES (1,'da\'lkvna','GROUP',6,1,NULL),(2,'srthrstjrs','USER',6,NULL,1),(3,'rerherga','USER',6,NULL,2),(5,'Post post postpost','USER',6,NULL,1),(6,'Post post postpost','USER',6,NULL,1),(7,'Post post postpost','USER',6,NULL,1);
+/*!40000 ALTER TABLE `posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_user` int(11) NOT NULL,
+  `authorities` varchar(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `roles_user_id_fk` (`fk_user`),
+  CONSTRAINT `fk_roles_user` FOREIGN KEY (`fk_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='user roles';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,1,'ROLE_CLIENT'),(2,19,'ROLE_CLIENT');
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(11) NOT NULL,
+  `password` varchar(25) NOT NULL,
+  `name` varchar(25) DEFAULT NULL,
+  `lastname` varchar(25) DEFAULT NULL,
+  `email` varchar(25) DEFAULT NULL,
+  `skype` varchar(25) DEFAULT NULL,
+  `mobile` int(11) DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `sex` varchar(6) DEFAULT NULL,
+  `fk_media` int(11) DEFAULT '1',
+  `city` varchar(255) DEFAULT NULL,
+  `about` text,
+  `enabled` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_login_uindex` (`login`),
+  KEY `fk_users_media_idx` (`fk_media`),
+  CONSTRAINT `fk_users_media` FOREIGN KEY (`fk_media`) REFERENCES `media` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'user','user','Masha','Tsilul','Milla-Masha@mail.ru','Milla-masha',2147483647,'2015-01-01','1',6,'Grodno','Moeiug',1),(2,'user2','user2','Masha2','Tsilul2','Milla-Masha@mail.ru','Milla-masha',2147483647,'2016-02-03','1',4,'Grodno','Moeiug',1),(19,'tomVers','tommy','tommy','versetty','tommy@versetty.com',NULL,0,'2016-08-07','Male',NULL,NULL,NULL,1);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'social_network'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -364,4 +350,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-25 17:39:17
+-- Dump completed on 2016-08-08 16:27:58
