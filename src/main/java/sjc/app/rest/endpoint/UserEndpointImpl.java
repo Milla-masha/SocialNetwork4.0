@@ -3,12 +3,12 @@ package sjc.app.rest.endpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.model.vo.UserRegisterVO;
 import sjc.app.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 
 @Controller
@@ -19,11 +19,12 @@ public class UserEndpointImpl
     private UserService userService;
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value = "/profile")
+    @RequestMapping(method = RequestMethod.GET, path = "/profile")
     @ResponseBody
-    public Response get(HttpServletRequest request)
+    public Response getProfileInfo()
     {
-        return Response.ok(userService.getInfoUserVOLogin(request.getUserPrincipal().getName())).build();
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
+        return Response.ok(userService.getInfoUserLogin(SecurityContextHolder.getContext().getAuthentication().getName())).build();
     }
 
     @ResponseStatus(HttpStatus.OK)

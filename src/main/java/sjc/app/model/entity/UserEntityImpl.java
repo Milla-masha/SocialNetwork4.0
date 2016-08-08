@@ -29,9 +29,9 @@ public class UserEntityImpl extends AbstractPersistable {
 	private List<GroupEntityImpl> groups=new ArrayList<>(0);
 	private List<PostUserEntityImpl> posts=new ArrayList<>(0);
 	private List<RoleEntityImpl> authorities=new ArrayList<>(0);
-	private List<MusicEntityImpl> musics;
-	private List<VideoEntityImpl> videos;
-	private List<ImageEntityImpl> images;
+	private List<MusicEntityImpl> musics=new ArrayList<>(0);
+	private List<VideoEntityImpl> videos=new ArrayList<>(0);
+	private List<ImageEntityImpl> images=new ArrayList<>(0);
 
 	@Column(name = "password")
 	public String getPassword() {
