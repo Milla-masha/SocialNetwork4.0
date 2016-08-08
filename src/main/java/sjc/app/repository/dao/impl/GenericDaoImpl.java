@@ -3,37 +3,43 @@ package sjc.app.repository.dao.impl;
 import org.springframework.stereotype.Repository;
 import sjc.app.model.entity.AbstractPersistable;
 import sjc.app.repository.dao.GenericDao;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 
 @Repository
-public abstract class GenericDaoImpl<T extends AbstractPersistable> implements GenericDao<T> {
+public abstract class GenericDaoImpl<T extends AbstractPersistable> implements GenericDao<T>
+{
 
     private final Class<T> persistentClass;
     @PersistenceContext
     private EntityManager entityManager;
 
-    public GenericDaoImpl(final Class<T> persistentClass) {
+    public GenericDaoImpl(final Class<T> persistentClass)
+    {
         this.persistentClass = persistentClass;
     }
 
-    public EntityManager getEntityManager() {
+    public EntityManager getEntityManager()
+    {
         return entityManager;
     }
 
     @Override
-    public T save(T obj) {
+    public T save(T obj)
+    {
         T savedEntity;
-        if ( obj.getId()==null) {
+        if (obj.getId() == null)
+        {
             savedEntity = getEntityManager().merge(obj);
-        } else {
+        } else
+        {
             getEntityManager().persist(obj);
             savedEntity = obj;
         }
@@ -41,12 +47,14 @@ public abstract class GenericDaoImpl<T extends AbstractPersistable> implements G
     }
 
     @Override
-    public void update(T obj) {
+    public void update(T obj)
+    {
         this.entityManager.merge(obj);
     }
 
     @Override
-    public List<T> findAll() {
+    public List<T> findAll()
+    {
 
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(persistentClass);
@@ -57,17 +65,20 @@ public abstract class GenericDaoImpl<T extends AbstractPersistable> implements G
     }
 
     @Override
-    public T findById(Long id) {
+    public T findById(Long id)
+    {
         return getEntityManager().find(persistentClass, id);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id)
+    {
         getEntityManager().remove(findById(id));
     }
 
     @Override
-    public void delete(T persistentObject) {
+    public void delete(T persistentObject)
+    {
         getEntityManager().remove(persistentObject);
     }
 }

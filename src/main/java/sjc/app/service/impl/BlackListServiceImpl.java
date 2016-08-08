@@ -24,26 +24,28 @@ public class BlackListServiceImpl implements BlackListService
     @Override
     public List<UserSmallVO> getBlackList(Long userId, int offset, int limit)
     {
-        List<UserEntityImpl> infoBlack=blackListDao.getBlackList(userId,offset,limit);
-        List<UserSmallVO> blackList= new ArrayList<>();
-        for (UserEntityImpl user:infoBlack)
+        List<UserEntityImpl> infoBlack = blackListDao.getBlackList(userId, offset, limit);
+        List<UserSmallVO> blackList = new ArrayList<>();
+        for (UserEntityImpl user : infoBlack)
         {
             UserSmallVO blackUser = new UserSmallVO();
             blackUser.setName(user.getName());
             blackUser.setLastName(user.getLastName());
-            blackUser.setAvatar(user.getAvatar());
+            blackUser.setAvatar(user.getAvatar().getUrl());
             blackList.add(blackUser);
         }
         return blackList;
     }
 
     @Override
-    public void addBlackList(Long userId, Long idBlackUser) {
-        blackListDao.addBlackList(userId,idBlackUser);
+    public void addBlackList(Long userId, Long idBlackUser)
+    {
+        blackListDao.addBlackList(userId, idBlackUser);
     }
 
     @Override
-    public void deleteBlackList(Long userId, Long idBlackUser) {
-        blackListDao.deleteBlackList(userId,idBlackUser);
+    public void deleteBlackList(Long userId, Long idBlackUser)
+    {
+        blackListDao.deleteBlackList(userId, idBlackUser);
     }
 }

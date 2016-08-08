@@ -14,27 +14,23 @@ import sjc.app.service.impl.UserDetailServiceImpl;
 import java.util.Collection;
 
 @Component("customAuthenticationProvider")
-public class CustomAuthenticationProvider implements AuthenticationProvider
-{
+public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private UserDetailServiceImpl userService;
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException
-    {
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
 
         User user = userService.loadUserByUsername(username);
 
-        if (user == null || !user.getUsername().equalsIgnoreCase(username))
-        {
+        if (user == null || !user.getUsername().equalsIgnoreCase(username)) {
             System.out.println("Dhrsdhearjgnalsgnlar");
             throw new BadCredentialsException("Username not found.");
         }
 
-        if (!password.equals(user.getPassword()))
-        {
+        if (!password.equals(user.getPassword())) {
             throw new BadCredentialsException("Wrong password.");
         }
 
@@ -44,8 +40,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider
     }
 
     @Override
-    public boolean supports(Class<?> aClass)
-    {
+    public boolean supports(Class<?> aClass) {
         return true;
     }
 }

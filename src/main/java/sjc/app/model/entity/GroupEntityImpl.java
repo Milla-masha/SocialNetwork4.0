@@ -9,8 +9,9 @@ import java.util.List;
 public class GroupEntityImpl extends AbstractPersistable{
 
     private String name;
-    private String image;
+    private ImageEntityImpl image;
     private String description;
+    private UserEntityImpl owner;
     private List<PostGroupEntityImpl> posts;
     private List<UserEntityImpl> users=new ArrayList<>(0);
 
@@ -25,13 +26,15 @@ public class GroupEntityImpl extends AbstractPersistable{
     public void setName(String name) {
         this.name = name;
     }
-    @Column(name = "image")
 
-    public String getImage() {
+    @Access(AccessType.PROPERTY)
+    @JoinColumn(name = "fk_media", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    public ImageEntityImpl getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(ImageEntityImpl image) {
         this.image = image;
     }
 
@@ -66,5 +69,17 @@ public class GroupEntityImpl extends AbstractPersistable{
 
     public void setPosts(List<PostGroupEntityImpl> posts) {
         this.posts = posts;
+    }
+
+
+    @Access(AccessType.PROPERTY)
+    @JoinColumn(name = "fk_user", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    public UserEntityImpl getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserEntityImpl owner) {
+        this.owner = owner;
     }
 }

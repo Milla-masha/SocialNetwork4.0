@@ -17,13 +17,15 @@ import java.util.List;
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
 @Transactional
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService
+{
 
     @Autowired
     private UserDao userRepository;
 
     @Override
-    public boolean addUser(UserRegisterVO user) {
+    public boolean addUser(UserRegisterVO user)
+    {
         UserEntityImpl userEntity = new UserEntityImpl();
 //        try {userRepository.findByName(user.getLogin());
 //        return false;}
@@ -35,9 +37,12 @@ public class UserServiceImpl implements UserService {
         userEntity.setName(user.getName());
         userEntity.setLastName(user.getLastName());
         if (user.getSex().equals("1"))
+        {
             userEntity.setSex("Male");
-        else userEntity.setSex("Female");
-        userEntity.setBirthdateString(user.getBday());
+        } else userEntity.setSex("Female");
+        {
+            userEntity.setBirthdateString(user.getBday());
+        }
         userEntity.setEmail(user.getEmail());
         List<RoleEntityImpl> authorities = new ArrayList<>();
         RoleEntityImpl authority = new RoleEntityImpl();

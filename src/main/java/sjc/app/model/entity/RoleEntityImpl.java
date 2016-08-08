@@ -7,10 +7,12 @@ import javax.persistence.*;
 @Table(name = "roles")
 public class RoleEntityImpl extends AbstractPersistable {
 
+    @Column(name = "authorities")
     private String role;
+    @JoinColumn(name = "fk_user", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserEntityImpl user;
 
-    @Column(name = "authorities")
     public String getRole() {
         return role;
     }
@@ -19,9 +21,6 @@ public class RoleEntityImpl extends AbstractPersistable {
         this.role = role;
     }
 
-    @Access(AccessType.PROPERTY)
-    @JoinColumn(name = "fk_user", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
     public UserEntityImpl getUser() {
         return user;
     }

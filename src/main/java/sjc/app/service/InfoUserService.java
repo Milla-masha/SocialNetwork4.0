@@ -5,5 +5,6 @@ import sjc.app.model.vo.InfoUserVO;
 public interface InfoUserService
 {
     InfoUserVO getInfoUserVO(Long userId);
-    InfoUserVO getInfoUserVO(String login);
+
+    InfoUserVO getInfoUserVOLogin(String login);
 }

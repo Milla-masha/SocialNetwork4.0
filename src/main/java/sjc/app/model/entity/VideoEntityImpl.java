@@ -11,6 +11,9 @@ public class VideoEntityImpl extends MediaEntityImpl {
     private String preview;
     private List<UserEntityImpl> users;
 
+    public VideoEntityImpl() {
+    }
+
     @Column(name = "name")
     public String getName() {
         return name;

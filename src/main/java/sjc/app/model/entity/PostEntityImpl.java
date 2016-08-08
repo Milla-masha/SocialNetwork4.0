@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "posts")
 public class PostEntityImpl extends AbstractPersistable {
 
-    private String image;
+    private ImageEntityImpl image;
     private String text;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPost", fetch = FetchType.LAZY)
     private List<LikeEntityImpl> likes;
@@ -20,12 +20,14 @@ public class PostEntityImpl extends AbstractPersistable {
     public PostEntityImpl() {
     }
 
-    @Column(name = "image")
-    public String getImage() {
+    @Access(AccessType.PROPERTY)
+    @JoinColumn(name = "fk_media", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY)
+    public ImageEntityImpl getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(ImageEntityImpl image) {
         this.image = image;
     }
 

@@ -6,8 +6,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.MusicEntityImpl;
-import sjc.app.repository.dao.MusicDao;
 import sjc.app.model.vo.MusicVO;
+import sjc.app.repository.dao.MusicDao;
 import sjc.app.service.MusicService;
 
 import java.util.ArrayList;
@@ -24,11 +24,11 @@ public class MusicServiceImpl implements MusicService
     @Override
     public List<MusicVO> getMusics(Long userId, int offset, int limit)
     {
-        List<MusicEntityImpl> musics=musicDao.getMusicsUser(userId,offset,limit);
-        List<MusicVO> musicVOs=new ArrayList<>();
-        for (MusicEntityImpl music:musics)
+        List<MusicEntityImpl> musics = musicDao.getMusicsUser(userId, offset, limit);
+        List<MusicVO> musicVOs = new ArrayList<>();
+        for (MusicEntityImpl music : musics)
         {
-            MusicVO mus=new MusicVO();
+            MusicVO mus = new MusicVO();
             mus.setUrl(music.getUrl());
             mus.setName(music.getName());
             musicVOs.add(mus);

@@ -19,7 +19,7 @@ public class UserEntityImpl extends AbstractPersistable {
 	private int mobile;
 	private String lastName;
 	private String sex;
-	private String avatar;
+	private ImageEntityImpl avatar;
 	private Date birthdate;
 	private String city;
 	private String about;
@@ -145,12 +145,14 @@ public class UserEntityImpl extends AbstractPersistable {
 		this.sex = sex;
 	}
 
-	@Column(name="avatar")
-	public String getAvatar() {
+	@Access(AccessType.PROPERTY)
+	@JoinColumn(name = "fk_media", referencedColumnName = "id")
+	@OneToOne(fetch = FetchType.LAZY)
+	public ImageEntityImpl getAvatar() {
 		return avatar;
 	}
 
-	public void setAvatar(String avatar) {
+	public void setAvatar(ImageEntityImpl avatar) {
 		this.avatar = avatar;
 	}
 

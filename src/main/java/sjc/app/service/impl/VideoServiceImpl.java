@@ -16,16 +16,19 @@ import java.util.List;
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
 @Transactional
 @Service
-public class VideoServiceImpl implements VideoService {
+public class VideoServiceImpl implements VideoService
+{
 
     @Autowired
     private VideoDao videoDao;
 
     @Override
-    public List<VideoFullVO> getVideos(Long userId, int offset, int limit) {
-        List<VideoEntityImpl> videosEntity=videoDao.getVideosUser(userId,offset,limit);
+    public List<VideoFullVO> getVideos(Long userId, int offset, int limit)
+    {
+        List<VideoEntityImpl> videosEntity = videoDao.getVideosUser(userId, offset, limit);
         List<VideoFullVO> videos = new ArrayList<>();
-        for (VideoEntityImpl videoEntity:videosEntity) {
+        for (VideoEntityImpl videoEntity : videosEntity)
+        {
             VideoFullVO video = new VideoFullVO();
             video.setName(videoEntity.getName());
             video.setPreView(videoEntity.getPreview());
@@ -36,13 +39,14 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public VideoFullVO getVideo(Long videoId) {
-        VideoEntityImpl videoEntity=videoDao.findById(videoId);
+    public VideoFullVO getVideo(Long videoId)
+    {
+        VideoEntityImpl videoEntity = videoDao.findById(videoId);
         VideoFullVO video = new VideoFullVO();
         video.setName(videoEntity.getName());
         video.setPreView(videoEntity.getPreview());
         video.setUrl(videoEntity.getUrl());
-      //  video.setDescription(videoEntity.);
+        //  video.setDescription(videoEntity.);
         return video;
     }
 }

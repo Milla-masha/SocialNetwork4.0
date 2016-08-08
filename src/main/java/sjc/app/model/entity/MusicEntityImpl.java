@@ -10,6 +10,9 @@ public class MusicEntityImpl extends MediaEntityImpl {
     private String name;
     private List<UserEntityImpl> users;
 
+    public MusicEntityImpl() {
+    }
+
     @Column(name = "name")
     public String getName() {
         return name;

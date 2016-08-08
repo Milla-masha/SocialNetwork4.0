@@ -10,6 +10,9 @@ public class ImageEntityImpl extends MediaEntityImpl {
 
     private List<UserEntityImpl> users;
 
+    public ImageEntityImpl() {
+    }
+
     @Access(AccessType.PROPERTY)
     @ManyToMany( fetch = FetchType.LAZY, mappedBy = "images")
     public List<UserEntityImpl> getUsers() {

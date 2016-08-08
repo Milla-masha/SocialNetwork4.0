@@ -14,20 +14,21 @@ import sjc.app.service.InfoUserService;
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
 @Transactional
 @Service
-public class InfoUserServiceImpl implements InfoUserService {
-
+public class InfoUserServiceImpl implements InfoUserService
+{
     @Autowired
     private UserDao userDao;
 
     @Override
-    public InfoUserVO getInfoUserVO(Long userId) {
+    public InfoUserVO getInfoUserVO(Long userId)
+    {
         UserEntityImpl userEntity = userDao.findById(userId);
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
         user.setId(userEntity.getId());
         user.setName(userEntity.getName());
         user.setLastName(userEntity.getLastName());
-        user.setAvatar(userEntity.getAvatar());
+        user.setAvatar(userEntity.getAvatar().getUrl());
         user.setAbout(userEntity.getAbout());
         user.setBirthday(userEntity.getBirthdate());
         user.setCity(userEntity.getCity());
@@ -39,14 +40,15 @@ public class InfoUserServiceImpl implements InfoUserService {
     }
 
     @Override
-    public InfoUserVO getInfoUserVO(String login) {
+    public InfoUserVO getInfoUserVOLogin(String login)
+    {
         UserEntityImpl userEntity = userDao.findByName(login);
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
         user.setId(userEntity.getId());
         user.setName(userEntity.getName());
         user.setLastName(userEntity.getLastName());
-        user.setAvatar(userEntity.getAvatar());
+        user.setAvatar(userEntity.getAvatar().getUrl());
         user.setAbout(userEntity.getAbout());
         user.setBirthday(userEntity.getBirthdate());
         user.setCity(userEntity.getCity());
