@@ -76,6 +76,26 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
+    public InfoUserVO getInfoUserLogin(String login)
+    {
+        UserEntityImpl userEntity = userDao.findByName(login);
+        InfoUserVO user = new InfoUserVO();
+        ContactUserVO contact = new ContactUserVO();
+        user.setId(userEntity.getId());
+        user.setName(userEntity.getName());
+        user.setLastName(userEntity.getLastName());
+        user.setAvatar(userEntity.getAvatar().getUrl());
+        user.setAbout(userEntity.getAbout());
+        user.setBirthday(userEntity.getBirthdate());
+        user.setCity(userEntity.getCity());
+        contact.setEmail(userEntity.getEmail());
+        contact.setMobile(userEntity.getMobileString());
+        contact.setSkype(userEntity.getSkype());
+        user.setContactUser(contact);
+        return user;
+    }
+
+    @Override
     public InfoUserVO getInfoUserVOLogin(String login)
     {
         UserEntityImpl userEntity = userDao.findByName(login);

@@ -9,6 +9,8 @@ public interface UserService
 
     InfoUserVO getInfoUserVO(Long userId);
 
+    InfoUserVO getInfoUserLogin(String login);
+
     InfoUserVO getInfoUserVOLogin(String login);
 
 }

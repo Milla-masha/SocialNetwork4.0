@@ -19,9 +19,9 @@ public class UserEndpointImpl
     private UserService userService;
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, path = "/profile")
+    @RequestMapping(method = RequestMethod.GET, value = "/profile")
     @ResponseBody
-    public Response getProfileLogin(HttpServletRequest request)
+    public Response get(HttpServletRequest request)
     {
         return Response.ok(userService.getInfoUserVOLogin(request.getUserPrincipal().getName())).build();
     }
