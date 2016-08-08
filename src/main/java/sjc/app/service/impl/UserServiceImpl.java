@@ -7,12 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.RoleEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
+import sjc.app.model.vo.ContactUserVO;
+import sjc.app.model.vo.InfoUserVO;
 import sjc.app.model.vo.UserRegisterVO;
 import sjc.app.repository.dao.UserDao;
 import sjc.app.service.UserService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
 @Transactional
@@ -21,37 +20,78 @@ public class UserServiceImpl implements UserService
 {
 
     @Autowired
-    private UserDao userRepository;
+    private UserDao userDao;
 
     @Override
     public boolean addUser(UserRegisterVO user)
     {
-        UserEntityImpl userEntity = new UserEntityImpl();
-//        try {userRepository.findByName(user.getLogin());
-//        return false;}
-//        catch (NoResultException p)
-//        {
-        System.out.println(user.getName());
-        userEntity.setLogin(user.getLogin());
-        userEntity.setPassword(user.getPassword());
-        userEntity.setName(user.getName());
-        userEntity.setLastName(user.getLastName());
-        if (user.getSex().equals("1"))
+        try
         {
-            userEntity.setSex("Male");
-        } else userEntity.setSex("Female");
+            UserEntityImpl userEntity = new UserEntityImpl();
+            System.out.println(user.getName());
+            userEntity.setLogin(user.getLogin());
+            userEntity.setPassword(user.getPassword());
+            userEntity.setName(user.getName());
+            userEntity.setLastName(user.getLastName());
+            if (user.getSex().equals("1"))
+            {
+                userEntity.setSex("Male");
+            } else userEntity.setSex("Female");
+            {
+                userEntity.setBirthdateString(user.getBday());
+            }
+            userEntity.setEmail(user.getEmail());
+            userEntity.setEnabled(1);
+            userEntity = userDao.save(userEntity);
+            RoleEntityImpl authority = new RoleEntityImpl();
+            authority.setUser(userEntity);
+            authority.setRole("ROLE_CLIENT");
+            userEntity.getAuthorities().add(authority);
+            userDao.update(userEntity);
+            return true;
+        } catch (Exception e)
         {
-            userEntity.setBirthdateString(user.getBday());
+            return false;
         }
-        userEntity.setEmail(user.getEmail());
-        List<RoleEntityImpl> authorities = new ArrayList<>();
-        RoleEntityImpl authority = new RoleEntityImpl();
-        authority.setUser(userEntity);
-        authority.setRole("ROLE_CLIENT");
-        authorities.add(authority);
-        userEntity.setAuthorities(authorities);
-        userEntity.setEnabled(1);
-        userRepository.save(userEntity);
-        return true;
+    }
+
+    @Override
+    public InfoUserVO getInfoUserVO(Long userId)
+    {
+        UserEntityImpl userEntity = userDao.findById(userId);
+        InfoUserVO user = new InfoUserVO();
+        ContactUserVO contact = new ContactUserVO();
+        user.setId(userEntity.getId());
+        user.setName(userEntity.getName());
+        user.setLastName(userEntity.getLastName());
+        user.setAvatar(userEntity.getAvatar().getUrl());
+        user.setAbout(userEntity.getAbout());
+        user.setBirthday(userEntity.getBirthdate());
+        user.setCity(userEntity.getCity());
+        contact.setEmail(userEntity.getEmail());
+        contact.setMobile(userEntity.getMobileString());
+        contact.setSkype(userEntity.getSkype());
+        user.setContactUser(contact);
+        return user;
+    }
+
+    @Override
+    public InfoUserVO getInfoUserVOLogin(String login)
+    {
+        UserEntityImpl userEntity = userDao.findByName(login);
+        InfoUserVO user = new InfoUserVO();
+        ContactUserVO contact = new ContactUserVO();
+        user.setId(userEntity.getId());
+        user.setName(userEntity.getName());
+        user.setLastName(userEntity.getLastName());
+        user.setAvatar(userEntity.getAvatar().getUrl());
+        user.setAbout(userEntity.getAbout());
+        user.setBirthday(userEntity.getBirthdate());
+        user.setCity(userEntity.getCity());
+        contact.setEmail(userEntity.getEmail());
+        contact.setMobile(userEntity.getMobileString());
+        contact.setSkype(userEntity.getSkype());
+        user.setContactUser(contact);
+        return user;
     }
 }

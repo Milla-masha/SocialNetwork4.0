@@ -28,7 +28,7 @@ public class UserEntityImpl extends AbstractPersistable {
 	private List<UserEntityImpl> blackListUsers=new ArrayList<>(0);
 	private List<GroupEntityImpl> groups=new ArrayList<>(0);
 	private List<PostUserEntityImpl> posts=new ArrayList<>(0);
-	private List<RoleEntityImpl> authorities;
+	private List<RoleEntityImpl> authorities=new ArrayList<>(0);
 	private List<MusicEntityImpl> musics;
 	private List<VideoEntityImpl> videos;
 	private List<ImageEntityImpl> images;
@@ -52,7 +52,7 @@ public class UserEntityImpl extends AbstractPersistable {
 	}
 
 	@Access(AccessType.PROPERTY)
-	@OneToMany( mappedBy = "user", fetch = FetchType.LAZY)
+	@OneToMany( mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	public List<RoleEntityImpl> getAuthorities() {
 		return authorities;
 	}
