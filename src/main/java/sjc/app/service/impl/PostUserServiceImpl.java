@@ -46,7 +46,10 @@ public class PostUserServiceImpl implements PostUserService
             post.setDislike(getCountDisLike(postEntity.getLikes()));
             post.setText(postEntity.getText());
             UserSmallVO owner = new UserSmallVO();
-            owner.setAvatar(postEntity.getUserFrom().getAvatar().getUrl());
+            if(postEntity.getUserFrom().getAvatar()!=null)
+            {
+                owner.setAvatar(postEntity.getUserFrom().getAvatar().getUrl());
+            }
             owner.setName(postEntity.getUserFrom().getName());
             owner.setLastName(postEntity.getUserFrom().getLastName());
             post.setOwner(owner);

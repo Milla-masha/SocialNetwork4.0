@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sjc.app.model.vo.UserFullVO;
 import sjc.app.model.vo.UserRegisterVO;
 import sjc.app.service.UserService;
 
@@ -44,5 +45,12 @@ public class UserEndpointImpl
         return Response.ok().build();
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.PUT)
+    @ResponseBody
+    public Response editProfileInfo(@RequestBody UserFullVO user)
+    {
+        return Response.ok(userService.editProfile(SecurityContextHolder.getContext().getAuthentication().getName(),user)).build();
+    }
 }
 

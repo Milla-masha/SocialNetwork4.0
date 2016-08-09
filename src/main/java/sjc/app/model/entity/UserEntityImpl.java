@@ -161,6 +161,13 @@ public class UserEntityImpl extends AbstractPersistable {
 		return birthdate;
 	}
 
+	@Column(name = "birthdate")
+	public String getBirthdateString()
+	{
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		return formatter.format(birthdate);
+	}
+
 	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
 	}

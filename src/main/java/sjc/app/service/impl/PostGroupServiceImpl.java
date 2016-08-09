@@ -44,7 +44,10 @@ public class PostGroupServiceImpl implements PostGroupService
         for (PostGroupEntityImpl postEntity : postsEntity)
         {
             PostVO post = new PostVO();
-            post.setImage(postEntity.getImage().getUrl());
+            if(postEntity.getImage()!=null)
+            {
+                post.setImage(postEntity.getImage().getUrl());
+            }
             post.setLike(getCountLike(postEntity.getLikes()));
             post.setDislike(getCountDisLike(postEntity.getLikes()));
             post.setText(postEntity.getText());
