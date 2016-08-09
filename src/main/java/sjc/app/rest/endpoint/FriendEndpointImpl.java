@@ -16,6 +16,15 @@ public class FriendEndpointImpl
     @Autowired
     private FriendService friendService;
 
+//    @ResponseStatus(HttpStatus.OK)
+//    @RequestMapping(method = RequestMethod.GET)
+//    @ResponseBody
+//    public Response findFriend(@RequestParam String name, @RequestParam Integer offset, @RequestParam Integer limit)
+//    {
+//      //  return Response.ok(friendService.findFriends(name, offset, limit)).build();
+//   return null;
+//    }
+
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody

@@ -1,6 +1,7 @@
 package sjc.app.service;
 
 import sjc.app.model.vo.InfoUserVO;
+import sjc.app.model.vo.UserFullVO;
 import sjc.app.model.vo.UserRegisterVO;
 
 public interface UserService
@@ -13,4 +14,5 @@ public interface UserService
 
     InfoUserVO getInfoUserVOLogin(String login);
 
+    boolean editProfile(String login, UserFullVO user);
 }

@@ -54,7 +54,10 @@ public class GroupServiceImpl implements GroupService
         GroupEntityImpl groupEntity = groupDao.findById(groupId);
         group.setName(groupEntity.getName());
         group.setFolowers(groupEntity.getUsers().size());
-        group.setImage(groupEntity.getImage().getUrl());
+        if(groupEntity.getImage()!=null)
+        {
+            group.setImage(groupEntity.getImage().getUrl());
+        }
         group.setDescription(groupEntity.getDescription());
         return group;
     }
@@ -66,7 +69,10 @@ public class GroupServiceImpl implements GroupService
         groupEntity.setName(group.getName());
         groupEntity.setDescription(group.getDescription());
         groupEntity.setOwner(userDao.findByName(login));
-        groupEntity.setImage(imageDao.findById(group.getFkImage()));
+        if(group.getFkImage()!=null)
+        {
+            groupEntity.setImage(imageDao.findById(group.getFkImage()));
+        }
         groupDao.save(groupEntity);
         return true;
     }

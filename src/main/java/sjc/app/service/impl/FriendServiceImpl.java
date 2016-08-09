@@ -36,7 +36,11 @@ public class FriendServiceImpl implements FriendService
             UserSmallVO friend = new UserSmallVO();
             friend.setName(user.getName());
             friend.setLastName(user.getLastName());
-            friend.setAvatar(user.getAvatar().getUrl());
+            friend.setIdUser(user.getId());
+            if(user.getAvatar()!=null)
+            {
+                friend.setAvatar(user.getAvatar().getUrl());
+            }
             friends.add(friend);
         }
         return friends;

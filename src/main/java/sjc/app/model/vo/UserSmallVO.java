@@ -3,6 +3,7 @@ package sjc.app.model.vo;
 
 public class UserSmallVO {
 
+    Long idUser;
     String name;
     String lastName;
     String avatar;
@@ -34,5 +35,13 @@ public class UserSmallVO {
         this.avatar = avatar;
     }
 
+    public Long getIdUser()
+    {
+        return idUser;
+    }
 
+    public void setIdUser(Long idUser)
+    {
+        this.idUser = idUser;
+    }
 }

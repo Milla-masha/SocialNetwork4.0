@@ -1,6 +1,4 @@
 package sjc.app.model.vo;
-import java.util.Date;
-
 public class InfoUserVO {
 
     private Long id;
@@ -9,7 +7,7 @@ public class InfoUserVO {
 
     private String lastName;
 
-    private Date birthday;
+    private String birthday;
 
     private String avatar;
 
@@ -19,7 +17,7 @@ public class InfoUserVO {
 
     private ContactUserVO contactUser;
 
-    public InfoUserVO(Long id,String name, String lastName, Date birthday, String avatar, String city, String about, ContactUserVO contactUser) {
+    public InfoUserVO(Long id,String name, String lastName, String birthday, String avatar, String city, String about, ContactUserVO contactUser) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -59,11 +57,11 @@ public class InfoUserVO {
         this.lastName = lastName;
     }
 
-    public Date getBirthday() {
+    public String  getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

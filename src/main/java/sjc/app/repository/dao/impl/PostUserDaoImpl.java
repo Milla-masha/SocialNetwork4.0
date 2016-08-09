@@ -2,7 +2,7 @@ package sjc.app.repository.dao.impl;
 
 import org.springframework.stereotype.Repository;
 import sjc.app.model.entity.PostUserEntityImpl;
-import sjc.app.repository.dao.PostDao;
+import sjc.app.repository.dao.PostUserDao;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,9 +12,9 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public class PostDaoImpl extends GenericDaoImpl<PostUserEntityImpl> implements PostDao
+public class PostUserDaoImpl extends GenericDaoImpl<PostUserEntityImpl> implements PostUserDao
 {
-    public PostDaoImpl()
+    public PostUserDaoImpl()
     {
         super(PostUserEntityImpl.class);
     }

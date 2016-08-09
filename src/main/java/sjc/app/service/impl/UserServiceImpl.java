@@ -9,7 +9,9 @@ import sjc.app.model.entity.RoleEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.ContactUserVO;
 import sjc.app.model.vo.InfoUserVO;
+import sjc.app.model.vo.UserFullVO;
 import sjc.app.model.vo.UserRegisterVO;
+import sjc.app.repository.dao.ImageDao;
 import sjc.app.repository.dao.UserDao;
 import sjc.app.service.UserService;
 
@@ -21,6 +23,8 @@ public class UserServiceImpl implements UserService
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private ImageDao imageDao;
 
     @Override
     public boolean addUser(UserRegisterVO user)
@@ -64,9 +68,12 @@ public class UserServiceImpl implements UserService
         user.setId(userEntity.getId());
         user.setName(userEntity.getName());
         user.setLastName(userEntity.getLastName());
-        user.setAvatar(userEntity.getAvatar().getUrl());
+        if (userEntity.getAvatar() != null)
+        {
+            user.setAvatar(userEntity.getAvatar().getUrl());
+        }
         user.setAbout(userEntity.getAbout());
-        user.setBirthday(userEntity.getBirthdate());
+        user.setBirthday(userEntity.getBirthdateString());
         user.setCity(userEntity.getCity());
         contact.setEmail(userEntity.getEmail());
         contact.setMobile(userEntity.getMobileString());
@@ -84,9 +91,12 @@ public class UserServiceImpl implements UserService
         user.setId(userEntity.getId());
         user.setName(userEntity.getName());
         user.setLastName(userEntity.getLastName());
-        user.setAvatar(userEntity.getAvatar().getUrl());
+        if (userEntity.getAvatar() != null)
+        {
+            user.setAvatar(userEntity.getAvatar().getUrl());
+        }
         user.setAbout(userEntity.getAbout());
-        user.setBirthday(userEntity.getBirthdate());
+        user.setBirthday(userEntity.getBirthdateString());
         user.setCity(userEntity.getCity());
         contact.setEmail(userEntity.getEmail());
         contact.setMobile(userEntity.getMobileString());
@@ -104,14 +114,41 @@ public class UserServiceImpl implements UserService
         user.setId(userEntity.getId());
         user.setName(userEntity.getName());
         user.setLastName(userEntity.getLastName());
-        user.setAvatar(userEntity.getAvatar().getUrl());
+        if (userEntity.getAvatar() != null)
+        {
+            user.setAvatar(userEntity.getAvatar().getUrl());
+        }
         user.setAbout(userEntity.getAbout());
-        user.setBirthday(userEntity.getBirthdate());
+        user.setBirthday(userEntity.getBirthdateString());
         user.setCity(userEntity.getCity());
         contact.setEmail(userEntity.getEmail());
         contact.setMobile(userEntity.getMobileString());
         contact.setSkype(userEntity.getSkype());
         user.setContactUser(contact);
         return user;
+    }
+
+    @Override
+    public boolean editProfile(String login, UserFullVO user)
+    {
+        UserEntityImpl userEntity = userDao.findByName(login);
+        userEntity.setName(user.getName());
+        userEntity.setAbout(user.getAbout());
+        if (user.getAvatarId() != null)
+        {
+            userEntity.setAvatar(imageDao.findById(user.getAvatarId()));
+        }
+        userEntity.setBirthdateString(user.getBirthdate());
+        userEntity.setCity(user.getCity());
+        userEntity.setEmail(user.getEmail());
+        userEntity.setLastName(user.getLastName());
+        if (user.getSex().equals("1"))
+        {
+            userEntity.setSex("Male");
+        } else userEntity.setSex("Female");
+        userEntity.setMobile(user.getMobile());
+        userEntity.setSkype(user.getSkype());
+        userDao.update(userEntity);
+        return true;
     }
 }

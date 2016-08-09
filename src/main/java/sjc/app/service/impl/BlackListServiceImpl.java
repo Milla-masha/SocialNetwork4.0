@@ -29,9 +29,13 @@ public class BlackListServiceImpl implements BlackListService
         for (UserEntityImpl user : infoBlack)
         {
             UserSmallVO blackUser = new UserSmallVO();
+            blackUser.setIdUser(user.getId());
             blackUser.setName(user.getName());
             blackUser.setLastName(user.getLastName());
-            blackUser.setAvatar(user.getAvatar().getUrl());
+            if(user.getAvatar()!=null)
+            {
+                blackUser.setAvatar(user.getAvatar().getUrl());
+            }
             blackList.add(blackUser);
         }
         return blackList;
