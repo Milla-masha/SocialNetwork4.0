@@ -1,5 +1,7 @@
 package sjc.app.model.entity;
 
+import sjc.app.model.entity.interfaces.PostEntity;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,64 +12,49 @@ import java.util.List;
         discriminatorType = DiscriminatorType.STRING
 )
 @Table(name = "posts")
-public class PostEntityImpl extends AbstractPersistable
-{
+public class PostEntityImpl extends AbstractPersistable implements PostEntity {
 
     private ImageEntityImpl image;
     private String text;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPost", fetch = FetchType.LAZY)
     private List<LikeEntityImpl> likes;
-    private UserEntityImpl userFrom;
 
-    public PostEntityImpl()
-    {
+    public PostEntityImpl() {
     }
 
     @Access(AccessType.PROPERTY)
     @JoinColumn(name = "fk_media", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY)
-    public ImageEntityImpl getImage()
-    {
+    @Override
+    public ImageEntityImpl getImage() {
         return image;
     }
 
-    public void setImage(ImageEntityImpl image)
-    {
+    @Override
+    public void setImage(ImageEntityImpl image) {
         this.image = image;
     }
 
     @Column(name = "text")
-    public String getText()
-    {
+    @Override
+    public String getText() {
         return text;
     }
 
-    public void setText(String text)
-    {
+    @Override
+    public void setText(String text) {
         this.text = text;
     }
 
     //@Access(AccessType.PROPERTY)
-    public List<LikeEntityImpl> getLikes()
-    {
+    @Override
+    public List<LikeEntityImpl> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<LikeEntityImpl> likes)
-    {
+    @Override
+    public void setLikes(List<LikeEntityImpl> likes) {
         this.likes = likes;
     }
 
-    @Access(AccessType.PROPERTY)
-    @JoinColumn(name = "fk_user_from", referencedColumnName = "id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    public UserEntityImpl getUserFrom()
-    {
-        return userFrom;
-    }
-
-    public void setUserFrom(UserEntityImpl userFrom)
-    {
-        this.userFrom = userFrom;
-    }
 }
