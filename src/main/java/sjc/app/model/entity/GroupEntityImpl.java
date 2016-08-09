@@ -8,25 +8,30 @@ import java.util.List;
 
 @Entity
 @Table(name = "groups")
-public class GroupEntityImpl extends AbstractPersistable implements GroupEntity {
+public class GroupEntityImpl extends AbstractPersistable implements GroupEntity
+{
 
     private String name;
     private ImageEntityImpl image;
     private String description;
     private UserEntityImpl owner;
     private List<PostGroupEntityImpl> posts;
-    private List<UserEntityImpl> users=new ArrayList<>(0);
+    private List<UserEntityImpl> users = new ArrayList<>(0);
 
-    public GroupEntityImpl() {
+    public GroupEntityImpl()
+    {
     }
 
     @Column(name = "name")
     @Override
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
+
     @Override
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
@@ -34,47 +39,59 @@ public class GroupEntityImpl extends AbstractPersistable implements GroupEntity 
     @JoinColumn(name = "fk_media", referencedColumnName = "id")
     @ManyToOne(optional = false)
     @Override
-    public ImageEntityImpl getImage() {
+    public ImageEntityImpl getImage()
+    {
         return image;
     }
+
     @Override
-    public void setImage(ImageEntityImpl image) {
+    public void setImage(ImageEntityImpl image)
+    {
         this.image = image;
     }
 
     @Column(name = "description")
     @Override
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
+
     @Override
-    public void setDescription(String description) {
+    public void setDescription(String description)
+    {
         this.description = description;
     }
 
     @Access(AccessType.PROPERTY)
-    @ManyToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "group_user",  joinColumns = {
-            @JoinColumn(name = "fk_group", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "fk_user",
-                    nullable = false, updatable = false) })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "group_user", joinColumns = {
+            @JoinColumn(name = "fk_group", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "fk_user",
+                    nullable = false, updatable = false)})
     @Override
-    public List<UserEntityImpl> getUsers() {
+    public List<UserEntityImpl> getUsers()
+    {
         return users;
     }
+
     @Override
-    public void setUsers(List<UserEntityImpl> users) {
+    public void setUsers(List<UserEntityImpl> users)
+    {
         this.users = users;
     }
 
     @Access(AccessType.PROPERTY)
-    @OneToMany( fetch = FetchType.LAZY, mappedBy = "group")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
     @Override
-    public List<PostGroupEntityImpl> getPosts() {
+    public List<PostGroupEntityImpl> getPosts()
+    {
         return posts;
     }
+
     @Override
-    public void setPosts(List<PostGroupEntityImpl> posts) {
+    public void setPosts(List<PostGroupEntityImpl> posts)
+    {
         this.posts = posts;
     }
 
@@ -83,11 +100,14 @@ public class GroupEntityImpl extends AbstractPersistable implements GroupEntity 
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
     @Override
-    public UserEntityImpl getOwner() {
+    public UserEntityImpl getOwner()
+    {
         return owner;
     }
+
     @Override
-    public void setOwner(UserEntityImpl owner) {
+    public void setOwner(UserEntityImpl owner)
+    {
         this.owner = owner;
     }
 }

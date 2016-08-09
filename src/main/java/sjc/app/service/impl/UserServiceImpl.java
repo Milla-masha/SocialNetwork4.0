@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService
         user.setLastName(userEntity.getLastName());
         user.setAvatar(userEntity.getAvatar().getUrl());
         user.setAbout(userEntity.getAbout());
-        user.setBirthday(userEntity.getBirthdate());
+        user.setBirthday(userEntity.getBirthdateString());
         user.setCity(userEntity.getCity());
         contact.setEmail(userEntity.getEmail());
         contact.setMobile(userEntity.getMobileString());
@@ -84,9 +84,12 @@ public class UserServiceImpl implements UserService
         user.setId(userEntity.getId());
         user.setName(userEntity.getName());
         user.setLastName(userEntity.getLastName());
-        user.setAvatar(userEntity.getAvatar().getUrl());
+        if (userEntity.getAvatar() != null)
+        {
+            user.setAvatar(userEntity.getAvatar().getUrl());
+        }
         user.setAbout(userEntity.getAbout());
-        user.setBirthday(userEntity.getBirthdate());
+        user.setBirthday(userEntity.getBirthdateString());
         user.setCity(userEntity.getCity());
         contact.setEmail(userEntity.getEmail());
         contact.setMobile(userEntity.getMobileString());
@@ -106,7 +109,7 @@ public class UserServiceImpl implements UserService
         user.setLastName(userEntity.getLastName());
         user.setAvatar(userEntity.getAvatar().getUrl());
         user.setAbout(userEntity.getAbout());
-        user.setBirthday(userEntity.getBirthdate());
+        user.setBirthday(userEntity.getBirthdateString());
         user.setCity(userEntity.getCity());
         contact.setEmail(userEntity.getEmail());
         contact.setMobile(userEntity.getMobileString());

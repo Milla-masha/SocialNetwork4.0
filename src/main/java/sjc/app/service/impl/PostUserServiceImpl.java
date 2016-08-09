@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.LikeEntityImpl;
 import sjc.app.model.entity.PostUserEntityImpl;
+import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.PostSmallVO;
 import sjc.app.model.vo.PostVO;
 import sjc.app.model.vo.UserSmallVO;
 import sjc.app.repository.dao.ImageDao;
-import sjc.app.repository.dao.PostDao;
+import sjc.app.repository.dao.PostUserDao;
 import sjc.app.repository.dao.UserDao;
-import sjc.app.service.PostService;
+import sjc.app.service.PostUserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,11 @@ import java.util.List;
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
 @Transactional
 @Service
-public class PostServiceImpl implements PostService
+public class PostUserServiceImpl implements PostUserService
 {
 
     @Autowired
-    private PostDao postDao;
+    private PostUserDao postUserDao;
     @Autowired
     private UserDao userDao;
     @Autowired
@@ -33,10 +34,10 @@ public class PostServiceImpl implements PostService
 
 
     @Override
-    public List<PostVO> getPosts(Long userId, int offset, int limit)
+    public List<PostVO> getPostsUser(Long userId, int offset, int limit)
     {
         List<PostVO> posts = new ArrayList<>();
-        List<PostUserEntityImpl> postsEntity = postDao.getPostsUser(userId, offset, limit);
+        List<PostUserEntityImpl> postsEntity = postUserDao.getPostsUser(userId, offset, limit);
         for (PostUserEntityImpl postEntity : postsEntity)
         {
             PostVO post = new PostVO();
@@ -45,9 +46,9 @@ public class PostServiceImpl implements PostService
             post.setDislike(getCountDisLike(postEntity.getLikes()));
             post.setText(postEntity.getText());
             UserSmallVO owner = new UserSmallVO();
-            owner.setAvatar(postEntity.getUser().getAvatar().getUrl());
-            owner.setName(postEntity.getUser().getName());
-            owner.setLastName(postEntity.getUser().getLastName());
+            owner.setAvatar(postEntity.getUserFrom().getAvatar().getUrl());
+            owner.setName(postEntity.getUserFrom().getName());
+            owner.setLastName(postEntity.getUserFrom().getLastName());
             post.setOwner(owner);
             posts.add(post);
         }
@@ -55,23 +56,30 @@ public class PostServiceImpl implements PostService
     }
 
     @Override
-    public boolean addPost(PostSmallVO post, String login)
+    public boolean addPostUser(PostSmallVO post, String login)
     {
+        UserEntityImpl userEntityFrom=userDao.findByName(login);
+        UserEntityImpl userEntityTo=userDao.findById(post.getIdTo());
+        if (userEntityTo.getBlackListUsers().contains(userEntityFrom))
+        {
+            return false;
+        }
         PostUserEntityImpl postEntity = new PostUserEntityImpl();
         postEntity.setText(post.getText());
-        postEntity.setUser(userDao.findByName(login));
+        postEntity.setUser(userEntityTo);
+        postEntity.setUserFrom(userEntityFrom);
         postEntity.setImage(imageDao.findById(post.getFkImage()));
-        postDao.save(postEntity);
+        postUserDao.save(postEntity);
         return true;
     }
 
     @Override
-    public boolean deletePost(Long postId, String login)
+    public boolean deletePostUser(Long postId, String login)
     {
-        PostUserEntityImpl postEntity = postDao.findById(postId);
-        if (postEntity.getUser().getLogin().equals(login))
+        PostUserEntityImpl postEntity = postUserDao.findById(postId);
+        if (postEntity.getUserFrom().getLogin().equals(login))
         {
-            postDao.delete(postEntity);
+            postUserDao.delete(postEntity);
             return true;
         }
         else return false;
