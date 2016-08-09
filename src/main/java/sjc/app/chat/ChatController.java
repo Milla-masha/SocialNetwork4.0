@@ -21,8 +21,9 @@ public class ChatController {
     }
 
     @MessageMapping("/chat")
-    @SendTo("/topic/message")
+    @SendTo("/topic/app")
     public OutputMessage sendMessage(Message message) {
+
         return new OutputMessage(message, new Date());
     }
 }
