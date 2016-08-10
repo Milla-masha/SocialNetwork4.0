@@ -12,4 +12,6 @@ public interface BlackListService
     void addBlackList(Long idUserOwner, Long idBlackUser);
 
     void deleteBlackList(Long idUserOwner, Long idBlackUser);
+
+    Long getCountBlackUser(Long userId);
 }

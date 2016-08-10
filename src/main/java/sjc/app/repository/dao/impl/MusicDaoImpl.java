@@ -28,10 +28,21 @@ public class MusicDaoImpl extends GenericDaoImpl<MusicEntityImpl> implements Mus
         CriteriaQuery<MusicEntityImpl> criteriaQuery = cb.createQuery(MusicEntityImpl.class);
         Root<MusicEntityImpl> root = criteriaQuery.from(MusicEntityImpl.class);
         Join<UserEntityImpl, MusicEntityImpl> usersJoin = root.join("users");
-        criteriaQuery.select(usersJoin).where(cb.equal(usersJoin.get("id"), idUser));
+        criteriaQuery.select(root).where(cb.equal(usersJoin.get("id"), idUser));
         TypedQuery<MusicEntityImpl> q = getEntityManager().createQuery(criteriaQuery);
         q.setFirstResult(offset);
         q.setMaxResults(limit);
         return q.getResultList();
+    }
+
+    @Override
+    public Long getCountMusicsUser(Long idUser)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<MusicEntityImpl> root = cq.from(MusicEntityImpl.class);
+        Join<UserEntityImpl, MusicEntityImpl> usersJoin = root.join("users");
+        cq.select(cb.count(root)).where(cb.equal(usersJoin.get("id"), idUser));
+        return getEntityManager().createQuery(cq).getSingleResult();
     }
 }

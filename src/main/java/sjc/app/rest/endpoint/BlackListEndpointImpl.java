@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sjc.app.rest.response.PaginationResponseOk;
+import sjc.app.rest.response.ResponseOk;
+import sjc.app.rest.response.impl.PaginationResponseImpl;
+import sjc.app.rest.response.impl.ResponseImpl;
 import sjc.app.service.BlackListService;
-
-import javax.ws.rs.core.Response;
 
 @Controller
 @RequestMapping("/blacklist")
@@ -14,30 +16,34 @@ public class BlackListEndpointImpl
 {
     @Autowired
     private BlackListService blackListService;
+    private PaginationResponseOk paginationResponse=new PaginationResponseImpl();
+    private ResponseOk response=new ResponseImpl();
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public Response getBlackList(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
+    public PaginationResponseOk getBlackList(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
     {
-        return Response.ok(blackListService.getBlackList(userId, offset, limit)).build();
+        paginationResponse.setEntity(blackListService.getBlackList(userId, offset, limit));
+        paginationResponse.buildMetadata(offset,limit,blackListService.getCountBlackUser(userId));
+        return paginationResponse;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Response addBlackList(@RequestParam Long ownerId, @RequestParam Long blackUserId)
+    public ResponseOk addBlackList(@RequestParam Long ownerId, @RequestParam Long blackUserId)
     {
         blackListService.addBlackList(ownerId, blackUserId);
-        return Response.ok().build();
+        return response;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public Response deleteBlackList(Long ownerId, Long blackUserId)
+    public ResponseOk deleteBlackList(Long ownerId, Long blackUserId)
     {
         blackListService.deleteBlackList(ownerId, blackUserId);
-        return Response.ok().build();
+        return response;
     }
 }

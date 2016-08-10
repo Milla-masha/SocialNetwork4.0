@@ -8,9 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.model.vo.UserFullVO;
 import sjc.app.model.vo.UserRegisterVO;
+import sjc.app.rest.response.PaginationResponseOk;
+import sjc.app.rest.response.ResponseOk;
+import sjc.app.rest.response.impl.PaginationResponseImpl;
+import sjc.app.rest.response.impl.ResponseImpl;
 import sjc.app.service.UserService;
-
-import javax.ws.rs.core.Response;
 
 @Controller
 @RequestMapping("/users")
@@ -18,39 +20,43 @@ public class UserEndpointImpl
 {
     @Autowired
     private UserService userService;
+    private PaginationResponseOk paginationResponse=new PaginationResponseImpl();
+    private ResponseOk response=new ResponseImpl();
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, path = "/profile")
     @ResponseBody
-    public Response getProfileInfo()
+    public ResponseOk getProfileInfo()
     {
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
-        return Response.ok(userService.getInfoUserLogin(SecurityContextHolder.getContext().getAuthentication().getName())).build();
+        response.setEntity(userService.getInfoUserLogin(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return response;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/{idUser}")
     @ResponseBody
-    public Response getProfile(@PathVariable Long idUser)
+    public ResponseOk getProfile(@PathVariable Long idUser)
     {
-        return Response.ok(userService.getInfoUserVO(idUser)).build();
+        response.setEntity(userService.getInfoUserVO(idUser));
+        return response;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public Response addUser(@RequestBody UserRegisterVO userRegister)
+    public ResponseOk addUser(@RequestBody UserRegisterVO userRegister)
     {
         userService.addUser(userRegister);
-        return Response.ok().build();
+        return response;
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
     @ResponseBody
-    public Response editProfileInfo(@RequestBody UserFullVO user)
+    public ResponseOk editProfileInfo(@RequestBody UserFullVO user)
     {
-        return Response.ok(userService.editProfile(SecurityContextHolder.getContext().getAuthentication().getName(),user)).build();
+        response.setEntity(userService.editProfile(SecurityContextHolder.getContext().getAuthentication().getName(),user));
+        return response;
     }
 }
 

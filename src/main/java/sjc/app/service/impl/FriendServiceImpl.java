@@ -37,7 +37,7 @@ public class FriendServiceImpl implements FriendService
             friend.setName(user.getName());
             friend.setLastName(user.getLastName());
             friend.setIdUser(user.getId());
-            if(user.getAvatar()!=null)
+            if (user.getAvatar() != null)
             {
                 friend.setAvatar(user.getAvatar().getUrl());
             }
@@ -56,8 +56,7 @@ public class FriendServiceImpl implements FriendService
             userEntity.getFriends().add(friend);
             userDao.update(userEntity);
             return true;
-        }
-        catch (NullPointerException ne)
+        } catch (NullPointerException ne)
         {
             return false;
         }
@@ -71,5 +70,18 @@ public class FriendServiceImpl implements FriendService
         userEntity.getFriends().remove(friend);
         userDao.update(userEntity);
         return true;
+    }
+
+    @Override
+    public List<UserSmallVO> findFriends(String name, Long userId, int offset, int limit)
+    {
+        return null;
+
+    }
+
+    @Override
+    public Long getCountFriends(Long userId)
+    {
+        return friendsDao.getCountFriends(userId);
     }
 }

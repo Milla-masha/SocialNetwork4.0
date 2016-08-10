@@ -32,4 +32,16 @@ public class PostGroupDaoImpl extends GenericDaoImpl<PostGroupEntityImpl> implem
         q.setMaxResults(limit);
         return q.getResultList();
     }
+
+    @Override
+    public Long getCountPostsByGroup(Long groupId)
+    {
+        CriteriaBuilder qb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+        Root<PostGroupEntityImpl> post = cq.from(PostGroupEntityImpl.class);
+        Predicate condition = qb.equal(post.get("group"), groupId);
+        cq.where(condition);
+        cq.select(qb.count(post));
+        return getEntityManager().createQuery(cq).getSingleResult();
+    }
 }

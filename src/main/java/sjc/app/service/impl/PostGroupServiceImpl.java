@@ -48,6 +48,7 @@ public class PostGroupServiceImpl implements PostGroupService
             {
                 post.setImage(postEntity.getImage().getUrl());
             }
+            post.setId(postEntity.getId());
             post.setLike(getCountLike(postEntity.getLikes()));
             post.setDislike(getCountDisLike(postEntity.getLikes()));
             post.setText(postEntity.getText());
@@ -81,10 +82,16 @@ public class PostGroupServiceImpl implements PostGroupService
         PostGroupEntityImpl postEntity = postGroupDao.findById(postId);
         if (postEntity.getUserFrom().getLogin().equals(login))
         {
-            postGroupDao.delete(postEntity);
+            postGroupDao.delete(postId);
             return true;
         }
         else return false;
+    }
+
+    @Override
+    public Long getCountPostsByGroup(Long groupId)
+    {
+        return postGroupDao.getCountPostsByGroup(groupId);
     }
 
     public int getCountLike(List<LikeEntityImpl> likes)

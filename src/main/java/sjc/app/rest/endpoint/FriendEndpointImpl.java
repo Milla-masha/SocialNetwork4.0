@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sjc.app.rest.response.PaginationResponseOk;
+import sjc.app.rest.response.ResponseOk;
+import sjc.app.rest.response.impl.PaginationResponseImpl;
+import sjc.app.rest.response.impl.ResponseImpl;
 import sjc.app.service.FriendService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,37 +19,42 @@ public class FriendEndpointImpl
 {
     @Autowired
     private FriendService friendService;
+    private PaginationResponseOk paginationResponse=new PaginationResponseImpl();
+    private ResponseOk response=new ResponseImpl();
 
-//    @ResponseStatus(HttpStatus.OK)
-//    @RequestMapping(method = RequestMethod.GET)
-//    @ResponseBody
-//    public Response findFriend(@RequestParam String name, @RequestParam Integer offset, @RequestParam Integer limit)
-//    {
-//      //  return Response.ok(friendService.findFriends(name, offset, limit)).build();
-//   return null;
-//    }
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
+    @ResponseBody
+    public Response findFriend(@RequestParam String name, @PathVariable Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
+    {
+        return Response.ok(friendService.findFriends(name, userId, offset, limit)).build();
+    }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public Response getFriend(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
+    public PaginationResponseOk getFriend(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
     {
-        return Response.ok(friendService.getFriends(userId, offset, limit)).build();
+        paginationResponse.setEntity(friendService.getFriends(userId, offset, limit));
+        paginationResponse.buildMetadata(offset,limit,friendService.getCountFriends(userId));
+        return paginationResponse;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Response addFriend(@RequestParam Long userId, HttpServletRequest request)
+    public ResponseOk addFriend(@RequestParam Long userId, HttpServletRequest request)
     {
-        return Response.ok(friendService.addFriend(userId, request.getUserPrincipal().getName())).build();
+        response.setEntity(friendService.addFriend(userId, request.getUserPrincipal().getName()));
+        return response;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public Response deleteFriend(@RequestParam Long userId, HttpServletRequest request)
+    public ResponseOk deleteFriend(@RequestParam Long userId, HttpServletRequest request)
     {
-        return Response.ok(friendService.deleteFriend(userId, request.getUserPrincipal().getName())).build();
+        response.setEntity(friendService.deleteFriend(userId, request.getUserPrincipal().getName()));
+        return response;
     }
 }

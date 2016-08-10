@@ -5,10 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.model.vo.GroupSmallVO;
+import sjc.app.rest.response.PaginationResponseOk;
+import sjc.app.rest.response.ResponseOk;
+import sjc.app.rest.response.impl.PaginationResponseImpl;
+import sjc.app.rest.response.impl.ResponseImpl;
 import sjc.app.service.GroupService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Response;
 
 @Controller
 @RequestMapping("/groups")
@@ -17,44 +20,51 @@ public class GroupEndpointImpl
 
     @Autowired
     private GroupService groupService;
+    private PaginationResponseOk paginationResponse=new PaginationResponseImpl();
+    private ResponseOk response=new ResponseImpl();
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public Response getGroups(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
+    public PaginationResponseOk getGroups(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
     {
-        return Response.ok(groupService.getGroups(userId, offset, limit)).build();
+        paginationResponse.setEntity(groupService.getGroups(userId, offset, limit));
+        return paginationResponse;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/{groupId}")
     @ResponseBody
-    public Response getGroup(@PathVariable Long groupId)
+    public ResponseOk getGroup(@PathVariable Long groupId)
     {
-        return Response.ok(groupService.getGroup(groupId)).build();
+        response.setEntity(groupService.getGroup(groupId));
+        return response;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public Response addGroup(@RequestBody GroupSmallVO group, HttpServletRequest request)
+    public ResponseOk addGroup(@RequestBody GroupSmallVO group, HttpServletRequest request)
     {
-        return Response.ok(groupService.addGroup(group, request.getUserPrincipal().getName())).build();
+        response.setEntity(groupService.addGroup(group, request.getUserPrincipal().getName()));
+        return response;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", value = "/{groupId}")
     @ResponseBody
-    public Response currentGroup(@PathVariable Long groupId, HttpServletRequest request)
+    public ResponseOk currentGroup(@PathVariable Long groupId, HttpServletRequest request)
     {
-        return Response.ok(groupService.currentGroup(groupId, request.getUserPrincipal().getName())).build();
+        response.setEntity(groupService.currentGroup(groupId, request.getUserPrincipal().getName()));
+        return response;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE, consumes = "application/json")
     @ResponseBody
-    public Response leaveGroup(@RequestParam Long groupId, HttpServletRequest request)
+    public ResponseOk leaveGroup(@RequestParam Long groupId, HttpServletRequest request)
     {
-        return Response.ok(groupService.leaveGroup(groupId, request.getUserPrincipal().getName())).build();
+        response.setEntity(groupService.leaveGroup(groupId, request.getUserPrincipal().getName()));
+        return response;
     }
 }

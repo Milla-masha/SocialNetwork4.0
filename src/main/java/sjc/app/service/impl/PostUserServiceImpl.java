@@ -32,7 +32,6 @@ public class PostUserServiceImpl implements PostUserService
     @Autowired
     private ImageDao imageDao;
 
-
     @Override
     public List<PostVO> getPostsUser(Long userId, int offset, int limit)
     {
@@ -41,12 +40,16 @@ public class PostUserServiceImpl implements PostUserService
         for (PostUserEntityImpl postEntity : postsEntity)
         {
             PostVO post = new PostVO();
-            post.setImage(postEntity.getImage().getUrl());
+            if (postEntity.getImage() != null)
+            {
+                post.setImage(postEntity.getImage().getUrl());
+            }
+            post.setId(postEntity.getId());
             post.setLike(getCountLike(postEntity.getLikes()));
             post.setDislike(getCountDisLike(postEntity.getLikes()));
             post.setText(postEntity.getText());
             UserSmallVO owner = new UserSmallVO();
-            if(postEntity.getUserFrom().getAvatar()!=null)
+            if (postEntity.getUserFrom().getAvatar() != null)
             {
                 owner.setAvatar(postEntity.getUserFrom().getAvatar().getUrl());
             }
@@ -61,8 +64,8 @@ public class PostUserServiceImpl implements PostUserService
     @Override
     public boolean addPostUser(PostSmallVO post, String login)
     {
-        UserEntityImpl userEntityFrom=userDao.findByName(login);
-        UserEntityImpl userEntityTo=userDao.findById(post.getIdTo());
+        UserEntityImpl userEntityFrom = userDao.findByName(login);
+        UserEntityImpl userEntityTo = userDao.findById(post.getIdTo());
         if (userEntityTo.getBlackListUsers().contains(userEntityFrom))
         {
             return false;
@@ -71,7 +74,10 @@ public class PostUserServiceImpl implements PostUserService
         postEntity.setText(post.getText());
         postEntity.setUser(userEntityTo);
         postEntity.setUserFrom(userEntityFrom);
-        postEntity.setImage(imageDao.findById(post.getFkImage()));
+        if (post.getFkImage() != null)
+        {
+            postEntity.setImage(imageDao.findById(post.getFkImage()));
+        }
         postUserDao.save(postEntity);
         return true;
     }
@@ -80,12 +86,18 @@ public class PostUserServiceImpl implements PostUserService
     public boolean deletePostUser(Long postId, String login)
     {
         PostUserEntityImpl postEntity = postUserDao.findById(postId);
-        if (postEntity.getUserFrom().getLogin().equals(login))
+        if (postEntity.getUserFrom().getLogin().equals(login) || postEntity.getUser().getLogin().equals(login))
         {
-            postUserDao.delete(postEntity);
+            System.out.print(postEntity.getId() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+            postUserDao.delete(postId);
             return true;
-        }
-        else return false;
+        } else return false;
+    }
+
+    @Override
+    public Long getCountPostsUser(Long idUser)
+    {
+        return postUserDao.getCountPostsUser(idUser);
     }
 
     public int getCountLike(List<LikeEntityImpl> likes)

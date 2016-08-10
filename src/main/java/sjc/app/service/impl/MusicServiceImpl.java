@@ -35,4 +35,10 @@ public class MusicServiceImpl implements MusicService
         }
         return musicVOs;
     }
+
+    @Override
+    public Long getCountMusicsUser(Long userId)
+    {
+        return musicDao.getCountMusicsUser(userId);
+    }
 }

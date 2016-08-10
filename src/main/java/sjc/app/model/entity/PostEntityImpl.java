@@ -68,7 +68,7 @@ public class PostEntityImpl extends AbstractPersistable implements PostEntity
 
     @Access(AccessType.PROPERTY)
     @JoinColumn(name = "fk_user_from", referencedColumnName = "id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     public UserEntityImpl getUserFrom()
     {
         return userFrom;

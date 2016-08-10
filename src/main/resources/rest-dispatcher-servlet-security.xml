@@ -52,10 +52,19 @@
           xmlns="http://www.springframework.org/schema/security">
         <anonymous enabled="false"/>
         <csrf disabled="true"/>
-        <intercept-url pattern="/*" access="ROLE_CLIENT"/>
+        <intercept-url pattern="/*" method="OPTIONS"/>
+        <intercept-url pattern="/*" method="POST" access="ROLE_CLIENT"/>
+        <intercept-url pattern="/*" method="PUT" access="ROLE_CLIENT"/>
+        <intercept-url pattern="/*" method="GET" access="ROLE_CLIENT"/>
+        <intercept-url pattern="/*" method="DELETE" access="ROLE_CLIENT"/>
+        <custom-filter ref="corsFilter" before="SECURITY_CONTEXT_FILTER"/>
         <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
         <access-denied-handler ref="oauthAccessDeniedHandler"/>
     </http>
+
+    <bean id="corsFilter"
+          class="sjc.app.rest.authentication.filter.CustomCorsFilter"/>
+
 
     <bean id="oauthAuthenticationEntryPoint"
           class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">

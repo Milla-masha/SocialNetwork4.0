@@ -10,10 +10,10 @@ public class LikeEntityImpl extends AbstractPersistable implements LikeEntity {
     @Column(name = "is_like")
     private int isLike;
     @JoinColumn(name = "fk_post", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     protected PostEntityImpl fkPost;
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private UserEntityImpl fkUser;
 
     public LikeEntityImpl() {

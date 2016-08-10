@@ -11,4 +11,6 @@ public interface BlackListDao
     void addBlackList(Long ownerId, Long blackUserId);
 
     void deleteBlackList(Long ownerId, Long blackUserId);
+
+    Long getCountBlackList(Long idUser);
 }

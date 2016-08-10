@@ -12,4 +12,6 @@ public interface PostUserService
     boolean addPostUser(PostSmallVO post, String login);
 
     boolean deletePostUser(Long postId, String login);
+
+    Long getCountPostsUser(Long idUser);
 }

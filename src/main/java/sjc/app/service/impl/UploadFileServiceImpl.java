@@ -58,12 +58,12 @@ public class UploadFileServiceImpl implements UploadfileService
                     if (file.getContentType().contains("image"))
                     {
                         ImageEntityImpl image = new ImageEntityImpl();
-                        image.setUrl(sharedLinkMetadata.getUrl());
+                        image.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0","?dl=1"));
                         return imageDao.save(image).getId();
                     } else if (file.getContentType().contains("audio"))
                     {
                         MusicEntityImpl music = new MusicEntityImpl();
-                        music.setUrl(sharedLinkMetadata.getUrl());
+                        music.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0","?dl=1"));
                         return musicDao.save(music).getId();
                     } else
                     {

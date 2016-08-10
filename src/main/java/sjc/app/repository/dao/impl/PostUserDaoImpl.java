@@ -32,4 +32,16 @@ public class PostUserDaoImpl extends GenericDaoImpl<PostUserEntityImpl> implemen
         q.setMaxResults(limit);
         return q.getResultList();
     }
+
+    @Override
+    public Long getCountPostsUser(Long idUser)
+    {
+        CriteriaBuilder qb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+        Root<PostUserEntityImpl> post = cq.from(PostUserEntityImpl.class);
+        Predicate condition = qb.equal(post.get("user"), idUser);
+        cq.where(condition);
+        cq.select(qb.count(post));
+        return getEntityManager().createQuery(cq).getSingleResult();
+    }
 }

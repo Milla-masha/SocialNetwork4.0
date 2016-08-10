@@ -7,4 +7,5 @@ import java.util.List;
 public interface MusicService
 {
     List<MusicVO> getMusics(Long userId, int offset, int limit);
+    Long getCountMusicsUser(Long userId);
 }

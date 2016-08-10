@@ -12,4 +12,8 @@ public interface FriendService
     boolean addFriend(Long userId, String login);
 
     boolean deleteFriend(Long userId, String login);
+
+    List<UserSmallVO> findFriends(String name, Long userId, int offset, int limit);
+
+    Long getCountFriends(Long userId);
 }

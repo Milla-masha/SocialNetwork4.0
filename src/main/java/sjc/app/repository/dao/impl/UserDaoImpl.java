@@ -47,6 +47,18 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
     }
 
     @Override
+    public Long getCountFriends(Long userId)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Long> cUser = cb.createQuery(Long.class);
+        Root<UserEntityImpl> rUser = cUser.from(UserEntityImpl.class);
+        Predicate condition = cb.equal(rUser.get("id"), userId);
+        Join<UserEntityImpl, UserEntityImpl> joinAnswerCollaborator = rUser.join("friends");
+        cUser.select(cb.count(joinAnswerCollaborator)).where(condition);
+        return getEntityManager().createQuery(cUser).getSingleResult();
+    }
+
+    @Override
     public List<UserEntityImpl> getBlackList(Long idUser, int offset, int limit)
     {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
@@ -102,6 +114,18 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
         } catch (NullPointerException ne)
         {
         }
+    }
+
+    @Override
+    public Long getCountBlackList(Long idUser)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Long> cUser = cb.createQuery(Long.class);
+        Root<UserEntityImpl> rUser = cUser.from(UserEntityImpl.class);
+        Predicate condition = cb.equal(rUser.get("id"), idUser);
+        Join<UserEntityImpl, UserEntityImpl> joinAnswerCollaborator = rUser.join("blackListUsers");
+        cUser.select(cb.count(joinAnswerCollaborator)).where(condition);
+        return getEntityManager().createQuery(cUser).getSingleResult();
     }
 }
 

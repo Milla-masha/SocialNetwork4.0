@@ -1,5 +1,6 @@
 package sjc.app.model.entity;
 
+import org.hibernate.annotations.DiscriminatorOptions;
 import sjc.app.model.entity.interfaces.MediaEntity;
 
 import javax.persistence.*;

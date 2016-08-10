@@ -52,4 +52,10 @@ public class BlackListServiceImpl implements BlackListService
     {
         blackListDao.deleteBlackList(userId, idBlackUser);
     }
+
+    @Override
+    public Long getCountBlackUser(Long userId)
+    {
+       return blackListDao.getCountBlackList(userId);
+    }
 }

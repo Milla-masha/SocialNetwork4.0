@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService
         try
         {
             UserEntityImpl userEntity = new UserEntityImpl();
-            System.out.println(user.getName());
             userEntity.setLogin(user.getLogin());
             userEntity.setPassword(user.getPassword());
             userEntity.setName(user.getName());
@@ -44,6 +43,7 @@ public class UserServiceImpl implements UserService
             {
                 userEntity.setBirthdateString(user.getBday());
             }
+            userEntity.setAvatar(imageDao.findById(13L));
             userEntity.setEmail(user.getEmail());
             userEntity.setEnabled(1);
             userEntity = userDao.save(userEntity);

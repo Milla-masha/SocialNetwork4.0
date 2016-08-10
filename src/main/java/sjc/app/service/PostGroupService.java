@@ -12,4 +12,6 @@ public interface PostGroupService
     boolean addPostGroup(PostSmallVO post, String login);
 
     boolean deletePostGroup(Long postId, String login);
+
+    Long getCountPostsByGroup(Long groupId);
 }
