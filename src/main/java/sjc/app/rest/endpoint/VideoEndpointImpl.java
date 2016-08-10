@@ -10,6 +10,8 @@ import sjc.app.rest.response.impl.PaginationResponseImpl;
 import sjc.app.rest.response.impl.ResponseImpl;
 import sjc.app.service.VideoService;
 
+import javax.ws.rs.core.Response;
+
 @Controller
 @RequestMapping("/videos")
 public class VideoEndpointImpl
@@ -22,18 +24,16 @@ public class VideoEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public PaginationResponseOk getVideos(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
+    public Response getVideos(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
     {
-        paginationResponse.setEntity(videoService.getVideos(userId, offset, limit));
-        return paginationResponse;
+        return Response.ok(videoService.getVideos(userId, offset, limit)).build();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/{videoId}")
     @ResponseBody
-    public ResponseOk getVideo(@PathVariable Long videoId)
+    public Response getVideo(@PathVariable Long videoId)
     {
-        response.setEntity(videoService.getVideo(videoId));
-        return response;
+        return Response.ok(videoService.getVideo(videoId)).build();
     }
 }

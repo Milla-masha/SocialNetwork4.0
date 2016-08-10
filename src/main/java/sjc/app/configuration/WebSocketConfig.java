@@ -11,8 +11,8 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
  * Created by psycl on 08.08.2016.
  */
 @Configuration
-@EnableWebSocketMessageBroker
 @ComponentScan(basePackages = "sjc.app.chat")
+@EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
@@ -23,6 +23,6 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat").withSockJS();
+        registry.addEndpoint("/chat").setAllowedOrigins("*").withSockJS();
     }
 }

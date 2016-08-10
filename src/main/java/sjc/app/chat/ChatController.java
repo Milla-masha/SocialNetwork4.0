@@ -23,6 +23,7 @@ public class ChatController {
     @MessageMapping("/chat")
     @SendTo("/topic/message")
     public OutputMessage sendMessage(Message message) {
+
         return new OutputMessage(message, new Date());
     }
 }

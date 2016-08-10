@@ -26,8 +26,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         User user = userService.loadUserByUsername(username);
 
         if (user == null || !user.getUsername().equalsIgnoreCase(username)) {
-            System.out.println("Dhrsdhearjgnalsgnlar");
-            throw new BadCredentialsException("Username not found.");
+
+             throw new BadCredentialsException("Username not found.");
         }
 
         if (!password.equals(user.getPassword())) {

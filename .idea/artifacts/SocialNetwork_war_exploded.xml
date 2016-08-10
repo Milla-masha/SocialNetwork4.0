@@ -56,8 +56,6 @@
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:6.0.2" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.6" />
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.6" />
-          <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.1.2" />
-          <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.1.2" />
           <element id="library" level="project" name="Maven: asm:asm:3.3.1" />
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-bundle:1.19.1" />
           <element id="library" level="project" name="Maven: javax.ws.rs:jsr311-api:1.1.1" />
@@ -75,6 +73,8 @@
           <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.1" />
           <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.2.1" />
+          <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.1.2" />
+          <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.1.2" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.5.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.5.0" />
         </element>
