@@ -7,6 +7,15 @@ public class PostVO {
     String text;
     Integer like;
     Integer dislike;
+    String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public PostVO() {
     }

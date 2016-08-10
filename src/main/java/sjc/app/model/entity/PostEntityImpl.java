@@ -20,6 +20,18 @@ public class PostEntityImpl extends AbstractPersistable implements PostEntity
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPost", fetch = FetchType.LAZY)
     private List<LikeEntityImpl> likes;
     private UserEntityImpl userFrom;
+@Column(name = "date")
+@Override
+    public String getDate() {
+        return date;
+    }
+@Override
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    private String date;
+
 
     public PostEntityImpl()
     {

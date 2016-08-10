@@ -1,7 +1,6 @@
 package sjc.app.model.vo;
 
-public class GroupSmallVO
-{
+public class GroupSmallVO {
     String name;
     Long fkImage;
     String description;

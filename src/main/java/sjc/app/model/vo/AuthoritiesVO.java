@@ -1,12 +1,12 @@
 package sjc.app.model.vo;
 
-public class AuthoritiesVO
-{
+public class AuthoritiesVO {
     private long id;
     private String authorities;
     private UserVO idU;
 
-    public AuthoritiesVO() {}
+    public AuthoritiesVO() {
+    }
 
     public long getId() {
         return id;

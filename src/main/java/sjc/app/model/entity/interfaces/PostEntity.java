@@ -9,6 +9,10 @@ import java.util.List;
  * Created by psycl on 09.08.2016.
  */
 public interface PostEntity {
+    String getDate();
+
+    void setDate(String date);
+
     ImageEntityImpl getImage();
 
     void setImage(ImageEntityImpl image);
