@@ -4,7 +4,7 @@ import sjc.app.model.entity.AbstractPersistable;
 
 import java.util.List;
 
-public interface GenericDao<T extends AbstractPersistable> {
+public interface GenericDao<T extends AbstractPersistable>{
 	
 	T save(T obj);
 	

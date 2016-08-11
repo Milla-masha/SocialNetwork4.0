@@ -2,14 +2,10 @@ package sjc.app.model.vo;
 
 public class LikeVO extends BaseVO
 {
-
     private int isLike;
     private Long postId;
     private Long userId;
 
-    public LikeVO()
-    {
-    }
 
     public int getIsLike()
     {

@@ -2,14 +2,10 @@ package sjc.app.model.vo;
 
 public class GroupVO extends BaseVO
 {
-    String name;
-    Integer folowers;
-    String image;
-    String description;
-
-    public GroupVO()
-    {
-    }
+    private String name;
+    private Integer folowers;
+    private String image;
+    private String description;
 
     public String getDescription()
     {

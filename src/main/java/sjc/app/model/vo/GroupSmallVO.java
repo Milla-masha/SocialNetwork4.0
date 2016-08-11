@@ -2,13 +2,11 @@ package sjc.app.model.vo;
 
 public class GroupSmallVO extends BaseVO
 {
-    String name;
-    Long fkImage;
-    String description;
+    private String description;
+    private String name;
+    private Long fkImage;
+    
 
-    public GroupSmallVO()
-    {
-    }
 
     public String getName()
     {

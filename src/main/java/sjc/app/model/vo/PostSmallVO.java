@@ -2,10 +2,10 @@ package sjc.app.model.vo;
 
 public class PostSmallVO extends BaseVO
 {
-    Long fkImage;
-    Long idTo;
-    String text;
-    String date;
+    private Long fkImage;
+    private Long idTo;
+    private String text;
+    private String date;
 
     public String getDate()
     {
@@ -15,10 +15,6 @@ public class PostSmallVO extends BaseVO
     public void setDate(String date)
     {
         this.date = date;
-    }
-
-    public PostSmallVO()
-    {
     }
 
     public Long getFkImage()

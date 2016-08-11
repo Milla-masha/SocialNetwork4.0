@@ -6,9 +6,6 @@ public class MusicVO extends BaseVO
     private String name;
     private String url;
 
-    public MusicVO() {
-    }
-
     public MusicVO(String url, String name) {
         this.url = url;
         this.name = name;

@@ -2,18 +2,20 @@ package sjc.app.model.vo;
 
 public class UserRegisterVO extends BaseVO
 {
-    String name;
-    String lastName;
-    String login;
-    String password;
-    String email;
-    String sex;
-    String bday;
+    private String name;
+    private String lastName;
+    private String login;
+    private String password;
+    private String email;
+    private String sex;
+    private String bday;
 
-    public UserRegisterVO() {
+    public UserRegisterVO()
+    {
     }
 
-    public UserRegisterVO(String name, String lastName, String login, String password, String email, String sex, String bday) {
+    public UserRegisterVO(String name, String lastName, String login, String password, String email, String sex, String bday)
+    {
         this.name = name;
         this.lastName = lastName;
         this.login = login;
@@ -23,59 +25,73 @@ public class UserRegisterVO extends BaseVO
         this.bday = bday;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getLastName() {
+    public String getLastName()
+    {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName)
+    {
         this.lastName = lastName;
     }
 
-    public String getLogin() {
+    public String getLogin()
+    {
         return login;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(String login)
+    {
         this.login = login;
     }
 
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password)
+    {
         this.password = password;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email)
+    {
         this.email = email;
     }
 
-    public String getSex() {
+    public String getSex()
+    {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(String sex)
+    {
         this.sex = sex;
     }
 
-    public String getBday() {
+    public String getBday()
+    {
         return bday;
     }
 
-    public void setBday(String bday) {
+    public void setBday(String bday)
+    {
         this.bday = bday;
     }
 }
