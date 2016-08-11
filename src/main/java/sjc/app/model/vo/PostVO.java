@@ -9,6 +9,15 @@ public class PostVO
     Integer like;
     Integer dislike;
     Long id;
+    String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public UserSmallVO getOwner()
     {

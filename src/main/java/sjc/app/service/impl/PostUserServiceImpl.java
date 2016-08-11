@@ -43,6 +43,7 @@ public class PostUserServiceImpl implements PostUserService
             {
                 post.setImage(postEntity.getImage().getUrl());
             }
+            post.setDate(postEntity.getDateString());
             post.setId(postEntity.getId());
             post.setLike(LikeServiceImpl.getCountLike(postEntity.getLikes()));
             post.setDislike(LikeServiceImpl.getCountDisLike(postEntity.getLikes()));
