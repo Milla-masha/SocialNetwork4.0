@@ -1,11 +1,11 @@
 package sjc.app.rest.response.impl;
 
 import org.apache.commons.collections.map.HashedMap;
-import sjc.app.rest.response.PaginationResponseOk;
+import sjc.app.rest.response.PaginationResponseSuccessful;
 
 import java.util.Map;
 
-public class PaginationResponseImpl extends ResponseImpl implements PaginationResponseOk
+public class PaginationResponseImpl extends ResponseImpl implements PaginationResponseSuccessful
 {
     Map<String,String> metadata=new HashedMap();
 

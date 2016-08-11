@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import sjc.app.rest.response.PaginationResponseOk;
-import sjc.app.rest.response.ResponseOk;
+import sjc.app.rest.response.PaginationResponseSuccessful;
+import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
 import sjc.app.rest.response.impl.ResponseImpl;
 import sjc.app.service.VideoService;
@@ -18,8 +18,8 @@ public class VideoEndpointImpl
 {
     @Autowired
     private VideoService videoService;
-    private PaginationResponseOk paginationResponse=new PaginationResponseImpl();
-    private ResponseOk response=new ResponseImpl();
+    private PaginationResponseSuccessful paginationResponse=new PaginationResponseImpl();
+    private ResponseSuccessful response=new ResponseImpl();
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)

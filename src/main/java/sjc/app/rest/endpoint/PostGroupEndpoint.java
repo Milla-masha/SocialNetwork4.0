@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.constant.Constant;
 import sjc.app.model.vo.PostSmallVO;
-import sjc.app.rest.response.PaginationResponseOk;
-import sjc.app.rest.response.ResponseOk;
+import sjc.app.rest.response.PaginationResponseSuccessful;
+import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
 import sjc.app.rest.response.impl.ResponseImpl;
 import sjc.app.service.PostGroupService;
@@ -20,13 +20,13 @@ public class PostGroupEndpoint
 {
     @Autowired
     private PostGroupService postGroupService;
-    private PaginationResponseOk paginationResponse=new PaginationResponseImpl();
-    private ResponseOk response=new ResponseImpl();
+    private PaginationResponseSuccessful paginationResponse=new PaginationResponseImpl();
+    private ResponseSuccessful response=new ResponseImpl();
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public PaginationResponseOk getPostsUser(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
+    public PaginationResponseSuccessful getPostsUser(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
     {
         //TODO
         paginationResponse.addMetadata(Constant.OFFSET,offset.toString());
@@ -39,7 +39,7 @@ public class PostGroupEndpoint
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public ResponseOk addPostsUser(@RequestBody PostSmallVO post, HttpServletRequest request)
+    public ResponseSuccessful addPostsUser(@RequestBody PostSmallVO post, HttpServletRequest request)
     {
         response.setEntity(postGroupService.addPostGroup(post, request.getUserPrincipal().getName()));
         return response;
@@ -48,7 +48,7 @@ public class PostGroupEndpoint
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseOk deletePostUser(@RequestParam Long postId, HttpServletRequest request)
+    public ResponseSuccessful deletePostUser(@RequestParam Long postId, HttpServletRequest request)
     {
         response.setEntity(postGroupService.deletePostGroup(postId, request.getUserPrincipal().getName()));
         return response;

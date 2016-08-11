@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import sjc.app.rest.response.PaginationResponseOk;
-import sjc.app.rest.response.ResponseOk;
+import sjc.app.rest.response.PaginationResponseSuccessful;
+import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
 import sjc.app.rest.response.impl.ResponseImpl;
 import sjc.app.service.UploadfileService;
@@ -20,12 +20,12 @@ public class UploadFileEndpoint
 {
     @Autowired
     UploadfileService uploadfile;
-    private PaginationResponseOk paginationResponse=new PaginationResponseImpl();
-    private ResponseOk response=new ResponseImpl();
+    private PaginationResponseSuccessful paginationResponse=new PaginationResponseImpl();
+    private ResponseSuccessful response=new ResponseImpl();
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseOk uploadFileHandler(@RequestParam("name") String name, @RequestParam("file") MultipartFile file)
+    public ResponseSuccessful uploadFileHandler(@RequestParam("name") String name, @RequestParam("file") MultipartFile file)
     {
         response.setEntity(uploadfile.UploadFile(name, file));
         return response;

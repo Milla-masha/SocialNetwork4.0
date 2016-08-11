@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.constant.Constant;
 import sjc.app.model.vo.PostSmallVO;
-import sjc.app.rest.response.PaginationResponseOk;
-import sjc.app.rest.response.ResponseOk;
+import sjc.app.rest.response.PaginationResponseSuccessful;
+import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
 import sjc.app.rest.response.impl.ResponseImpl;
 import sjc.app.service.PostUserService;
@@ -20,13 +20,13 @@ public class PostUserEndpointImpl
 {
     @Autowired
     private PostUserService postUserService;
-    private PaginationResponseOk paginationResponse=new PaginationResponseImpl();
-    private ResponseOk response=new ResponseImpl();
+    private PaginationResponseSuccessful paginationResponse=new PaginationResponseImpl();
+    private ResponseSuccessful response=new ResponseImpl();
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public PaginationResponseOk getPostsUser(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit, HttpServletRequest request)
+    public PaginationResponseSuccessful getPostsUser(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit, HttpServletRequest request)
     {
         System.out.println(request.getRequestURL());
         paginationResponse.setEntity(postUserService.getPostsUser(userId, offset, limit));
@@ -39,7 +39,7 @@ public class PostUserEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public ResponseOk addPostsUser(@RequestBody PostSmallVO post, HttpServletRequest request)
+    public ResponseSuccessful addPostsUser(@RequestBody PostSmallVO post, HttpServletRequest request)
     {
         response.setEntity(postUserService.addPostUser(post, request.getUserPrincipal().getName()));
         return response;
@@ -48,7 +48,7 @@ public class PostUserEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseOk deletePostUser(@RequestParam Long postId, HttpServletRequest request)
+    public ResponseSuccessful deletePostUser(@RequestParam Long postId, HttpServletRequest request)
     {
         response.setEntity(postUserService.deletePostUser(postId, request.getUserPrincipal().getName()));
         return response;

@@ -1,8 +1,8 @@
 package sjc.app.rest.response.impl;
 
-import sjc.app.rest.response.ResponseOk;
+import sjc.app.rest.response.ResponseSuccessful;
 
-public class ResponseImpl implements ResponseOk
+public class ResponseImpl implements ResponseSuccessful
 {
     private Object entity=null;
 

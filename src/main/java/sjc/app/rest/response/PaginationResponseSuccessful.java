@@ -2,7 +2,7 @@ package sjc.app.rest.response;
 
 import java.util.Map;
 
-public interface PaginationResponseOk extends ResponseOk
+public interface PaginationResponseSuccessful extends ResponseSuccessful
 {
     void addMetadata(String key, String value);
 

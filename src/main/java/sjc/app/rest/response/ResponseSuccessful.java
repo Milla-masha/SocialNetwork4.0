@@ -1,6 +1,6 @@
 package sjc.app.rest.response;
 
-public interface ResponseOk
+public interface ResponseSuccessful
 {
     void setEntity(Object entity);
 
