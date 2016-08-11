@@ -1,4 +1,5 @@
 package sjc.app.model.vo;
+
 public class InfoUserVO {
 
     private Long id;
@@ -17,7 +18,7 @@ public class InfoUserVO {
 
     private ContactUserVO contactUser;
 
-    public InfoUserVO(Long id,String name, String lastName, String birthday, String avatar, String city, String about, ContactUserVO contactUser) {
+    public InfoUserVO(Long id, String name, String lastName, String birthday, String avatar, String city, String about, ContactUserVO contactUser) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -57,7 +58,7 @@ public class InfoUserVO {
         this.lastName = lastName;
     }
 
-    public String  getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 

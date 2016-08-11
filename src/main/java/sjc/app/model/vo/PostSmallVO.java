@@ -1,42 +1,43 @@
 package sjc.app.model.vo;
 
-public class PostSmallVO
-{
+public class PostSmallVO {
     Long fkImage;
     Long idTo;
     String text;
+    String date;
 
-    public PostSmallVO()
-    {
+    public String getDate() {
+        return date;
     }
 
-    public Long getFkImage()
-    {
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public PostSmallVO() {
+    }
+
+    public Long getFkImage() {
         return fkImage;
     }
 
-    public void setFkImage(Long fkImage)
-    {
+    public void setFkImage(Long fkImage) {
         this.fkImage = fkImage;
     }
 
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
-    public void setText(String text)
-    {
+    public void setText(String text) {
         this.text = text;
     }
 
-    public Long getIdTo()
-    {
+    public Long getIdTo() {
         return idTo;
     }
 
-    public void setIdTo(Long idTo)
-    {
+    public void setIdTo(Long idTo) {
         this.idTo = idTo;
     }
 }
