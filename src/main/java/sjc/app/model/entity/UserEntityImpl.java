@@ -269,4 +269,22 @@ public class UserEntityImpl extends AbstractPersistable {
 	public void setImages(List<ImageEntityImpl> images) {
 		this.images = images;
 	}
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		UserEntityImpl that = (UserEntityImpl) o;
+
+		return login != null ? login.equals(that.login) : that.login == null;
+
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return login != null ? login.hashCode() : 0;
+	}
 }
