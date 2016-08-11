@@ -15,6 +15,8 @@ public class InfoUserVO extends BaseVO
 
     private String about;
 
+    private Integer sex;
+
     private ContactUserVO contactUser;
 
     public InfoUserVO()
@@ -93,4 +95,13 @@ public class InfoUserVO extends BaseVO
         this.contactUser = contactUser;
     }
 
+    public Integer getSex()
+    {
+        return sex;
+    }
+
+    public void setSex(Integer sex)
+    {
+        this.sex = sex;
+    }
 }

@@ -65,6 +65,9 @@ public class UserServiceImpl implements UserService
         UserEntityImpl userEntity = userDao.findById(userId);
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
+        if(userEntity.getSex().equals("Male"))
+            user.setSex(1);
+        else  user.setSex(0);
         user.setId(userEntity.getId());
         user.setName(userEntity.getName());
         user.setLastName(userEntity.getLastName());
@@ -89,6 +92,9 @@ public class UserServiceImpl implements UserService
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
         user.setId(userEntity.getId());
+        if(userEntity.getSex().equals("Male"))
+        user.setSex(1);
+        else  user.setSex(0);
         user.setName(userEntity.getName());
         user.setLastName(userEntity.getLastName());
         if (userEntity.getAvatar() != null)
@@ -111,6 +117,9 @@ public class UserServiceImpl implements UserService
         UserEntityImpl userEntity = userDao.findByName(login);
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
+        if(userEntity.getSex().equals("Male"))
+            user.setSex(1);
+        else  user.setSex(0);
         user.setId(userEntity.getId());
         user.setName(userEntity.getName());
         user.setLastName(userEntity.getLastName());
