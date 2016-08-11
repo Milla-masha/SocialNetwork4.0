@@ -53,6 +53,7 @@ public class PostUserServiceImpl implements PostUserService
             {
                 owner.setAvatar(postEntity.getUserFrom().getAvatar().getUrl());
             }
+            owner.setId(postEntity.getUserFrom().getId());
             owner.setName(postEntity.getUserFrom().getName());
             owner.setLastName(postEntity.getUserFrom().getLastName());
             post.setOwner(owner);

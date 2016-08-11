@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService
         userEntity.setCity(user.getCity());
         userEntity.setEmail(user.getEmail());
         userEntity.setLastName(user.getLastName());
-        if (user.getSex().equals("1"))
+        if (user.getSex()==1)
         {
             userEntity.setSex("Male");
         } else userEntity.setSex("Female");
