@@ -3,15 +3,15 @@ package sjc.app.model.entity.interfaces;
 import sjc.app.model.entity.ImageEntityImpl;
 import sjc.app.model.entity.LikeEntityImpl;
 
+import java.util.Date;
 import java.util.List;
 
-/**
- * Created by psycl on 09.08.2016.
- */
 public interface PostEntity {
-    String getDate();
+    Date getDate();
 
-    void setDate(String date);
+    String getDateString();
+
+    void setDate(Date date);
 
     ImageEntityImpl getImage();
 

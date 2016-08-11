@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sjc.app.model.entity.LikeEntityImpl;
 import sjc.app.model.entity.PostUserEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.PostSmallVO;
@@ -44,9 +43,10 @@ public class PostUserServiceImpl implements PostUserService
             {
                 post.setImage(postEntity.getImage().getUrl());
             }
+            post.setDate(postEntity.getDateString());
             post.setId(postEntity.getId());
-            post.setLike(getCountLike(postEntity.getLikes()));
-            post.setDislike(getCountDisLike(postEntity.getLikes()));
+            post.setLike(LikeServiceImpl.getCountLike(postEntity.getLikes()));
+            post.setDislike(LikeServiceImpl.getCountDisLike(postEntity.getLikes()));
             post.setText(postEntity.getText());
             UserSmallVO owner = new UserSmallVO();
             if (postEntity.getUserFrom().getAvatar() != null)
@@ -100,25 +100,4 @@ public class PostUserServiceImpl implements PostUserService
         return postUserDao.getCountPostsUser(idUser);
     }
 
-    public int getCountLike(List<LikeEntityImpl> likes)
-    {
-        int count = 0;
-        for (LikeEntityImpl like : likes)
-        {
-            if (like.getIsLike() == 1)
-                count++;
-        }
-        return count;
-    }
-
-    public int getCountDisLike(List<LikeEntityImpl> likes)
-    {
-        int count = 0;
-        for (LikeEntityImpl like : likes)
-        {
-            if (like.getIsLike() == 0)
-                count++;
-        }
-        return count;
-    }
 }

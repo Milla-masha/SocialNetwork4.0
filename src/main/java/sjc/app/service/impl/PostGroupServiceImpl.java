@@ -6,7 +6,6 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.GroupEntityImpl;
-import sjc.app.model.entity.LikeEntityImpl;
 import sjc.app.model.entity.PostGroupEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.PostSmallVO;
@@ -48,9 +47,10 @@ public class PostGroupServiceImpl implements PostGroupService
             {
                 post.setImage(postEntity.getImage().getUrl());
             }
+            post.setDate(postEntity.getDateString());
             post.setId(postEntity.getId());
-            post.setLike(getCountLike(postEntity.getLikes()));
-            post.setDislike(getCountDisLike(postEntity.getLikes()));
+            post.setLike(LikeServiceImpl.getCountLike(postEntity.getLikes()));
+            post.setDislike(LikeServiceImpl.getCountDisLike(postEntity.getLikes()));
             post.setText(postEntity.getText());
             UserSmallVO owner = new UserSmallVO();
             owner.setAvatar(postEntity.getUserFrom().getAvatar().getUrl());
@@ -92,27 +92,5 @@ public class PostGroupServiceImpl implements PostGroupService
     public Long getCountPostsByGroup(Long groupId)
     {
         return postGroupDao.getCountPostsByGroup(groupId);
-    }
-
-    public int getCountLike(List<LikeEntityImpl> likes)
-    {
-        int count = 0;
-        for (LikeEntityImpl like : likes)
-        {
-            if (like.getIsLike() == 1)
-                count++;
-        }
-        return count;
-    }
-
-    public int getCountDisLike(List<LikeEntityImpl> likes)
-    {
-        int count = 0;
-        for (LikeEntityImpl like : likes)
-        {
-            if (like.getIsLike() == 0)
-                count++;
-        }
-        return count;
     }
 }
