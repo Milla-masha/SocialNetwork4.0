@@ -32,6 +32,41 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
     }
 
     @Override
+    public List<UserEntityImpl> findByFullName(String fullName, int offset, int limit)
+    {
+        if(fullName==null||fullName.equals(""))
+        {
+            return getUsers(offset, limit);
+        }
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<UserEntityImpl> c = cb.createQuery(UserEntityImpl.class);
+        Root<UserEntityImpl> user = c.from(UserEntityImpl.class);
+        Predicate condition = cb.or(cb.or(cb.or(cb.equal(cb.concat(cb.concat(user.get("name"), " ")
+                , user.get("lastName")), fullName)
+                , cb.equal(cb.concat(cb.concat(user.get("lastName"), " ")
+                        , user.get("name")), fullName))
+                ,cb.equal((user.get("lastName")), fullName)
+                ,cb.equal((user.get("name")), fullName)));
+        c.where(condition);
+        TypedQuery<UserEntityImpl> q = getEntityManager().createQuery(c);
+        q.setFirstResult(offset);
+        q.setMaxResults(limit);
+        return q.getResultList();
+    }
+
+    @Override
+    public List<UserEntityImpl> getUsers(int offset, int limit)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<UserEntityImpl> cUser = cb.createQuery(UserEntityImpl.class);
+        Root<UserEntityImpl> root=cUser.from(UserEntityImpl.class);
+        TypedQuery<UserEntityImpl> q = getEntityManager().createQuery(cUser.select(root));
+        q.setFirstResult(offset);
+        q.setMaxResults(limit);
+        return q.getResultList();
+    }
+
+    @Override
     public List<UserEntityImpl> getFriends(Long idUser, int offset, int limit)
     {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();

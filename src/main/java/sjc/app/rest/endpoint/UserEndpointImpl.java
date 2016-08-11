@@ -24,6 +24,15 @@ public class UserEndpointImpl
     private ResponseSuccessful response=new ResponseImpl();
 
     @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, path = "/find")
+    @ResponseBody
+    public PaginationResponseSuccessful findPeople(@RequestParam String fullName, @RequestParam Integer offset, @RequestParam Integer limit)
+    {
+        paginationResponse.setEntity(userService.findUsersByFullName(SecurityContextHolder.getContext().getAuthentication().getName(),fullName,offset,limit));
+        return paginationResponse;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, path = "/profile")
     @ResponseBody
     public ResponseSuccessful getProfileInfo()
@@ -37,7 +46,7 @@ public class UserEndpointImpl
     @ResponseBody
     public ResponseSuccessful getProfile(@PathVariable Long idUser)
     {
-        response.setEntity(userService.getInfoUserVO(idUser));
+        response.setEntity(userService.getInfoUserVO(SecurityContextHolder.getContext().getAuthentication().getName(),idUser));
         return response;
     }
 

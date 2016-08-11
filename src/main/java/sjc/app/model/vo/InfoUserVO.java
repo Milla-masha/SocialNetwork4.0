@@ -2,6 +2,7 @@ package sjc.app.model.vo;
 
 public class InfoUserVO extends BaseVO
 {
+
     private String name;
 
     private String lastName;
@@ -17,6 +18,22 @@ public class InfoUserVO extends BaseVO
     private Integer sex;
 
     private ContactUserVO contactUser;
+
+    private Integer isFriend;
+
+    public Integer getIsFriend()
+    {
+        return isFriend;
+    }
+
+    public void setIsFriend(Integer isFriend)
+    {
+        this.isFriend = isFriend;
+    }
+
+    public InfoUserVO()
+    {
+    }
 
     public String getName()
     {

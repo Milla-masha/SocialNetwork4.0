@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.RoleEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
-import sjc.app.model.vo.ContactUserVO;
-import sjc.app.model.vo.InfoUserVO;
-import sjc.app.model.vo.UserFullVO;
-import sjc.app.model.vo.UserRegisterVO;
+import sjc.app.model.vo.*;
 import sjc.app.repository.dao.ImageDao;
 import sjc.app.repository.dao.UserDao;
 import sjc.app.service.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
 @Transactional
@@ -60,14 +60,15 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public InfoUserVO getInfoUserVO(Long userId)
+    public InfoUserVO getInfoUserVO(String login,Long userId)
     {
         UserEntityImpl userEntity = userDao.findById(userId);
+        UserEntityImpl userLogin = userDao.findByName(login);
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
-        if(userEntity.getSex().equals("Male"))
+        if (userEntity.getSex().equals("Male"))
             user.setSex(1);
-        else  user.setSex(0);
+        else user.setSex(0);
         user.setId(userEntity.getId());
         user.setName(userEntity.getName());
         user.setLastName(userEntity.getLastName());
@@ -82,6 +83,10 @@ public class UserServiceImpl implements UserService
         contact.setMobile(userEntity.getMobile());
         contact.setSkype(userEntity.getSkype());
         user.setContactUser(contact);
+        if(userLogin.getFriends().contains(userEntity))
+        {
+            user.setIsFriend(1);}
+        else user.setIsFriend(0);
         return user;
     }
 
@@ -92,35 +97,9 @@ public class UserServiceImpl implements UserService
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
         user.setId(userEntity.getId());
-        if(userEntity.getSex().equals("Male"))
-        user.setSex(1);
-        else  user.setSex(0);
-        user.setName(userEntity.getName());
-        user.setLastName(userEntity.getLastName());
-        if (userEntity.getAvatar() != null)
-        {
-            user.setAvatar(userEntity.getAvatar().getUrl());
-        }
-        user.setAbout(userEntity.getAbout());
-        user.setBirthday(userEntity.getBirthdateString());
-        user.setCity(userEntity.getCity());
-        contact.setEmail(userEntity.getEmail());
-        contact.setMobile(userEntity.getMobile());
-        contact.setSkype(userEntity.getSkype());
-        user.setContactUser(contact);
-        return user;
-    }
-
-    @Override
-    public InfoUserVO getInfoUserVOLogin(String login)
-    {
-        UserEntityImpl userEntity = userDao.findByName(login);
-        InfoUserVO user = new InfoUserVO();
-        ContactUserVO contact = new ContactUserVO();
-        if(userEntity.getSex().equals("Male"))
+        if (userEntity.getSex().equals("Male"))
             user.setSex(1);
-        else  user.setSex(0);
-        user.setId(userEntity.getId());
+        else user.setSex(0);
         user.setName(userEntity.getName());
         user.setLastName(userEntity.getLastName());
         if (userEntity.getAvatar() != null)
@@ -151,7 +130,7 @@ public class UserServiceImpl implements UserService
         userEntity.setCity(user.getCity());
         userEntity.setEmail(user.getEmail());
         userEntity.setLastName(user.getLastName());
-        if (user.getSex()==1)
+        if (user.getSex() == 1)
         {
             userEntity.setSex("Male");
         } else userEntity.setSex("Female");
@@ -159,5 +138,30 @@ public class UserServiceImpl implements UserService
         userEntity.setSkype(user.getSkype());
         userDao.update(userEntity);
         return true;
+    }
+
+    @Override
+    public List<FriendVO> findUsersByFullName(String login,String fullName, int offset, int limit)
+    {
+        UserEntityImpl user=userDao.findByName(login);
+        List<UserEntityImpl> userEntities = userDao.findByFullName(fullName, offset, limit);
+        List<FriendVO> friendVOs = new ArrayList<>();
+        for (UserEntityImpl userEntity : userEntities)
+        {
+            FriendVO friend = new FriendVO();
+            friend.setId(userEntity.getId());
+            if (userEntity.getAvatar() != null)
+            {
+                friend.setAvatar(userEntity.getAvatar().getUrl());
+            }
+            friend.setName(userEntity.getName());
+            friend.setLastName(userEntity.getLastName());
+            if(user.getFriends().contains(userEntity))
+            {
+            friend.setIsFriend(1);}
+            else friend.setIsFriend(0);
+            friendVOs.add(friend);
+        }
+        return friendVOs;
     }
 }

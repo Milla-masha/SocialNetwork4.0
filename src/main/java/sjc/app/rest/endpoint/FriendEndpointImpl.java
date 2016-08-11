@@ -12,7 +12,6 @@ import sjc.app.rest.response.impl.ResponseImpl;
 import sjc.app.service.FriendService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Response;
 
 @Controller
 @RequestMapping("/friends")
@@ -22,14 +21,6 @@ public class FriendEndpointImpl
     private FriendService friendService;
     private PaginationResponseSuccessful paginationResponse = new PaginationResponseImpl();
     private ResponseSuccessful response = new ResponseImpl();
-
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
-    @ResponseBody
-    public Response findFriend(@RequestParam String name, @PathVariable Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
-    {
-        return Response.ok(friendService.findFriends(name, userId, offset, limit)).build();
-    }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
