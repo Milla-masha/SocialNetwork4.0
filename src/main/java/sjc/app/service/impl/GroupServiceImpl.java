@@ -34,13 +34,14 @@ public class GroupServiceImpl implements GroupService
     public List<GroupVO> getGroups(Long userId, int offset, int limit)
     {
         List<GroupVO> groups = new ArrayList<>();
-        List<GroupEntityImpl> groupsEnt = groupDao.getGroupsUser(userId, offset, limit);
-        for (GroupEntityImpl groupEnt : groupsEnt)
+        List<GroupEntityImpl> groupsEntities = groupDao.getGroupsUser(userId, offset, limit);
+        for (GroupEntityImpl groupEntity : groupsEntities)
         {
             GroupVO group = new GroupVO();
-            group.setName(groupEnt.getName());
-            group.setFolowers(groupEnt.getUsers().size());
-            group.setImage(groupEnt.getImage().getUrl());
+            group.setId(groupEntity.getId());
+            group.setName(groupEntity.getName());
+            group.setFolowers(groupEntity.getUsers().size());
+            group.setImage(groupEntity.getImage().getUrl());
             groups.add(group);
         }
         return groups;
@@ -52,6 +53,7 @@ public class GroupServiceImpl implements GroupService
 
         GroupVO group = new GroupVO();
         GroupEntityImpl groupEntity = groupDao.findById(groupId);
+        group.setId(groupEntity.getId());
         group.setName(groupEntity.getName());
         group.setFolowers(groupEntity.getUsers().size());
         if(groupEntity.getImage()!=null)

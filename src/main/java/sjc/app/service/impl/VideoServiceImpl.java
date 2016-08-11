@@ -30,6 +30,7 @@ public class VideoServiceImpl implements VideoService
         for (VideoEntityImpl videoEntity : videosEntity)
         {
             VideoFullVO video = new VideoFullVO();
+            video.setId(videoEntity.getId());
             video.setName(videoEntity.getName());
             video.setPreView(videoEntity.getPreview());
             video.setUrl(videoEntity.getUrl());
@@ -43,6 +44,7 @@ public class VideoServiceImpl implements VideoService
     {
         VideoEntityImpl videoEntity = videoDao.findById(videoId);
         VideoFullVO video = new VideoFullVO();
+        video.setId(videoEntity.getId());
         video.setName(videoEntity.getName());
         video.setPreView(videoEntity.getPreview());
         video.setUrl(videoEntity.getUrl());

@@ -1,8 +1,6 @@
 package sjc.app.model.vo;
 
-import java.sql.Time;
-
-public class MusicVO
+public class MusicVO extends BaseVO
 {
 
     private String name;

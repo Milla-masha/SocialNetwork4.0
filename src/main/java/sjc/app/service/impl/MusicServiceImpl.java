@@ -24,14 +24,15 @@ public class MusicServiceImpl implements MusicService
     @Override
     public List<MusicVO> getMusics(Long userId, int offset, int limit)
     {
-        List<MusicEntityImpl> musics = musicDao.getMusicsUser(userId, offset, limit);
+        List<MusicEntityImpl> musicEntities = musicDao.getMusicsUser(userId, offset, limit);
         List<MusicVO> musicVOs = new ArrayList<>();
-        for (MusicEntityImpl music : musics)
+        for (MusicEntityImpl music : musicEntities)
         {
-            MusicVO mus = new MusicVO();
-            mus.setUrl(music.getUrl());
-            mus.setName(music.getName());
-            musicVOs.add(mus);
+            MusicVO musicVO = new MusicVO();
+            musicVO.setId(music.getId());
+            musicVO.setUrl(music.getUrl());
+            musicVO.setName(music.getName());
+            musicVOs.add(musicVO);
         }
         return musicVOs;
     }

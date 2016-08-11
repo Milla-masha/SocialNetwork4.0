@@ -34,9 +34,10 @@ public class FriendServiceImpl implements FriendService
         for (UserEntityImpl user : infoFriend)
         {
             UserSmallVO friend = new UserSmallVO();
+            friend.setId(user.getId());
             friend.setName(user.getName());
             friend.setLastName(user.getLastName());
-            friend.setIdUser(user.getId());
+            friend.setId(user.getId());
             if (user.getAvatar() != null)
             {
                 friend.setAvatar(user.getAvatar().getUrl());

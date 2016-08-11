@@ -1,16 +1,13 @@
 package sjc.app.model.vo;
 
 
-public class VideoFullVO
+public class VideoFullVO extends BaseVO
 {
 
     String name;
     String url;
     String preView;
     String description;
-
-    public VideoFullVO() {
-    }
 
     public String getName() {
         return name;

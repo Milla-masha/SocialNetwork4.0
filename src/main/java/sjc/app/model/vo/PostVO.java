@@ -1,6 +1,6 @@
 package sjc.app.model.vo;
 
-public class PostVO
+public class PostVO extends BaseVO
 {
 
     UserSmallVO owner;
@@ -8,7 +8,6 @@ public class PostVO
     String text;
     Integer like;
     Integer dislike;
-    Long id;
     String date;
 
     public String getDate() {
@@ -69,13 +68,4 @@ public class PostVO
         this.dislike = dislike;
     }
 
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
 }

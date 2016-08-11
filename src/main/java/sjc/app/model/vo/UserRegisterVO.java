@@ -1,6 +1,6 @@
 package sjc.app.model.vo;
 
-public class UserRegisterVO
+public class UserRegisterVO extends BaseVO
 {
     String name;
     String lastName;

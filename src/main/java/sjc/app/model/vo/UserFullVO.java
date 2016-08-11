@@ -1,11 +1,11 @@
 package sjc.app.model.vo;
 
-public class UserFullVO
+public class UserFullVO extends BaseVO
 {
     private String name;
     private String email;
     private String skype;
-    private int mobile;
+    private Integer mobile;
     private String lastName;
     private Integer sex;
     private Long avatarId;

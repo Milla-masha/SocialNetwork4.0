@@ -1,35 +1,43 @@
 package sjc.app.model.vo;
 
-public class LikeVO {
+public class LikeVO extends BaseVO
+{
 
     private int isLike;
     private Long postId;
     private Long userId;
 
-    public LikeVO() {
+    public LikeVO()
+    {
     }
 
-    public int getIsLike() {
+    public int getIsLike()
+    {
         return isLike;
     }
 
-    public void setIsLike(int isLike) {
+    public void setIsLike(int isLike)
+    {
         this.isLike = isLike;
     }
 
-    public Long getPostId() {
+    public Long getPostId()
+    {
         return postId;
     }
 
-    public void setPostId(Long postId) {
+    public void setPostId(Long postId)
+    {
         this.postId = postId;
     }
 
-    public Long getUserId() {
+    public Long getUserId()
+    {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Long userId)
+    {
         this.userId = userId;
     }
 }

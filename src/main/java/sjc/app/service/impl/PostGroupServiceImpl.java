@@ -47,12 +47,14 @@ public class PostGroupServiceImpl implements PostGroupService
             {
                 post.setImage(postEntity.getImage().getUrl());
             }
+            post.setId(postEntity.getId());
             post.setDate(postEntity.getDateString());
             post.setId(postEntity.getId());
             post.setLike(LikeServiceImpl.getCountLike(postEntity.getLikes()));
             post.setDislike(LikeServiceImpl.getCountDisLike(postEntity.getLikes()));
             post.setText(postEntity.getText());
             UserSmallVO owner = new UserSmallVO();
+            owner.setId(postEntity.getUserFrom().getId());
             owner.setAvatar(postEntity.getUserFrom().getAvatar().getUrl());
             owner.setName(postEntity.getUserFrom().getName());
             owner.setLastName(postEntity.getUserFrom().getLastName());

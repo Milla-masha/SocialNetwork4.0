@@ -1,6 +1,7 @@
 package sjc.app.model.vo;
 
-public class ContactUserVO {
+public class ContactUserVO extends BaseVO
+{
 
     private String mobile;
 
@@ -8,37 +9,45 @@ public class ContactUserVO {
 
     private String email;
 
-    public ContactUserVO() {
+    public ContactUserVO()
+    {
     }
 
-    public ContactUserVO(String mobile, String skype, String email) {
+    public ContactUserVO(String mobile, String skype, String email)
+    {
         this.mobile = mobile;
         this.skype = skype;
 
         this.email = email;
     }
 
-    public String getMobile() {
+    public String getMobile()
+    {
         return mobile;
     }
 
-    public void setMobile(String mobile) {
+    public void setMobile(String mobile)
+    {
         this.mobile = mobile;
     }
 
-    public String getSkype() {
+    public String getSkype()
+    {
         return skype;
     }
 
-    public void setSkype(String skype) {
+    public void setSkype(String skype)
+    {
         this.skype = skype;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email)
+    {
         this.email = email;
     }
 }
