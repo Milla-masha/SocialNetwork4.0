@@ -10,10 +10,6 @@ public class PostVO
     Integer dislike;
     Long id;
 
-    public PostVO()
-    {
-    }
-
     public UserSmallVO getOwner()
     {
         return owner;

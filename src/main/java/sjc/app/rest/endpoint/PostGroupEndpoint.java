@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sjc.app.constant.Constant;
 import sjc.app.model.vo.PostSmallVO;
 import sjc.app.rest.response.PaginationResponseOk;
 import sjc.app.rest.response.ResponseOk;
@@ -28,7 +29,9 @@ public class PostGroupEndpoint
     public PaginationResponseOk getPostsUser(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
     {
         //TODO
-        paginationResponse.buildMetadata(offset,limit,postGroupService.getCountPostsByGroup(userId));
+        paginationResponse.addMetadata(Constant.OFFSET,offset.toString());
+        paginationResponse.addMetadata(Constant.LIMIT,limit.toString());
+        paginationResponse.addMetadata(Constant.COUNT,postGroupService.getCountPostsByGroup(userId).toString());
         paginationResponse.setEntity(postGroupService.getPostsGroup(userId, offset, limit));
         return paginationResponse;
     }

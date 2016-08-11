@@ -1,11 +1,11 @@
 package sjc.app.rest.response;
 
-import sjc.app.rest.response.impl.Metadata;
+import java.util.Map;
 
 public interface PaginationResponseOk extends ResponseOk
 {
-    void buildMetadata(Integer offset, Integer limit, Long count);
+    void addMetadata(String key, String value);
 
-    Metadata getMetadata();
+    Map<String,String> getMetadata();
 
 }
