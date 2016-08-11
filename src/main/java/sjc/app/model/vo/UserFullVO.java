@@ -5,7 +5,7 @@ public class UserFullVO extends BaseVO
     private String name;
     private String email;
     private String skype;
-    private Integer mobile;
+    private String mobile;
     private String lastName;
     private Integer sex;
     private Long avatarId;
@@ -47,12 +47,12 @@ public class UserFullVO extends BaseVO
         this.skype = skype;
     }
 
-    public int getMobile()
+    public String getMobile()
     {
         return mobile;
     }
 
-    public void setMobile(int mobile)
+    public void setMobile(String mobile)
     {
         this.mobile = mobile;
     }

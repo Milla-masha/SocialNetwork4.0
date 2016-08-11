@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService
         user.setBirthday(userEntity.getBirthdateString());
         user.setCity(userEntity.getCity());
         contact.setEmail(userEntity.getEmail());
-        contact.setMobile(userEntity.getMobileString());
+        contact.setMobile(userEntity.getMobile());
         contact.setSkype(userEntity.getSkype());
         user.setContactUser(contact);
         return user;
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService
         user.setBirthday(userEntity.getBirthdateString());
         user.setCity(userEntity.getCity());
         contact.setEmail(userEntity.getEmail());
-        contact.setMobile(userEntity.getMobileString());
+        contact.setMobile(userEntity.getMobile());
         contact.setSkype(userEntity.getSkype());
         user.setContactUser(contact);
         return user;
@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserService
         user.setBirthday(userEntity.getBirthdateString());
         user.setCity(userEntity.getCity());
         contact.setEmail(userEntity.getEmail());
-        contact.setMobile(userEntity.getMobileString());
+        contact.setMobile(userEntity.getMobile());
         contact.setSkype(userEntity.getSkype());
         user.setContactUser(contact);
         return user;

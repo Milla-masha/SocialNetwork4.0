@@ -48,7 +48,6 @@ public class VideoServiceImpl implements VideoService
         video.setName(videoEntity.getName());
         video.setPreView(videoEntity.getPreview());
         video.setUrl(videoEntity.getUrl());
-        //  video.setDescription(videoEntity.);
         return video;
     }
 }

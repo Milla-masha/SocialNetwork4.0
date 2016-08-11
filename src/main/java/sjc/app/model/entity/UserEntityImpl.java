@@ -16,7 +16,7 @@ public class UserEntityImpl extends AbstractPersistable {
 	private String name;
 	private String email;
 	private String skype;
-	private int mobile;
+	private String mobile;
 	private String lastName;
 	private String sex;
 	private ImageEntityImpl avatar;
@@ -220,16 +220,11 @@ public class UserEntityImpl extends AbstractPersistable {
 	}
 
 	@Column(name="mobile")
-	public int getMobile() {
+	public String getMobile() {
 		return mobile;
 	}
 
-	@Column(name="mobile")
-	public String getMobileString() {
-		return Integer.toString(mobile);
-	}
-
-	public void setMobile(int mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 
