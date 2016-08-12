@@ -4,7 +4,7 @@ public class GroupSmallVO extends BaseVO
 {
     String name;
     Long fkImage;
-    String description;
+    private String description;
 
     public GroupSmallVO()
     {
