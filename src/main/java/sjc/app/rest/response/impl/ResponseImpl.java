@@ -4,7 +4,7 @@ import sjc.app.rest.response.ResponseSuccessful;
 
 public class ResponseImpl implements ResponseSuccessful
 {
-    private Object entity=null;
+    private Object entity = null;
 
     @Override
     public void setEntity(Object entity)

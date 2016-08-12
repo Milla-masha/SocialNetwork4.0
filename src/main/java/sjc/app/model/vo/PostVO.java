@@ -3,18 +3,20 @@ package sjc.app.model.vo;
 public class PostVO extends BaseVO
 {
 
-    UserSmallVO owner;
-    String image;
-    String text;
-    Integer like;
-    Integer dislike;
-    String date;
+    private UserSmallVO owner;
+    private String image;
+    private String text;
+    private Integer like;
+    private Integer dislike;
+    private String date;
 
-    public String getDate() {
+    public String getDate()
+    {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(String date)
+    {
         this.date = date;
     }
 

@@ -4,9 +4,9 @@ package sjc.app.model.vo;
 public class UserSmallVO extends BaseVO
 {
 
-    String name;
-    String lastName;
-    String avatar;
+    private String name;
+    private String lastName;
+    private String avatar;
 
     public String getName()
     {

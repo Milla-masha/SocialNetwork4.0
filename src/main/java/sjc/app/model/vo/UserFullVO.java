@@ -13,9 +13,7 @@ public class UserFullVO extends BaseVO
     private String city;
     private String about;
 
-    public UserFullVO()
-    {
-    }
+
 
     public String getName()
     {

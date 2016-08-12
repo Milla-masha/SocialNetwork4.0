@@ -20,8 +20,8 @@ public class FriendEndpointImpl
 {
     @Autowired
     private FriendService friendService;
-    private PaginationResponseSuccessful paginationResponse=new PaginationResponseImpl();
-    private ResponseSuccessful response=new ResponseImpl();
+    private PaginationResponseSuccessful paginationResponse = new PaginationResponseImpl();
+    private ResponseSuccessful response = new ResponseImpl();
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
@@ -37,9 +37,9 @@ public class FriendEndpointImpl
     public PaginationResponseSuccessful getFriend(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
     {
         paginationResponse.setEntity(friendService.getFriends(userId, offset, limit));
-        paginationResponse.addMetadata(Constant.OFFSET,offset.toString());
-        paginationResponse.addMetadata(Constant.LIMIT,limit.toString());
-        paginationResponse.addMetadata(Constant.COUNT,friendService.getCountFriends(userId).toString());
+        paginationResponse.addMetadata(Constant.OFFSET, offset.toString());
+        paginationResponse.addMetadata(Constant.LIMIT, limit.toString());
+        paginationResponse.addMetadata(Constant.COUNT, friendService.getCountFriends(userId).toString());
         return paginationResponse;
     }
 

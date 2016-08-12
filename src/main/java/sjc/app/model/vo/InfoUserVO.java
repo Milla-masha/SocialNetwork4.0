@@ -2,7 +2,6 @@ package sjc.app.model.vo;
 
 public class InfoUserVO extends BaseVO
 {
-
     private String name;
 
     private String lastName;
@@ -18,10 +17,6 @@ public class InfoUserVO extends BaseVO
     private Integer sex;
 
     private ContactUserVO contactUser;
-
-    public InfoUserVO()
-    {
-    }
 
     public String getName()
     {

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import sjc.app.chat.Message;
 import sjc.app.chat.OutputMessage;
 
+import java.security.Principal;
 import java.util.Date;
 
 /**
@@ -16,24 +17,38 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/")
-public class ChatController {
+public class ChatController
+{
 
     @RequestMapping(method = RequestMethod.GET)
-    public String viewApplication() {
+    public String viewApplication()
+    {
         return "index";
     }
 
     @MessageMapping("/chat")
     @SendTo("/topic/message")
-    public OutputMessage sendMessage(Message message) {
+    public OutputMessage sendMessage(Message message)
+    {
 
         return new OutputMessage(message, new Date());
 
     }
+
     @MessageMapping("/usermessage")
     @SendToUser("/queue/message")
-    public  OutputMessage sendToUser(Message message){
+    public OutputMessage sendToUser(Message message)
+    {
         return new OutputMessage(message, new Date());
     }
 
+    @MessageMapping("/spittle")
+    @SendToUser("/queue/notifications")
+    public OutputMessage handleSpittle(Principal principal, Message message)
+    {
+
+        message.setMessage(principal.getName());
+
+        return new OutputMessage(message, new Date());
+    }
 }
