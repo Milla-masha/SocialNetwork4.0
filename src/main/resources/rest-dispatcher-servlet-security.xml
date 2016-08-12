@@ -26,17 +26,24 @@
     <!-- The OAuth2 protected resources are separated out into their own block
         so we can deal with authorization and error handling separately. This isn't
         mandatory, but it makes it easier to control the behaviour. -->
-    <!--
-        <http pattern="/chat/*"
-              auto-config="true" security="none" create-session="never" use-expressions="false"
-              xmlns="http://www.springframework.org/schema/security">
+    <http pattern="/chat/*"
+          auto-config="true" security="none" create-session="never" use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
 
-        </http>
-        <http pattern="/topic/*"
-              auto-config="true" security="none" create-session="never" use-expressions="false"
-              xmlns="http://www.springframework.org/schema/security">
-        </http>
-    -->
+    </http>
+    <http pattern="/chat"
+          auto-config="true" security="none" create-session="never" use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
+
+    </http>
+    <http pattern="/user/*"
+          auto-config="true" security="none" create-session="never" use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
+    </http>
+    <http pattern="/topic/*"
+          auto-config="true" security="none" create-session="never" use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
+    </http>
 
 
     <http pattern="/users/*" create-session="never" use-expressions="false"
@@ -69,6 +76,7 @@
         <intercept-url pattern="/*" method="POST" access="ROLE_CLIENT"/>
         <intercept-url pattern="/*" method="PUT" access="ROLE_CLIENT"/>
         <intercept-url pattern="/*" method="GET" access="ROLE_CLIENT"/>
+        <intercept-url pattern="/*" method="DELETE" access="ROLE_CLIENT"/>
         <intercept-url pattern="/*" method="DELETE" access="ROLE_CLIENT"/>
         <custom-filter ref="corsFilter" before="SECURITY_CONTEXT_FILTER"/>
         <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>

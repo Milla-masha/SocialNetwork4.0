@@ -30,12 +30,10 @@ public class ChatController
     @SendTo("/topic/message")
     public OutputMessage sendMessage(Message message)
     {
-
         return new OutputMessage(message, new Date());
-
     }
 
-    @MessageMapping("/usermessage")
+    @MessageMapping("/user")
     @SendToUser("/queue/message")
     public OutputMessage sendToUser(Message message)
     {
@@ -46,9 +44,7 @@ public class ChatController
     @SendToUser("/queue/notifications")
     public OutputMessage handleSpittle(Principal principal, Message message)
     {
-
         message.setMessage(principal.getName());
-
         return new OutputMessage(message, new Date());
     }
 }
