@@ -19,7 +19,7 @@ public class FirebaseInitializer
        {
            options = new FirebaseOptions.Builder()
                    .setServiceAccount(new FileInputStream("firebase-secret-jsonkey/socialnetwork-fa62f914687e.json"))
-                   .setDatabaseUrl("https://databaseName.firebaseio.com/")
+                   .setDatabaseUrl("https://socialnetwork-a8eb6.firebaseio.com/")
                    .build();
        } catch (FileNotFoundException e)
        {
