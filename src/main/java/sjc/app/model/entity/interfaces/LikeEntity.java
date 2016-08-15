@@ -15,7 +15,7 @@ public interface LikeEntity {
 
     void setFkPost(PostEntityImpl fkPost);
 
-    UserEntityImpl getFkUser();
+    UserEntityImpl getUser();
 
-    void setFkUser(UserEntityImpl fkUser);
+    void setUser(UserEntityImpl fkUser);
 }
