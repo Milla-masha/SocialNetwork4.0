@@ -73,7 +73,10 @@ public class PostGroupServiceImpl implements PostGroupService
         postEntity.setText(post.getText());
         postEntity.setGroup(groupTo);
         postEntity.setUserFrom(userEntityFrom);
-        postEntity.setImage(imageDao.findById(post.getFkImage()));
+        if(post.getFkImage()!=null)
+        {
+            postEntity.setImage(imageDao.findById(post.getFkImage()));
+        }
         postGroupDao.save(postEntity);
         return true;
     }

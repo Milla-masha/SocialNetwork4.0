@@ -90,6 +90,16 @@
         <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
         <access-denied-handler ref="oauthAccessDeniedHandler"/>
     </http>
+    <http pattern="/groups/*" create-session="never" use-expressions="false"
+          entry-point-ref="oauthAuthenticationEntryPoint"
+          access-decision-manager-ref="accessDecisionManager"
+          xmlns="http://www.springframework.org/schema/security">
+        <anonymous enabled="false"/>
+        <csrf disabled="true"/>
+        <intercept-url pattern="/groups/*" access="ROLE_CLIENT"/>
+        <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
+        <access-denied-handler ref="oauthAccessDeniedHandler"/>
+    </http>
     <http pattern="/users" create-session="never" use-expressions="false"
           entry-point-ref="oauthAuthenticationEntryPoint"
           access-decision-manager-ref="accessDecisionManager"
@@ -121,7 +131,22 @@
         <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
         <access-denied-handler ref="oauthAccessDeniedHandler"/>
     </http>
-
+    <http pattern="/chat/*"
+          auto-config="true" security="none" create-session="never" use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
+    </http>
+    <http pattern="/chat"
+          auto-config="true" security="none" create-session="never" use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
+    </http>
+    <http pattern="/user/*"
+          auto-config="true" security="none" create-session="never" use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
+    </http>
+    <http pattern="/topic/*"
+          auto-config="true" security="none" create-session="never" use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
+    </http>
     <bean id="corsFilter"
           class="sjc.app.rest.authentication.filter.CustomCorsFilter"/>
 

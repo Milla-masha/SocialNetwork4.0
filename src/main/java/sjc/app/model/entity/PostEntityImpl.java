@@ -18,7 +18,7 @@ public class PostEntityImpl extends AbstractPersistable implements PostEntity {
 
     private ImageEntityImpl image;
     private String text;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPost", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "fkPost", fetch = FetchType.LAZY)
     private List<LikeEntityImpl> likes;
     private UserEntityImpl userFrom;
     private Date date;

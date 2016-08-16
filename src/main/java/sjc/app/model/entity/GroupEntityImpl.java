@@ -37,7 +37,7 @@ public class GroupEntityImpl extends AbstractPersistable implements GroupEntity
 
     @Access(AccessType.PROPERTY)
     @JoinColumn(name = "fk_media", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Override
     public ImageEntityImpl getImage()
     {
@@ -66,9 +66,8 @@ public class GroupEntityImpl extends AbstractPersistable implements GroupEntity
     @Access(AccessType.PROPERTY)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "group_user", joinColumns = {
-            @JoinColumn(name = "fk_group", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "fk_user",
-                    nullable = false, updatable = false)})
+            @JoinColumn(name = "fk_group")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_user")})
     @Override
     public List<UserEntityImpl> getUsers()
     {

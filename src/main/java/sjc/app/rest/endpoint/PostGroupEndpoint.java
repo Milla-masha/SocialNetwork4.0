@@ -26,12 +26,11 @@ public class PostGroupEndpoint
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public PaginationResponseSuccessful getGropPosts(@RequestParam Long groupId, @RequestParam Integer offset, @RequestParam Integer limit)
+    public PaginationResponseSuccessful getPostsUser(@RequestParam Long groupId, @RequestParam Integer offset, @RequestParam Integer limit)
     {
-        //TODO
-        paginationResponse.addMetadata(Constant.OFFSET, offset.toString());
-        paginationResponse.addMetadata(Constant.LIMIT, limit.toString());
-        paginationResponse.addMetadata(Constant.COUNT, postGroupService.getCountPostsByGroup(groupId).toString());
+        paginationResponse.addMetadata(Constant.OFFSET,offset.toString());
+        paginationResponse.addMetadata(Constant.LIMIT,limit.toString());
+        paginationResponse.addMetadata(Constant.COUNT,postGroupService.getCountPostsByGroup(groupId).toString());
         paginationResponse.setEntity(postGroupService.getPostsGroup(groupId, offset, limit));
         return paginationResponse;
     }

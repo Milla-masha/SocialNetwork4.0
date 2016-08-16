@@ -22,13 +22,12 @@ public class PostGroupDaoImpl extends GenericDaoImpl<PostGroupEntityImpl> implem
     @Override
     public List<PostGroupEntityImpl> getPostsGroup(Long idGroup, int offset, int limit)
     {
-        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<PostGroupEntityImpl> criteriaQuery = builder.createQuery(PostGroupEntityImpl.class);
-        Root<PostGroupEntityImpl> postRoot = criteriaQuery.from(PostGroupEntityImpl.class);
-        Predicate condition = builder.equal(postRoot.get("Group"), idGroup);
-        criteriaQuery.where(condition);
-        criteriaQuery.orderBy(builder.desc(postRoot.get("date")));
-        TypedQuery<PostGroupEntityImpl> q = getEntityManager().createQuery(criteriaQuery);
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<PostGroupEntityImpl> c = cb.createQuery(PostGroupEntityImpl.class);
+        Root<PostGroupEntityImpl> post = c.from(PostGroupEntityImpl.class);
+        Predicate condition = cb.equal(post.get("group"), idGroup);
+        c.where(condition);
+        TypedQuery<PostGroupEntityImpl> q = getEntityManager().createQuery(c);
         q.setFirstResult(offset);
         q.setMaxResults(limit);
         return q.getResultList();

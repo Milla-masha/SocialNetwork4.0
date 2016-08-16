@@ -55,7 +55,6 @@ public abstract class GenericDaoImpl<T extends AbstractPersistable> implements G
     @Override
     public List<T> findAll()
     {
-
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(persistentClass);
         Root<T> rootEntry = cq.from(persistentClass);
