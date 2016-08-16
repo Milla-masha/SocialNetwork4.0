@@ -30,7 +30,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry)
     {
-        registry.addEndpoint("/chat")
+        registry.addEndpoint("/hello")
                 .setAllowedOrigins("*")
                 .withSockJS();
     }

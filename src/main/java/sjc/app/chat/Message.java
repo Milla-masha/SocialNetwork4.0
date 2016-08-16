@@ -1,35 +1,34 @@
+/*
 package sjc.app.chat;
 
+*/
 /**
  * Created by psycl on 08.08.2016.
- */
+ *//*
+
 public class Message {
+  //  private String from;
+    private String text;
+  //  private int id;
 
-    private String message;
-    private int id;
-
-    public Message() {
+    public Message()  {
 
     }
-
-    public Message(int id, String message) {
-        this.id = id;
-        this.message = message;
+    public Message(*/
+/*int id, *//*
+String text) {
+      //  this.id = id;
+        this.text = text;
     }
 
-    public String getMessage() {
-        return message;
+
+    public String getText() {
+        return text;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-}
+}*/

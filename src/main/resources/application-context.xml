@@ -20,37 +20,40 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <context:component-scan base-package="sjc.app"/>
-        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-              destroy-method="close">
-            <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-            <property name="url" value="jdbc:mysql://localhost:3306/social_network?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false" />
-            <property name="username" value="root" />
-            <property name="password" value="root" />
-        </bean>
-     <!--   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-              destroy-method="close">
-            <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-            <property name="url" value="jdbc:mysql://us-cdbr-iron-east-04.cleardb.net:3306/?reconnect=truee&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false" />
-            <property name="username" value="be745b3c0c2e9e" />
-            <property name="password" value="382ad6c7" />
-        </bean>-->
-   <!-- <bean class="java.net.URI" id="dbUrl">
-        <constructor-arg
-                value="mysql://be745b3c0c2e9e:382ad6c7@us-cdbr-iron-east-04.cleardb.net/heroku_b918673307eb9ec?reconnect=true"/>
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url"
+                  value="jdbc:mysql://localhost:3306/social_network?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
     </bean>
+    <!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+           destroy-method="close">
+         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+         <property name="url" value="jdbc:mysql://us-cdbr-iron-east-04.cleardb.net:3306/?reconnect=true&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false" />
+         <property name="username" value="be745b3c0c2e9e" />
+         <property name="password" value="382ad6c7" />
+         <property name="testOnBorrow" value="true"/>
+     <property name="testOnReturn" value="true"/>
+     <property name="testWhileIdle" value="true"/>
+     <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
+     <property name="numTestsPerEvictionRun" value="3"/>
+     <property name="minEvictableIdleTimeMillis" value="1800000"/>
+     <property name="validationQuery" value="SELECT version();"/>
+     </bean>-->
+
+    <!--<bean class="java.net.URI" id="dbUrl">
+        <constructor-arg value="#{systemEnvironment['DATABASE_URL']}"/>
+    </bean>-->
+<!--
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="url" value="jdbc:mysql://us-cdbr-iron-east-04.cleardb.net:3306/?reconnect=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
-        <property name="username" value="be745b3c0c2e9e"/>
-        <property name="password" value="382ad6c7"/>
-        <property name="testOnBorrow" value="true"/>
-        <property name="testOnReturn" value="true"/>
-        <property name="testWhileIdle" value="true"/>
-        <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
-        <property name="numTestsPerEvictionRun" value="3"/>
-        <property name="minEvictableIdleTimeMillis" value="1800000"/>
-        <property name="validationQuery" value="SELECT version();"/>
-    </bean>-->
+        <property name="url" value="#{ 'jdbc:mysql://' + @dbUrl.getHost() + ':' + @dbUrl.getPort() + @dbUrl.getPath() }"/>
+        <property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
+        <property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
+    </bean>
+-->
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
