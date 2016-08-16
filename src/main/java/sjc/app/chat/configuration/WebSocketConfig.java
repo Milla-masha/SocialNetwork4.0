@@ -23,14 +23,15 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer
     {
         config.enableSimpleBroker("/queue/", "/topic/", "/exchange/");
         config.setApplicationDestinationPrefixes("/app");
-      //  config.setUserDestinationPrefix("/user");
+        config.setUserDestinationPrefix("/user");
+
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry)
     {
         registry.addEndpoint("/chat")
-                //.setAllowedOrigins("*")
+                .setAllowedOrigins("*")
                 .withSockJS();
     }
 

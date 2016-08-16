@@ -80,7 +80,7 @@ public class GroupServiceImpl implements GroupService
     }
 
     @Override
-    public boolean currentGroup(Long groupId, String login)
+    public boolean addUserToGroup(Long groupId, String login)
     {
         GroupEntityImpl groupEntity = groupDao.findById(groupId);
         UserEntityImpl userEntity = userDao.findByName(login);

@@ -13,7 +13,7 @@ public interface GroupService
 
     boolean addGroup(GroupSmallVO group, String login);
 
-    boolean currentGroup(Long groupId, String login);
+    boolean addUserToGroup(Long groupId, String login);
 
     boolean leaveGroup(Long groupId, String login);
 }

@@ -19,24 +19,26 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+*/
+/*
+@EnableRedisHttpSession
+*//*
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
 
-    private static final String SECURE_ADMIN_PASSWORD = "rockandroll";
+    private static final String SECURE_ADMIN_PASSWORD = "user";
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .formLogin()
-                .loginPage("/index.html")
                 .defaultSuccessUrl("/chat.html")
                 .permitAll()
                 .and()
                 .logout()
-                .logoutSuccessUrl("/index.html")
                 .permitAll()
                 .and()
                 .authorizeRequests()
@@ -45,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 /**", "/images*/
 /**", "/css*/
 /**", "/index.html", "/").permitAll()
-                .antMatchers("/websocket").hasRole("ADMIN")
+                .antMatchers("/chat").permitAll()
                 .anyRequest().authenticated();
 
     }

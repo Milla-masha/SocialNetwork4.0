@@ -20,8 +20,8 @@ public class PostUserEndpointImpl
 {
     @Autowired
     private PostUserService postUserService;
-    private PaginationResponseSuccessful paginationResponse=new PaginationResponseImpl();
-    private ResponseSuccessful response=new ResponseImpl();
+    private PaginationResponseSuccessful paginationResponse = new PaginationResponseImpl();
+    private ResponseSuccessful response = new ResponseImpl();
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
@@ -30,9 +30,9 @@ public class PostUserEndpointImpl
     {
         System.out.println(request.getRequestURL());
         paginationResponse.setEntity(postUserService.getPostsUser(userId, offset, limit));
-        paginationResponse.addMetadata(Constant.OFFSET,offset.toString());
-        paginationResponse.addMetadata(Constant.LIMIT,limit.toString());
-        paginationResponse.addMetadata(Constant.COUNT,postUserService.getCountPostsUser(userId).toString());
+        paginationResponse.addMetadata(Constant.OFFSET, offset.toString());
+        paginationResponse.addMetadata(Constant.LIMIT, limit.toString());
+        paginationResponse.addMetadata(Constant.COUNT, postUserService.getCountPostsUser(userId).toString());
         return paginationResponse;
     }
 

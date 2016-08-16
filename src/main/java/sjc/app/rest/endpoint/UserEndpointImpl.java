@@ -20,8 +20,8 @@ public class UserEndpointImpl
 {
     @Autowired
     private UserService userService;
-    private PaginationResponseSuccessful paginationResponse=new PaginationResponseImpl();
-    private ResponseSuccessful response=new ResponseImpl();
+    private PaginationResponseSuccessful paginationResponse = new PaginationResponseImpl();
+    private ResponseSuccessful response = new ResponseImpl();
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, path = "/find")
@@ -64,7 +64,7 @@ public class UserEndpointImpl
     @ResponseBody
     public ResponseSuccessful editProfileInfo(@RequestBody UserFullVO user)
     {
-        response.setEntity(userService.editProfile(SecurityContextHolder.getContext().getAuthentication().getName(),user));
+        response.setEntity(userService.editProfile(SecurityContextHolder.getContext().getAuthentication().getName(), user));
         return response;
     }
 }

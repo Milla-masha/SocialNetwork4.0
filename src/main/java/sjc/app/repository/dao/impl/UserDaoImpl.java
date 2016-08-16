@@ -96,13 +96,13 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
     @Override
     public List<UserEntityImpl> getBlackList(Long idUser, int offset, int limit)
     {
-        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<UserEntityImpl> cUser = cb.createQuery(UserEntityImpl.class);
-        Root<UserEntityImpl> rUser = cUser.from(UserEntityImpl.class);
-        Predicate condition = cb.equal(rUser.get("id"), idUser);
+        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<UserEntityImpl> userEntityCriteriaQuery = builder.createQuery(UserEntityImpl.class);
+        Root<UserEntityImpl> rUser = userEntityCriteriaQuery.from(UserEntityImpl.class);
+        Predicate condition = builder.equal(rUser.get("id"), idUser);
         Join<UserEntityImpl, UserEntityImpl> joinAnswerCollaborator = rUser.join("blackListUsers");
-        cUser.select(joinAnswerCollaborator).where(condition);
-        TypedQuery<UserEntityImpl> q = getEntityManager().createQuery(cUser);
+        userEntityCriteriaQuery.select(joinAnswerCollaborator).where(condition);
+        TypedQuery<UserEntityImpl> q = getEntityManager().createQuery(userEntityCriteriaQuery);
         q.setFirstResult(offset);
         q.setMaxResults(limit);
         return q.getResultList();

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import sjc.app.model.vo.GroupSmallVO;
 import sjc.app.rest.response.PaginationResponseSuccessful;
 import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
@@ -20,8 +19,8 @@ public class GroupEndpointImpl
 
     @Autowired
     private GroupService groupService;
-    private PaginationResponseSuccessful paginationResponse=new PaginationResponseImpl();
-    private ResponseSuccessful response=new ResponseImpl();
+    private PaginationResponseSuccessful paginationResponse = new PaginationResponseImpl();
+    private ResponseSuccessful response = new ResponseImpl();
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
@@ -40,7 +39,7 @@ public class GroupEndpointImpl
         response.setEntity(groupService.getGroup(groupId));
         return response;
     }
-
+/*
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
@@ -48,14 +47,23 @@ public class GroupEndpointImpl
     {
         response.setEntity(groupService.addGroup(group, request.getUserPrincipal().getName()));
         return response;
-    }
+    }*/
+
+/*    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+    @ResponseBody
+    public ResponseSuccessful joinGroup(@RequestParam Long groupId, HttpServletRequest request)
+    {
+        response.setEntity(groupService.addUserToGroup(groupId, request.getUserPrincipal().getName()));
+        return response;
+    }*/
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json", value = "/{groupId}")
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public ResponseSuccessful currentGroup(@PathVariable Long groupId, HttpServletRequest request)
+    public ResponseSuccessful joinGroup(@RequestParam Long groupId, HttpServletRequest request)
     {
-        response.setEntity(groupService.currentGroup(groupId, request.getUserPrincipal().getName()));
+        response.setEntity(groupService.addUserToGroup(groupId, request.getUserPrincipal().getName()));
         return response;
     }
 

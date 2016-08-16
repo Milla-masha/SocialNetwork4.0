@@ -22,12 +22,13 @@ public class PostUserDaoImpl extends GenericDaoImpl<PostUserEntityImpl> implemen
     @Override
     public List<PostUserEntityImpl> getPostsUser(Long idUser, int offset, int limit)
     {
-        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<PostUserEntityImpl> c = cb.createQuery(PostUserEntityImpl.class);
-        Root<PostUserEntityImpl> post = c.from(PostUserEntityImpl.class);
-        Predicate condition = cb.equal(post.get("user"), idUser);
-        c.where(condition);
-        TypedQuery<PostUserEntityImpl> q = getEntityManager().createQuery(c);
+        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<PostUserEntityImpl> criteriaQuery = builder.createQuery(PostUserEntityImpl.class);
+        Root<PostUserEntityImpl> postRoot = criteriaQuery.from(PostUserEntityImpl.class);
+        Predicate condition = builder.equal(postRoot.get("user"), idUser);
+        criteriaQuery.where(condition);
+        criteriaQuery.orderBy(builder.desc(postRoot.get("date")));
+        TypedQuery<PostUserEntityImpl> q = getEntityManager().createQuery(criteriaQuery);
         q.setFirstResult(offset);
         q.setMaxResults(limit);
         return q.getResultList();

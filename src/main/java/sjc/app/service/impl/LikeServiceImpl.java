@@ -32,9 +32,9 @@ public class LikeServiceImpl implements LikeService
     @Override
     public boolean addLikeToPostUser(LikeVO likeVO, String login)
     {
-        LikeEntityImpl likeEntity=new LikeEntityImpl();
+        LikeEntityImpl likeEntity = new LikeEntityImpl();
         likeEntity.setFkPost(postUserDao.findById(likeVO.getPostId()));
-        likeEntity.setFkUser(userDao.findByName(login));
+        likeEntity.setUser(userDao.findByName(login));
         likeEntity.setIsLike(likeVO.getIsLike());
         likeDao.save(likeEntity);
         return true;
@@ -43,9 +43,9 @@ public class LikeServiceImpl implements LikeService
     @Override
     public boolean addLikeToPostGroup(LikeVO likeVO, String login)
     {
-        LikeEntityImpl likeEntity=new LikeEntityImpl();
+        LikeEntityImpl likeEntity = new LikeEntityImpl();
         likeEntity.setFkPost(postGroupDao.findById(likeVO.getPostId()));
-        likeEntity.setFkUser(userDao.findByName(login));
+        likeEntity.setUser(userDao.findByName(login));
         likeEntity.setIsLike(likeVO.getIsLike());
         likeDao.save(likeEntity);
         return true;
