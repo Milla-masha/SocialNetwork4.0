@@ -5,12 +5,12 @@
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
 
-<display-name>SocialNetwork</display-name>
- <context-param>
-    <param-name>contextConfigLocation</param-name>
-     <!--<param-value>classpath:application-context.xml</param-value>-->
-     <param-value>classpath:application-context.xml, classpath:rest-dispatcher-servlet-security.xml</param-value>
-  </context-param>
+    <display-name>SocialNetwork</display-name>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <!--<param-value>classpath:application-context.xml</param-value>-->
+        <param-value>classpath:application-context.xml, classpath:rest-dispatcher-servlet-security.xml</param-value>
+    </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -62,4 +62,4 @@
         <filter-name>CorseFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-   </web-app>
+</web-app>
