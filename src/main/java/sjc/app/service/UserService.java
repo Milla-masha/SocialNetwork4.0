@@ -1,9 +1,6 @@
 package sjc.app.service;
 
-import sjc.app.model.vo.FriendVO;
-import sjc.app.model.vo.InfoUserVO;
-import sjc.app.model.vo.UserFullVO;
-import sjc.app.model.vo.UserRegisterVO;
+import sjc.app.model.vo.*;
 
 import java.util.List;
 
@@ -18,4 +15,6 @@ public interface UserService
     boolean editProfile(String login, UserFullVO user);
 
     List<FriendVO> findUsersByFullName(String login,String fullName, int offset, int limit);
+
+    UserPasswordVO getUserPassword(String email);
 }

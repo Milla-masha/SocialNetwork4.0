@@ -32,6 +32,18 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
     }
 
     @Override
+    public UserEntityImpl findByEmail(String email)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<UserEntityImpl> c = cb.createQuery(UserEntityImpl.class);
+        Root<UserEntityImpl> registerUser = c.from(UserEntityImpl.class);
+        Predicate condition = cb.equal(registerUser.get("email"), email);
+        c.where(condition);
+        TypedQuery<UserEntityImpl> q = getEntityManager().createQuery(c);
+        return q.getSingleResult();
+    }
+
+    @Override
     public List<UserEntityImpl> findByFullName(String fullName, int offset, int limit)
     {
         if (fullName == null || fullName.equals(""))
@@ -140,7 +152,8 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
 
             List<UserEntityImpl> blackList = owner.getBlackListUsers();
 
-            if (blackList.contains(black)){
+            if (blackList.contains(black))
+            {
                 owner.getBlackListUsers().remove(black);
                 getEntityManager().merge(owner);
             }

@@ -9,6 +9,15 @@ public class UserVO extends BaseVO
     private String login;
     private List<UserVO> friends;
 
+    public UserVO(){
+
+    }
+
+    public UserVO(String password, String login){
+        this.password = password;
+        this.login = login;
+
+    }
     public String getPassword()
     {
         return password;

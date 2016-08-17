@@ -67,5 +67,9 @@ public class UserEndpointImpl
         response.setEntity(userService.editProfile(SecurityContextHolder.getContext().getAuthentication().getName(), user));
         return response;
     }
+
+
+
+
 }
 

@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public InfoUserVO getInfoUserVO(String login,Long userId)
+    public InfoUserVO getInfoUserVO(String login, Long userId)
     {
         UserEntityImpl userEntity = userDao.findById(userId);
         UserEntityImpl userLogin = userDao.findByName(login);
@@ -83,10 +83,10 @@ public class UserServiceImpl implements UserService
         contact.setMobile(userEntity.getMobile());
         contact.setSkype(userEntity.getSkype());
         user.setContactUser(contact);
-        if(userLogin.getFriends().contains(userEntity))
+        if (userLogin.getFriends().contains(userEntity))
         {
-            user.setIsFriend(1);}
-        else user.setIsFriend(0);
+            user.setIsFriend(1);
+        } else user.setIsFriend(0);
         return user;
     }
 
@@ -141,9 +141,9 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public List<FriendVO> findUsersByFullName(String login,String fullName, int offset, int limit)
+    public List<FriendVO> findUsersByFullName(String login, String fullName, int offset, int limit)
     {
-        UserEntityImpl user=userDao.findByName(login);
+        UserEntityImpl user = userDao.findByName(login);
         List<UserEntityImpl> userEntities = userDao.findByFullName(fullName, offset, limit);
         List<FriendVO> friendVOs = new ArrayList<>();
         for (UserEntityImpl userEntity : userEntities)
@@ -156,12 +156,19 @@ public class UserServiceImpl implements UserService
             }
             friend.setName(userEntity.getName());
             friend.setLastName(userEntity.getLastName());
-            if(user.getFriends().contains(userEntity))
+            if (user.getFriends().contains(userEntity))
             {
-            friend.setIsFriend(1);}
-            else friend.setIsFriend(0);
+                friend.setIsFriend(1);
+            } else friend.setIsFriend(0);
             friendVOs.add(friend);
         }
         return friendVOs;
+    }
+
+    @Override
+    public UserPasswordVO getUserPassword(String email){
+        UserEntityImpl user = userDao.findByEmail(email);
+
+        return new UserPasswordVO(user.getPassword());
     }
 }
