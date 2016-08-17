@@ -17,8 +17,8 @@ public class BlackListEndpointImpl
 {
     @Autowired
     private BlackListService blackListService;
-    private PaginationResponseSuccessful paginationResponse=new PaginationResponseImpl();
-    private ResponseSuccessful response=new ResponseImpl();
+    private PaginationResponseSuccessful paginationResponse = new PaginationResponseImpl();
+    private ResponseSuccessful response = new ResponseImpl();
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
@@ -26,27 +26,27 @@ public class BlackListEndpointImpl
     public PaginationResponseSuccessful getBlackList(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
     {
         paginationResponse.setEntity(blackListService.getBlackList(userId, offset, limit));
-        paginationResponse.addMetadata(Constant.OFFSET,offset.toString());
-        paginationResponse.addMetadata(Constant.LIMIT,limit.toString());
-        paginationResponse.addMetadata(Constant.COUNT,blackListService.getCountBlackUser(userId).toString());
+        paginationResponse.addMetadata(Constant.OFFSET, offset.toString());
+        paginationResponse.addMetadata(Constant.LIMIT, limit.toString());
+        paginationResponse.addMetadata(Constant.COUNT, blackListService.getCountBlackUser(userId).toString());
         return paginationResponse;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseSuccessful addBlackList(@RequestParam Long ownerId, @RequestParam Long blackUserId)
+    public ResponseSuccessful addBlackList(@RequestParam Long ownerId, @RequestParam Long bUserId)
     {
-        blackListService.addBlackList(ownerId, blackUserId);
+        blackListService.addBlackList(ownerId, bUserId);
         return response;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseSuccessful deleteBlackList(Long ownerId, Long blackUserId)
+    public ResponseSuccessful deleteBlackList(Long ownerId, Long bUserId)
     {
-        blackListService.deleteBlackList(ownerId, blackUserId);
+        blackListService.deleteBlackList(ownerId, bUserId);
         return response;
     }
 }

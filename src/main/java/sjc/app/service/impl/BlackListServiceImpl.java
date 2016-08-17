@@ -28,34 +28,37 @@ public class BlackListServiceImpl implements BlackListService
         List<UserSmallVO> blackList = new ArrayList<>();
         for (UserEntityImpl user : infoBlack)
         {
-            UserSmallVO blackUser = new UserSmallVO();
-            blackUser.setId(user.getId());
-            blackUser.setName(user.getName());
-            blackUser.setLastName(user.getLastName());
-            if(user.getAvatar()!=null)
+            UserSmallVO bUser = new UserSmallVO();
+            bUser.setId(user.getId());
+            bUser.setName(user.getName());
+            bUser.setLastName(user.getLastName());
+            if (user.getAvatar() != null)
             {
-                blackUser.setAvatar(user.getAvatar().getUrl());
+                bUser.setAvatar(user.getAvatar().getUrl());
             }
-            blackList.add(blackUser);
+            blackList.add(bUser);
         }
         return blackList;
     }
 
     @Override
-    public void addBlackList(Long userId, Long idBlackUser)
+    public void addBlackList(Long userId, Long bUserId)
     {
-        blackListDao.addBlackList(userId, idBlackUser);
+        if (userId != null && bUserId != null && !userId.equals(bUserId))
+        {
+            blackListDao.addBlackList(userId, bUserId);
+        }
     }
 
     @Override
-    public void deleteBlackList(Long userId, Long idBlackUser)
+    public void deleteBlackList(Long userId, Long bUserId)
     {
-        blackListDao.deleteBlackList(userId, idBlackUser);
+        blackListDao.deleteBlackList(userId, bUserId);
     }
 
     @Override
     public Long getCountBlackUser(Long userId)
     {
-       return blackListDao.getCountBlackList(userId);
+        return blackListDao.getCountBlackList(userId);
     }
 }

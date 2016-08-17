@@ -34,7 +34,7 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
     @Override
     public List<UserEntityImpl> findByFullName(String fullName, int offset, int limit)
     {
-        if(fullName==null||fullName.equals(""))
+        if (fullName == null || fullName.equals(""))
         {
             return getUsers(offset, limit);
         }
@@ -45,8 +45,8 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
                 , user.get("lastName")), fullName)
                 , cb.equal(cb.concat(cb.concat(user.get("lastName"), " ")
                         , user.get("name")), fullName))
-                ,cb.equal((user.get("lastName")), fullName)
-                ,cb.equal((user.get("name")), fullName)));
+                , cb.equal((user.get("lastName")), fullName)
+                , cb.equal((user.get("name")), fullName)));
         c.where(condition);
         TypedQuery<UserEntityImpl> q = getEntityManager().createQuery(c);
         q.setFirstResult(offset);
@@ -59,7 +59,7 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
     {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<UserEntityImpl> cUser = cb.createQuery(UserEntityImpl.class);
-        Root<UserEntityImpl> root=cUser.from(UserEntityImpl.class);
+        Root<UserEntityImpl> root = cUser.from(UserEntityImpl.class);
         TypedQuery<UserEntityImpl> q = getEntityManager().createQuery(cUser.select(root));
         q.setFirstResult(offset);
         q.setMaxResults(limit);
@@ -109,12 +109,12 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
     }
 
     @Override
-    public void addBlackList(Long ownerId, Long blackUserId)
+    public void addBlackList(Long ownerId, Long bUserId)
     {
         try
         {
             UserEntityImpl owner = getEntityManager().find(UserEntityImpl.class, ownerId);
-            UserEntityImpl black = getEntityManager().find(UserEntityImpl.class, blackUserId);
+            UserEntityImpl black = getEntityManager().find(UserEntityImpl.class, bUserId);
             List<UserEntityImpl> blackList = owner.getBlackListUsers();
             for (UserEntityImpl user : blackList)
             {
@@ -131,21 +131,28 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
     }
 
     @Override
-    public void deleteBlackList(Long ownerId, Long blackUserId)
+    public void deleteBlackList(Long ownerId, Long bUserId)
     {
         try
         {
             UserEntityImpl owner = getEntityManager().find(UserEntityImpl.class, ownerId);
-            UserEntityImpl black = getEntityManager().find(UserEntityImpl.class, blackUserId);
+            UserEntityImpl black = getEntityManager().find(UserEntityImpl.class, bUserId);
+
             List<UserEntityImpl> blackList = owner.getBlackListUsers();
-            for (UserEntityImpl user : blackList)
+
+            if (blackList.contains(black)){
+                owner.getBlackListUsers().remove(black);
+                getEntityManager().merge(owner);
+            }
+
+            /*for (UserEntityImpl user : blackList)
             {
                 if (user.getId().equals(black.getId()))
                 {
                     owner.getBlackListUsers().remove(black);
                     getEntityManager().merge(owner);
                 }
-            }
+            }*/
         } catch (NullPointerException ne)
         {
         }

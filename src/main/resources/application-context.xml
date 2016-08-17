@@ -20,7 +20,6 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <context:component-scan base-package="sjc.app"/>
-<!--
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -29,7 +28,6 @@
         <property name="username" value="root"/>
         <property name="password" value="root"/>
     </bean>
--->
     <!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
            destroy-method="close">
          <property name="driverClassName" value="com.mysql.jdbc.Driver" />
