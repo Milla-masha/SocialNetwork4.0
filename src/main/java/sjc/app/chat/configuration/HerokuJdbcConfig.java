@@ -1,4 +1,3 @@
-/*
 package sjc.app.chat.configuration;
 
 import org.apache.commons.dbcp.BasicDataSource;
@@ -8,10 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-*/
 /**
  * Created by psycl on 16.08.2016.
- *//*
+ */
 
 @Configuration
 public class HerokuJdbcConfig
@@ -34,4 +32,3 @@ public class HerokuJdbcConfig
         return basicDataSource;
     }
 }
-*/
