@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sjc.app.model.vo.GroupSmallVO;
 import sjc.app.rest.response.PaginationResponseSuccessful;
 import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
@@ -39,7 +40,7 @@ public class GroupEndpointImpl
         response.setEntity(groupService.getGroup(groupId));
         return response;
     }
-/*
+
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
@@ -47,7 +48,7 @@ public class GroupEndpointImpl
     {
         response.setEntity(groupService.addGroup(group, request.getUserPrincipal().getName()));
         return response;
-    }*/
+    }
 
 /*    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
