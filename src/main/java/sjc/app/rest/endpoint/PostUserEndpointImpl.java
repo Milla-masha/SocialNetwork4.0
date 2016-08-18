@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.constant.Constant;
+import sjc.app.model.vo.LikeVO;
 import sjc.app.model.vo.PostSmallVO;
 import sjc.app.rest.response.PaginationResponseSuccessful;
 import sjc.app.rest.response.ResponseSuccessful;
@@ -32,7 +33,7 @@ public class PostUserEndpointImpl
     public PaginationResponseSuccessful getPostsUser(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit, HttpServletRequest request)
     {
         System.out.println(request.getRequestURL());
-        paginationResponse.setEntity(postUserService.getPostsUser(userId, offset, limit));
+        paginationResponse.setEntity(postUserService.getPostsUser(request.getUserPrincipal().getName(),userId , offset, limit));
         paginationResponse.addMetadata(Constant.OFFSET,offset.toString());
         paginationResponse.addMetadata(Constant.LIMIT,limit.toString());
         paginationResponse.addMetadata(Constant.COUNT,postUserService.getCountPostsUser(userId).toString());
@@ -54,6 +55,15 @@ public class PostUserEndpointImpl
     public ResponseSuccessful deletePostUser(@RequestParam Long postId, HttpServletRequest request)
     {
         response.setEntity(postUserService.deletePostUser(postId, request.getUserPrincipal().getName()));
+        return response;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json", value = "/{idPost}/likes")
+    @ResponseBody
+    public ResponseSuccessful addLikeToPostsUser(@RequestBody LikeVO like, @PathVariable Long idPost, HttpServletRequest request)
+    {
+        response.setEntity(likeService.addLikeToPostUser(like, idPost, request.getUserPrincipal().getName()));
         return response;
     }
 }

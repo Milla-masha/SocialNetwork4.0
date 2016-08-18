@@ -17,4 +17,6 @@ public interface UserService
     List<FriendVO> findUsersByFullName(String login,String fullName, int offset, int limit);
 
     UserPasswordVO getUserPassword(String email);
+
+    boolean editUserPassword(PasswordVO password, String name);
 }

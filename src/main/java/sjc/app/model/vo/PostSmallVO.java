@@ -2,7 +2,7 @@ package sjc.app.model.vo;
 
 public class PostSmallVO extends BaseVO
 {
-    private Long fkImage;
+    private String urlImage;
     private Long idTo;
     private String text;
     private String date;
@@ -17,14 +17,14 @@ public class PostSmallVO extends BaseVO
         this.date = date;
     }
 
-    public Long getFkImage()
+    public String getUrlImage()
     {
-        return fkImage;
+        return urlImage;
     }
 
-    public void setFkImage(Long fkImage)
+    public void setUrlImage(String urlImage)
     {
-        this.fkImage = fkImage;
+        this.urlImage = urlImage;
     }
 
     public String getText()

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PostUserService
 {
-    List<PostVO> getPostsUser(Long idTo, int offset, int limit);
+    List<PostVO> getPostsUser(String login,Long idTo, int offset, int limit);
 
     boolean addPostUser(PostSmallVO post, String login);
 

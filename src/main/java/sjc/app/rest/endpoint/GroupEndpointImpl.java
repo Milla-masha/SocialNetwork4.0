@@ -26,18 +26,27 @@ public class GroupEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public PaginationResponseSuccessful getGroups(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
+    public PaginationResponseSuccessful getGroups(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit, HttpServletRequest request)
     {
-        paginationResponse.setEntity(groupService.getGroups(userId, offset, limit));
+        paginationResponse.setEntity(groupService.getGroups(userId, offset, limit, request.getUserPrincipal().getName()));
+        return paginationResponse;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, value = "/find")
+    @ResponseBody
+    public PaginationResponseSuccessful findGroupsByName(@RequestParam String name, @RequestParam Integer offset, @RequestParam Integer limit, HttpServletRequest request)
+    {
+        paginationResponse.setEntity(groupService.findGroupsByName( request.getUserPrincipal().getName(),name, offset, limit));
         return paginationResponse;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/{groupId}")
     @ResponseBody
-    public ResponseSuccessful getGroup(@PathVariable Long groupId)
+    public ResponseSuccessful getGroup(@PathVariable Long groupId, HttpServletRequest request)
     {
-        response.setEntity(groupService.getGroup(groupId));
+        response.setEntity(groupService.getGroup(groupId, request.getUserPrincipal().getName()));
         return response;
     }
 
@@ -50,30 +59,31 @@ public class GroupEndpointImpl
         return response;
     }
 
-/*    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-    @ResponseBody
-    public ResponseSuccessful joinGroup(@RequestParam Long groupId, HttpServletRequest request)
-    {
-        response.setEntity(groupService.addUserToGroup(groupId, request.getUserPrincipal().getName()));
-        return response;
-    }*/
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json", value = "/{groupId}")
     @ResponseBody
-    public ResponseSuccessful joinGroup(@RequestParam Long groupId, HttpServletRequest request)
+    public ResponseSuccessful joinGroup(@PathVariable Long groupId, HttpServletRequest request)
     {
         response.setEntity(groupService.addUserToGroup(groupId, request.getUserPrincipal().getName()));
         return response;
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.DELETE, consumes = "application/json")
+    @RequestMapping(method = RequestMethod.DELETE, consumes = "application/json", value = "/{groupId}")
     @ResponseBody
-    public ResponseSuccessful leaveGroup(@RequestParam Long groupId, HttpServletRequest request)
+    public ResponseSuccessful leaveGroup(@PathVariable Long groupId, HttpServletRequest request)
     {
         response.setEntity(groupService.leaveGroup(groupId, request.getUserPrincipal().getName()));
+        return response;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.DELETE, consumes = "application/json")
+    @ResponseBody
+    public ResponseSuccessful deleteGroup(@RequestParam Long groupId, HttpServletRequest request)
+    {
+        response.setEntity(groupService.deleteGroup(groupId, request.getUserPrincipal().getName()));
         return response;
     }
 }

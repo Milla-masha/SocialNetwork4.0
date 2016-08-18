@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="3407121436">
+  <component name="DataSourceManagerImpl" format="xml" hash="2524343300">
     <data-source source="LOCAL" name="MySQL - socialnetwork@localhost" uuid="5c0f003f-3cd3-4c8e-9f72-65dd77f095a8">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -20,20 +20,6 @@
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/social_network</jdbc-url>
-      <driver-properties>
-        <property name="autoReconnect" value="true" />
-        <property name="zeroDateTimeBehavior" value="convertToNull" />
-        <property name="tinyInt1isBit" value="false" />
-        <property name="characterEncoding" value="utf8" />
-        <property name="characterSetResults" value="utf8" />
-        <property name="yearIsDateType" value="false" />
-      </driver-properties>
-    </data-source>
-    <data-source source="LOCAL" name="MySQL - heroku_b918673307eb9ec@us-cdbr-iron-east-04.cleardb.net" uuid="c789663c-4197-4611-923c-5788d2776f97">
-      <driver-ref>mysql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://us-cdbr-iron-east-04.cleardb.net:3306/heroku_b918673307eb9ec</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />

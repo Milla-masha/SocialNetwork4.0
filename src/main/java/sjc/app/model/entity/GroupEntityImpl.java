@@ -37,7 +37,7 @@ public class GroupEntityImpl extends AbstractPersistable implements GroupEntity
 
     @Access(AccessType.PROPERTY)
     @JoinColumn(name = "fk_media", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade =  {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH})
     @Override
     public ImageEntityImpl getImage()
     {
@@ -64,7 +64,7 @@ public class GroupEntityImpl extends AbstractPersistable implements GroupEntity
     }
 
     @Access(AccessType.PROPERTY)
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH})
     @JoinTable(name = "group_user", joinColumns = {
             @JoinColumn(name = "fk_group")},
             inverseJoinColumns = {@JoinColumn(name = "fk_user")})
@@ -108,5 +108,23 @@ public class GroupEntityImpl extends AbstractPersistable implements GroupEntity
     public void setOwner(UserEntityImpl owner)
     {
         this.owner = owner;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GroupEntityImpl that = (GroupEntityImpl) o;
+
+        return getId() != null ? getId().equals(that.getId()) : that.getId() == null;
+
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return getId() != null ? getId().hashCode() : 0;
     }
 }

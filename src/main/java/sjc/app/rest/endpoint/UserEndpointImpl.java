@@ -28,7 +28,7 @@ public class UserEndpointImpl
     @ResponseBody
     public PaginationResponseSuccessful findPeople(@RequestParam String fullName, @RequestParam Integer offset, @RequestParam Integer limit)
     {
-        paginationResponse.setEntity(userService.findUsersByFullName(SecurityContextHolder.getContext().getAuthentication().getName(),fullName,offset,limit));
+        paginationResponse.setEntity(userService.findUsersByFullName(SecurityContextHolder.getContext().getAuthentication().getName(), fullName, offset, limit));
         return paginationResponse;
     }
 
@@ -46,7 +46,7 @@ public class UserEndpointImpl
     @ResponseBody
     public ResponseSuccessful getProfile(@PathVariable Long idUser)
     {
-        response.setEntity(userService.getInfoUserVO(SecurityContextHolder.getContext().getAuthentication().getName(),idUser));
+        response.setEntity(userService.getInfoUserVO(SecurityContextHolder.getContext().getAuthentication().getName(), idUser));
         return response;
     }
 
@@ -55,7 +55,7 @@ public class UserEndpointImpl
     @ResponseBody
     public ResponseSuccessful addUser(@RequestBody UserRegisterVO userRegister)
     {
-        userService.addUser(userRegister);
+        response.setEntity(userService.addUser(userRegister));
         return response;
     }
 
@@ -67,8 +67,6 @@ public class UserEndpointImpl
         response.setEntity(userService.editProfile(SecurityContextHolder.getContext().getAuthentication().getName(), user));
         return response;
     }
-
-
 
 
 }

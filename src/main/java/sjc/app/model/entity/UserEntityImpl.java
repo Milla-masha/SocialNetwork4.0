@@ -33,6 +33,7 @@ public class UserEntityImpl extends AbstractPersistable
     private List<MusicEntityImpl> musics = new ArrayList<>(0);
     private List<VideoEntityImpl> videos = new ArrayList<>(0);
     private List<ImageEntityImpl> images = new ArrayList<>(0);
+    private List<LikeEntityImpl> likes = new ArrayList<>(0);
 
     @Column(name = "password")
     public String getPassword()
@@ -85,7 +86,7 @@ public class UserEntityImpl extends AbstractPersistable
     }
 
     @Access(AccessType.PROPERTY)
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = CascadeType.ALL)
     public List<GroupEntityImpl> getGroups()
     {
         return groups;
@@ -271,9 +272,9 @@ public class UserEntityImpl extends AbstractPersistable
     @Access(AccessType.PROPERTY)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "media_users", joinColumns = {
-            @JoinColumn(name = "fk_users", nullable = false, updatable = false)},
+            @JoinColumn(name = "fk_users", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "fk_media",
-                    nullable = false, updatable = false)})
+                    nullable = false)})
     public List<MusicEntityImpl> getMusics()
     {
         return musics;
@@ -287,9 +288,9 @@ public class UserEntityImpl extends AbstractPersistable
     @Access(AccessType.PROPERTY)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "media_users", joinColumns = {
-            @JoinColumn(name = "fk_users", nullable = false, updatable = false)},
+            @JoinColumn(name = "fk_users", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "fk_media",
-                    nullable = false, updatable = false)})
+                    nullable = false)})
     public List<VideoEntityImpl> getVideos()
     {
         return videos;
@@ -316,6 +317,18 @@ public class UserEntityImpl extends AbstractPersistable
         this.images = images;
     }
 
+    @Access(AccessType.PROPERTY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    public List<LikeEntityImpl> getLikes()
+    {
+        return likes;
+    }
+
+    public void setLikes(List<LikeEntityImpl> likes)
+    {
+        this.likes = likes;
+    }
+
     @Override
     public boolean equals(Object o)
     {
@@ -324,13 +337,13 @@ public class UserEntityImpl extends AbstractPersistable
 
         UserEntityImpl that = (UserEntityImpl) o;
 
-        return login != null ? login.equals(that.login) : that.login == null;
+        return getId() != null ? getId().equals(that.getId()) : that.getId() == null;
 
     }
 
     @Override
     public int hashCode()
     {
-        return login != null ? login.hashCode() : 0;
+        return getId() != null ? getId().hashCode() : 0;
     }
 }

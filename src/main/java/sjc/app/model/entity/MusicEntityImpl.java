@@ -3,6 +3,7 @@ package sjc.app.model.entity;
 import sjc.app.model.entity.interfaces.MusicEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,7 +11,7 @@ import java.util.List;
 public class MusicEntityImpl extends MediaEntityImpl implements MusicEntity {
 
     private String name;
-    private List<UserEntityImpl> users;
+    private List<UserEntityImpl> users=new ArrayList<>(0);
 
     public MusicEntityImpl() {
     }

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.GroupEntityImpl;
+import sjc.app.model.entity.LikeEntityImpl;
 import sjc.app.model.entity.PostGroupEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.PostSmallVO;
@@ -36,9 +37,10 @@ public class PostGroupServiceImpl implements PostGroupService
 
 
     @Override
-    public List<PostVO> getPostsGroup(Long GroupId, int offset, int limit)
+    public List<PostVO> getPostsGroup(String login, Long GroupId, int offset, int limit)
     {
         List<PostVO> posts = new ArrayList<>();
+        UserEntityImpl userEntity=userDao.findByName(login);
         List<PostGroupEntityImpl> postsEntity = postGroupDao.getPostsGroup(GroupId, offset, limit);
         for (PostGroupEntityImpl postEntity : postsEntity)
         {
@@ -59,6 +61,17 @@ public class PostGroupServiceImpl implements PostGroupService
             owner.setName(postEntity.getUserFrom().getName());
             owner.setLastName(postEntity.getUserFrom().getLastName());
             post.setOwner(owner);
+            for (LikeEntityImpl like:postEntity.getLikes())
+            {
+                if(userEntity.getLikes().contains(like))
+                {
+                    post.setIsLike(like.getIsLike());
+                }
+                else
+                {
+                    post.setIsLike(0);
+                }
+            }
             posts.add(post);
         }
         return posts;
@@ -73,9 +86,9 @@ public class PostGroupServiceImpl implements PostGroupService
         postEntity.setText(post.getText());
         postEntity.setGroup(groupTo);
         postEntity.setUserFrom(userEntityFrom);
-        if(post.getFkImage()!=null)
+        if(post.getUrlImage()!=null)
         {
-            postEntity.setImage(imageDao.findById(post.getFkImage()));
+            postEntity.setImage(imageDao.findImageByUrl(post.getUrlImage()));
         }
         postGroupDao.save(postEntity);
         return true;

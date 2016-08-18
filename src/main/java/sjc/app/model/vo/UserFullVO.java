@@ -8,11 +8,10 @@ public class UserFullVO extends BaseVO
     private String mobile;
     private String lastName;
     private Integer sex;
-    private Long avatarId;
+    private String avatarUrl;
     private String birthdate;
     private String city;
     private String about;
-
 
 
     public String getName()
@@ -75,14 +74,14 @@ public class UserFullVO extends BaseVO
         this.sex = sex;
     }
 
-    public Long getAvatarId()
+    public String getAvatarUrl()
     {
-        return avatarId;
+        return avatarUrl;
     }
 
-    public void setAvatarId(Long avatarId)
+    public void setAvatarUrl(String avatarUrl)
     {
-        this.avatarId = avatarId;
+        this.avatarUrl = avatarUrl;
     }
 
     public String getBirthdate()

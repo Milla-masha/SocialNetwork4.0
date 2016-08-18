@@ -122,9 +122,9 @@ public class UserServiceImpl implements UserService
         UserEntityImpl userEntity = userDao.findByName(login);
         userEntity.setName(user.getName());
         userEntity.setAbout(user.getAbout());
-        if (user.getAvatarId() != null)
+        if (user.getAvatarUrl() != null)
         {
-            userEntity.setAvatar(imageDao.findById(user.getAvatarId()));
+            userEntity.setAvatar(imageDao.findImageByUrl(user.getAvatarUrl()));
         }
         userEntity.setBirthdateString(user.getBirthdate());
         userEntity.setCity(user.getCity());
@@ -166,9 +166,22 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public UserPasswordVO getUserPassword(String email){
+    public UserPasswordVO getUserPassword(String email)
+    {
         UserEntityImpl user = userDao.findByEmail(email);
-
         return new UserPasswordVO(user.getPassword());
+    }
+
+    @Override
+    public boolean editUserPassword(PasswordVO password, String name)
+    {
+        UserEntityImpl user = userDao.findByName(name);
+        if(user.getPassword().equals(password.getOldPassword()))
+        {
+            user.setPassword(password.getNewPassword());
+            userDao.update(user);
+            return true;
+        }
+        return false;
     }
 }

@@ -1,6 +1,5 @@
 package sjc.app.model.entity;
 
-import org.hibernate.annotations.DiscriminatorOptions;
 import sjc.app.model.entity.interfaces.MediaEntity;
 
 import javax.persistence.*;
@@ -12,16 +11,20 @@ import javax.persistence.*;
         discriminatorType = DiscriminatorType.STRING
 )
 @Table(name = "media")
-public class MediaEntityImpl extends AbstractPersistable implements MediaEntity {
+public class MediaEntityImpl extends AbstractPersistable implements MediaEntity
+{
     private String url;
 
     @Column(name = "url")
     @Override
-    public String getUrl() {
+    public String getUrl()
+    {
         return url;
     }
+
     @Override
-    public void setUrl(String url) {
+    public void setUrl(String url)
+    {
         this.url = url;
     }
 

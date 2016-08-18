@@ -4,7 +4,7 @@ import sjc.app.model.vo.LikeVO;
 
 public interface LikeService
 {
-    boolean addLikeToPostUser(LikeVO likeVO, String login);
+    Integer addLikeToPostUser(LikeVO likeVO, Long idPost, String login);
 
-    boolean addLikeToPostGroup(LikeVO likeVO, String login);
+    Integer addLikeToPostGroup(LikeVO likeVO, Long idPost, String login);
 }

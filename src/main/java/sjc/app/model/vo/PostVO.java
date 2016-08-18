@@ -9,6 +9,7 @@ public class PostVO extends BaseVO
     private Integer like;
     private Integer dislike;
     private String date;
+    private Integer isLike;
 
     public String getDate()
     {
@@ -70,4 +71,13 @@ public class PostVO extends BaseVO
         this.dislike = dislike;
     }
 
+    public Integer getIsLike()
+    {
+        return isLike;
+    }
+
+    public void setIsLike(Integer isLike)
+    {
+        this.isLike = isLike;
+    }
 }

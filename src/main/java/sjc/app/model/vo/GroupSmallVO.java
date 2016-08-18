@@ -3,7 +3,7 @@ package sjc.app.model.vo;
 public class GroupSmallVO extends BaseVO
 {
     String name;
-    Long fkImage;
+    String urlImage;
     private String description;
 
     public GroupSmallVO()
@@ -20,14 +20,14 @@ public class GroupSmallVO extends BaseVO
         this.name = name;
     }
 
-    public Long getFkImage()
+    public String getUrlImage()
     {
-        return fkImage;
+        return urlImage;
     }
 
-    public void setFkImage(Long fkImage)
+    public void setUrlImage(String urlImage)
     {
-        this.fkImage = fkImage;
+        this.urlImage = urlImage;
     }
 
     public String getDescription()

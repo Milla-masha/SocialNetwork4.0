@@ -15,8 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import sjc.app.model.entity.ImageEntityImpl;
 import sjc.app.model.entity.MusicEntityImpl;
+import sjc.app.model.entity.UserEntityImpl;
+import sjc.app.model.entity.VideoEntityImpl;
 import sjc.app.repository.dao.ImageDao;
 import sjc.app.repository.dao.MusicDao;
+import sjc.app.repository.dao.UserDao;
 import sjc.app.repository.dao.VideoDao;
 import sjc.app.service.UploadfileService;
 
@@ -31,6 +34,8 @@ public class UploadFileServiceImpl implements UploadfileService
     @Autowired
     private MusicDao musicDao;
     @Autowired
+    private UserDao userDao;
+    @Autowired
     private VideoDao videoDao;
     @Autowired
     private ImageDao imageDao;
@@ -41,7 +46,7 @@ public class UploadFileServiceImpl implements UploadfileService
     DbxClientV2 client;
 
     @Override
-    public Long UploadFile(String name, MultipartFile file)
+    public String UploadFile(String name, MultipartFile file, String login)
     {
         DbxRequestConfig config = new DbxRequestConfig(CLIENT_IDENTIFIER, USER_LOKALE);
         client = new DbxClientV2(config, ACCESS_TOKEN);
@@ -55,16 +60,28 @@ public class UploadFileServiceImpl implements UploadfileService
                     FileMetadata metadata = client.files().uploadBuilder("/" + file.getOriginalFilename())
                             .uploadAndFinish(in);
                     SharedLinkMetadata sharedLinkMetadata = client.sharing().createSharedLinkWithSettings(metadata.getPathDisplay());
+                    UserEntityImpl user= userDao.findByName(login);
                     if (file.getContentType().contains("image"))
                     {
                         ImageEntityImpl image = new ImageEntityImpl();
                         image.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0","?dl=1"));
-                        return imageDao.save(image).getId();
+                        user.getImages().add(image);
+                        userDao.update(user);
+                        return image.getUrl();
                     } else if (file.getContentType().contains("audio"))
                     {
                         MusicEntityImpl music = new MusicEntityImpl();
                         music.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0","?dl=1"));
-                        return musicDao.save(music).getId();
+                        user.getMusics().add(music);
+                        userDao.update(user);
+                        return music.getUrl();
+                    } else if (file.getContentType().contains("video"))
+                    {
+                        VideoEntityImpl video = new VideoEntityImpl();
+                        video.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0","?dl=1"));
+                        user.getVideos().add(video);
+                        userDao.update(user);
+                        return video.getUrl();
                     } else
                     {
                         return null;

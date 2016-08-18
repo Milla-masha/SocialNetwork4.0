@@ -6,6 +6,8 @@ public class GroupVO extends BaseVO
     private Integer folowers;
     private String image;
     private String description;
+    private Integer isMember;
+    private Integer isOwner;
 
     public String getDescription()
     {
@@ -45,5 +47,25 @@ public class GroupVO extends BaseVO
     public void setImage(String image)
     {
         this.image = image;
+    }
+
+    public Integer getIsMember()
+    {
+        return isMember;
+    }
+
+    public void setIsMember(Integer isMember)
+    {
+        this.isMember = isMember;
+    }
+
+    public Integer getIsOwner()
+    {
+        return isOwner;
+    }
+
+    public void setIsOwner(Integer isOwner)
+    {
+        this.isOwner = isOwner;
     }
 }

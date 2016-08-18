@@ -2,15 +2,14 @@ package sjc.app.rest.endpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sjc.app.model.vo.PasswordVO;
 import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.ResponseImpl;
 import sjc.app.service.UserService;
 
-/**
- * Created by psycl on 17.08.2016.
- */
 @Controller
 @RequestMapping("/password")
 public class PasswordEndpoint
@@ -28,4 +27,12 @@ public class PasswordEndpoint
         return response;
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseBody
+    public ResponseSuccessful editPassword(@RequestBody PasswordVO password)
+    {
+        response.setEntity(userService.editUserPassword(password, SecurityContextHolder.getContext().getAuthentication().getName()));
+        return response;
+    }
 }

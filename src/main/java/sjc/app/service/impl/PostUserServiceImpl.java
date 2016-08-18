@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sjc.app.model.entity.LikeEntityImpl;
 import sjc.app.model.entity.PostUserEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.PostSmallVO;
@@ -32,9 +33,10 @@ public class PostUserServiceImpl implements PostUserService
     private ImageDao imageDao;
 
     @Override
-    public List<PostVO> getPostsUser(Long userId, int offset, int limit)
+    public List<PostVO> getPostsUser(String login,Long userId, int offset, int limit)
     {
         List<PostVO> posts = new ArrayList<>();
+        UserEntityImpl userEntity=userDao.findByName(login);
         List<PostUserEntityImpl> postsEntity = postUserDao.getPostsUser(userId, offset, limit);
         for (PostUserEntityImpl postEntity : postsEntity)
         {
@@ -49,6 +51,17 @@ public class PostUserServiceImpl implements PostUserService
             post.setDislike(LikeServiceImpl.getCountDisLike(postEntity.getLikes()));
             post.setText(postEntity.getText());
             UserSmallVO owner = new UserSmallVO();
+            for (LikeEntityImpl like:postEntity.getLikes())
+            {
+                if(userEntity.getLikes().contains(like))
+                {
+                    post.setIsLike(like.getIsLike());
+                }
+                else
+                {
+                    post.setIsLike(0);
+                }
+            }
             if (postEntity.getUserFrom().getAvatar() != null)
             {
                 owner.setAvatar(postEntity.getUserFrom().getAvatar().getUrl());
@@ -75,9 +88,9 @@ public class PostUserServiceImpl implements PostUserService
         postEntity.setText(post.getText());
         postEntity.setUser(userEntityTo);
         postEntity.setUserFrom(userEntityFrom);
-        if (post.getFkImage() != null)
+        if (post.getUrlImage() != null)
         {
-            postEntity.setImage(imageDao.findById(post.getFkImage()));
+            postEntity.setImage(imageDao.findImageByUrl(post.getUrlImage()));
         }
         postUserDao.save(postEntity);
         return true;

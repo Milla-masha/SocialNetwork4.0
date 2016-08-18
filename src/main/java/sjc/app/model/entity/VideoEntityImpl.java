@@ -1,6 +1,7 @@
 package sjc.app.model.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -9,7 +10,7 @@ public class VideoEntityImpl extends MediaEntityImpl {
 
     private String name;
     private String preview;
-    private List<UserEntityImpl> users;
+    private List<UserEntityImpl> users=new ArrayList<>(0);
 
     public VideoEntityImpl() {
     }

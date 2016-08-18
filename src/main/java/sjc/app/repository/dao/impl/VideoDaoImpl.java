@@ -6,10 +6,7 @@ import sjc.app.model.entity.VideoEntityImpl;
 import sjc.app.repository.dao.VideoDao;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository
@@ -33,5 +30,17 @@ public class VideoDaoImpl extends GenericDaoImpl<VideoEntityImpl> implements Vid
         q.setFirstResult(offset);
         q.setMaxResults(limit);
         return q.getResultList();
+    }
+
+    @Override
+    public VideoEntityImpl findVideoByUrl(String url)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<VideoEntityImpl> c = cb.createQuery(VideoEntityImpl.class);
+        Root<VideoEntityImpl> videoEntityRoot = c.from(VideoEntityImpl.class);
+        Predicate condition = cb.equal(videoEntityRoot.get("url"), url);
+        c.where(condition);
+        TypedQuery<VideoEntityImpl> q = getEntityManager().createQuery(c);
+        return q.getResultList().get(0);
     }
 }

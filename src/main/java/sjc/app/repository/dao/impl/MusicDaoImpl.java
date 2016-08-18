@@ -6,10 +6,7 @@ import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.repository.dao.MusicDao;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository
@@ -44,5 +41,17 @@ public class MusicDaoImpl extends GenericDaoImpl<MusicEntityImpl> implements Mus
         Join<UserEntityImpl, MusicEntityImpl> usersJoin = root.join("users");
         cq.select(cb.count(root)).where(cb.equal(usersJoin.get("id"), idUser));
         return getEntityManager().createQuery(cq).getSingleResult();
+    }
+
+    @Override
+    public MusicEntityImpl findMusicByUrl(String url)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<MusicEntityImpl> c = cb.createQuery(MusicEntityImpl.class);
+        Root<MusicEntityImpl> musicEntityRoot = c.from(MusicEntityImpl.class);
+        Predicate condition = cb.equal(musicEntityRoot.get("url"), url);
+        c.where(condition);
+        TypedQuery<MusicEntityImpl> q = getEntityManager().createQuery(c);
+        return q.getResultList().get(0);
     }
 }

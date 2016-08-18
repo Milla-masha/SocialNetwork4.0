@@ -6,8 +6,10 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.MusicEntityImpl;
+import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.MusicVO;
 import sjc.app.repository.dao.MusicDao;
+import sjc.app.repository.dao.UserDao;
 import sjc.app.service.MusicService;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class MusicServiceImpl implements MusicService
 {
     @Autowired
     private MusicDao musicDao;
+    @Autowired
+    private UserDao userDao;
 
     @Override
     public List<MusicVO> getMusics(Long userId, int offset, int limit)
@@ -41,5 +45,34 @@ public class MusicServiceImpl implements MusicService
     public Long getCountMusicsUser(Long userId)
     {
         return musicDao.getCountMusicsUser(userId);
+    }
+
+    @Override
+    public boolean addMusicToUser(String url, String login)
+    {
+        UserEntityImpl user = userDao.findByName(login);
+        MusicEntityImpl musicEntity = musicDao.findMusicByUrl(url);
+        if (user.getMusics().contains(musicEntity))
+        {
+            return false;
+        } else user.getMusics().add(musicEntity);
+        userDao.update(user);
+        return true;
+    }
+
+    @Override
+    public boolean deleteMusicToUser(Long id, String login)
+    {
+        UserEntityImpl user = userDao.findByName(login);
+        MusicEntityImpl musicEntity = musicDao.findById(id);
+        if (user.getMusics().contains(musicEntity))
+        {
+            user.getMusics().remove(musicEntity);
+            userDao.update(user);
+            return true;
+        } else
+        {
+            return false;
+        }
     }
 }

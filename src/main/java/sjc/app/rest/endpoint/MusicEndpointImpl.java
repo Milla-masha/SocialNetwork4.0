@@ -2,6 +2,7 @@ package sjc.app.rest.endpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.constant.Constant;
@@ -33,5 +34,21 @@ public class MusicEndpointImpl
         return paginationResponse;
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+    @ResponseBody
+    public ResponseSuccessful addMusicToUser(@RequestParam String url)
+    {
+        response.setEntity(musicService.addMusicToUser(url, SecurityContextHolder.getContext().getAuthentication().getName()));
+        return response;
+    }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.DELETE, consumes = "application/json", value = "/{idMusic}")
+    @ResponseBody
+    public ResponseSuccessful deleteMusicToUser(@PathVariable Long idMusic)
+    {
+        response.setEntity(musicService.deleteMusicToUser(idMusic, SecurityContextHolder.getContext().getAuthentication().getName()));
+        return response;
+    }
 }

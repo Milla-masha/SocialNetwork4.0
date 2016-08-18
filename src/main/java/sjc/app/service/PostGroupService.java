@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PostGroupService
 {
-    List<PostVO> getPostsGroup(Long idTo, int offset, int limit);
+    List<PostVO> getPostsGroup(String login, Long idTo, int offset, int limit);
 
     boolean addPostGroup(PostSmallVO post, String login);
 
