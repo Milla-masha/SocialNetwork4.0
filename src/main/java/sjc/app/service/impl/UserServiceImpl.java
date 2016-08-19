@@ -25,6 +25,8 @@ public class UserServiceImpl implements UserService
     private UserDao userDao;
     @Autowired
     private ImageDao imageDao;
+    @Autowired
+    private OnlineUser onlineUserService;
 
     @Override
     public boolean addUser(UserRegisterVO user)
@@ -72,6 +74,7 @@ public class UserServiceImpl implements UserService
         user.setId(userEntity.getId());
         user.setName(userEntity.getName());
         user.setLastName(userEntity.getLastName());
+        user.setOnline(onlineUserService.isOnline(userEntity.getLogin()));
         if (userEntity.getAvatar() != null)
         {
             user.setAvatar(userEntity.getAvatar().getUrl());
@@ -106,6 +109,7 @@ public class UserServiceImpl implements UserService
         {
             user.setAvatar(userEntity.getAvatar().getUrl());
         }
+        user.setOnline(onlineUserService.isOnline(userEntity.getLogin()));
         user.setAbout(userEntity.getAbout());
         user.setBirthday(userEntity.getBirthdateString());
         user.setCity(userEntity.getCity());
@@ -154,6 +158,7 @@ public class UserServiceImpl implements UserService
             {
                 friend.setAvatar(userEntity.getAvatar().getUrl());
             }
+            friend.setOnline(onlineUserService.isOnline(userEntity.getLogin()));
             friend.setName(userEntity.getName());
             friend.setLastName(userEntity.getLastName());
             if (user.getFriends().contains(userEntity))
@@ -176,7 +181,7 @@ public class UserServiceImpl implements UserService
     public boolean editUserPassword(PasswordVO password, String name)
     {
         UserEntityImpl user = userDao.findByName(name);
-        if(user.getPassword().equals(password.getOldPassword()))
+        if (user.getPassword().equals(password.getOldPassword()))
         {
             user.setPassword(password.getNewPassword());
             userDao.update(user);
@@ -184,4 +189,5 @@ public class UserServiceImpl implements UserService
         }
         return false;
     }
+
 }

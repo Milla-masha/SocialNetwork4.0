@@ -21,6 +21,8 @@ public class InfoUserVO extends BaseVO
 
     private Integer isFriend;
 
+    private Boolean isOnline;
+
     public Integer getIsFriend()
     {
         return isFriend;
@@ -29,6 +31,16 @@ public class InfoUserVO extends BaseVO
     public void setIsFriend(Integer isFriend)
     {
         this.isFriend = isFriend;
+    }
+
+    public Boolean getOnline()
+    {
+        return isOnline;
+    }
+
+    public void setOnline(Boolean online)
+    {
+        isOnline = online;
     }
 
     public InfoUserVO()

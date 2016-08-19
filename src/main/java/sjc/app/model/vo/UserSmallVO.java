@@ -7,6 +7,17 @@ public class UserSmallVO extends BaseVO
     private String name;
     private String lastName;
     private String avatar;
+    private Boolean isOnline;
+
+    public Boolean getOnline()
+    {
+        return isOnline;
+    }
+
+    public void setOnline(Boolean isOnline)
+    {
+        this.isOnline = isOnline;
+    }
 
     public String getName()
     {

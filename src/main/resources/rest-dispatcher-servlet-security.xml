@@ -231,6 +231,7 @@
         <property name="tokenStore" ref="tokenStore"/>
         <property name="supportRefreshToken" value="true"/>
         <property name="clientDetailsService" ref="clientDetails"/>
+        <property name="accessTokenValiditySeconds" value="300"/>
     </bean>
 
     <bean id="userApprovalHandler"
@@ -253,7 +254,7 @@
         <oauth:client client-id="passwordClient"
                       secret="0m45bxp4r2"
                       authorities="ROLE_TRUSTED_CLIENT, ROLE_CLIENT"
-                      authorized-grant-types="password,refresh-token"
+                      authorized-grant-types="password,refresh_token"
                       scope="all"/>
     </oauth:client-details-service>
     <sec:global-method-security pre-post-annotations="enabled" authentication-manager-ref="authenticationManager"

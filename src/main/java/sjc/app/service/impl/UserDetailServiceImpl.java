@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.repository.dao.UserDao;
-import sjc.app.repository.dao.impl.UserDaoImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,6 @@ public class UserDetailServiceImpl implements UserDetailsService
 
     public UserDetailServiceImpl()
     {
-        userRepository = new UserDaoImpl();
     }
 
     @Override

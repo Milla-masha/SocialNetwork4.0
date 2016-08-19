@@ -64,6 +64,7 @@ public class GroupServiceImpl implements GroupService
     @Override
     public GroupVO getGroup(Long groupId, String login)
     {
+
         GroupVO group = new GroupVO();
         UserEntityImpl user = userDao.findByName(login);
         GroupEntityImpl groupEntity = groupDao.findById(groupId);

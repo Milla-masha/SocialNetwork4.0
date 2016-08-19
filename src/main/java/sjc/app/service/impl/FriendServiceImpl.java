@@ -25,6 +25,8 @@ public class FriendServiceImpl implements FriendService
     private FriendDao friendsDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private OnlineUser onlineUserService;
 
     @Override
     public List<UserSmallVO> getFriends(Long userId, int offset, int limit)
@@ -34,6 +36,7 @@ public class FriendServiceImpl implements FriendService
         for (UserEntityImpl user : infoFriend)
         {
             UserSmallVO friend = new UserSmallVO();
+            friend.setOnline(onlineUserService.isOnline(user.getLogin()));
             friend.setId(user.getId());
             friend.setName(user.getName());
             friend.setLastName(user.getLastName());
@@ -71,13 +74,6 @@ public class FriendServiceImpl implements FriendService
         userEntity.getFriends().remove(friend);
         userDao.update(userEntity);
         return true;
-    }
-
-    @Override
-    public List<UserSmallVO> findFriends(String name, Long userId, int offset, int limit)
-    {
-        return null;
-
     }
 
     @Override
