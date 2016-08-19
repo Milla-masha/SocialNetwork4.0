@@ -26,6 +26,7 @@ public class PostGroupDaoImpl extends GenericDaoImpl<PostGroupEntityImpl> implem
         CriteriaQuery<PostGroupEntityImpl> c = cb.createQuery(PostGroupEntityImpl.class);
         Root<PostGroupEntityImpl> post = c.from(PostGroupEntityImpl.class);
         Predicate condition = cb.equal(post.get("group"), idGroup);
+        c.orderBy(cb.desc(post.get("date")));
         c.where(condition);
         TypedQuery<PostGroupEntityImpl> q = getEntityManager().createQuery(c);
         q.setFirstResult(offset);
