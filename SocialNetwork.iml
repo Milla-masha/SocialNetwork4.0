@@ -18,13 +18,8 @@
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/src/main/resources/WEB-INF/app-data.xml</file>
-          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/app-data.xml</file>
-          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/application-context.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/WEB-INF/application-context.xml</file>
-          <file>file://$MODULE_DIR$/src/main/resources/WEB-INF/app-data.xml</file>
-          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring-security.xml</file>
-          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/rest-dispatcher-servlet-security.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/application-context.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/rest-dispatcher-servlet-security.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -57,11 +52,16 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-websocket:4.3.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:4.3.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-web:4.3.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-spring-service-connector:1.2.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-core:1.2.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-cloudfoundry-connector:1.2.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-heroku-connector:1.2.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.google.firebase:firebase-server-sdk:3.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.api-client:google-api-client-gson:1.21.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.api-client:google-api-client:1.21.0" level="project" />
