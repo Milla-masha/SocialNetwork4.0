@@ -44,6 +44,12 @@ public class VideoServiceImpl implements VideoService
     }
 
     @Override
+    public Long getCountVideosUser(Long userId)
+    {
+        return videoDao.getCountVideosUser(userId);
+    }
+
+    @Override
     public VideoFullVO getVideo(Long videoId)
     {
         VideoEntityImpl videoEntity = videoDao.findById(videoId);

@@ -33,6 +33,17 @@ public class VideoDaoImpl extends GenericDaoImpl<VideoEntityImpl> implements Vid
     }
 
     @Override
+    public Long getCountVideosUser(Long idUser)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<VideoEntityImpl> root = cq.from(VideoEntityImpl.class);
+        Join<UserEntityImpl, VideoEntityImpl> usersJoin = root.join("users");
+        cq.select(cb.count(root)).where(cb.equal(usersJoin.get("id"), idUser));
+        return getEntityManager().createQuery(cq).getSingleResult();
+    }
+
+    @Override
     public VideoEntityImpl findVideoByUrl(String url)
     {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();

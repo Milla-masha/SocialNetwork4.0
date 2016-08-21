@@ -8,6 +8,8 @@ public interface VideoService
 {
     List<VideoFullVO> getVideos(Long userId, int offset, int limit);
 
+    Long getCountVideosUser(Long userId);
+
     VideoFullVO getVideo(Long videoId);
 
     boolean addVideoToUser(String url, String login);

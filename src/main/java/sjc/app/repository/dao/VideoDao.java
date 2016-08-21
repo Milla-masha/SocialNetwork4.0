@@ -9,5 +9,7 @@ public interface VideoDao extends GenericDao<VideoEntityImpl>
 {
     List<VideoEntityImpl> getVideosUser(Long idUser, int offset, int limit);
 
+    Long getCountVideosUser(Long id);
+
     VideoEntityImpl findVideoByUrl(String url);
 }
