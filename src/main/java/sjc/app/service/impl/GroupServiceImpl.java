@@ -62,6 +62,12 @@ public class GroupServiceImpl implements GroupService
     }
 
     @Override
+    public Long getCountGroupsFromUser(Long userId)
+    {
+        return groupDao.getCountGroups(userId);
+    }
+
+    @Override
     public GroupVO getGroup(Long groupId, String login)
     {
 

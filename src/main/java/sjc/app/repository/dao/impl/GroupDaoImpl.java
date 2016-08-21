@@ -33,12 +33,23 @@ public class GroupDaoImpl extends GenericDaoImpl<GroupEntityImpl> implements Gro
     }
 
     @Override
+    public Long getCountGroups(Long userId)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<GroupEntityImpl> root = cq.from(GroupEntityImpl.class);
+        Join<UserEntityImpl, GroupEntityImpl> usersJoin = root.join("users");
+        cq.select(cb.count(root)).where(cb.equal(usersJoin.get("id"), userId));
+        return getEntityManager().createQuery(cq).getSingleResult();
+    }
+
+    @Override
     public List<GroupEntityImpl> findGroupsByName(String groupName, int offset, int limit)
     {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<GroupEntityImpl> c = cb.createQuery(GroupEntityImpl.class);
         Root<GroupEntityImpl> groupEntityRoot = c.from(GroupEntityImpl.class);
-        Predicate condition = cb.like(groupEntityRoot.get("name"), "%"+groupName+"%");
+        Predicate condition = cb.like(groupEntityRoot.get("name"), "%" + groupName + "%");
         c.where(condition);
         TypedQuery<GroupEntityImpl> q = getEntityManager().createQuery(c);
         return q.getResultList();

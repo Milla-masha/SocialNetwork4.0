@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sjc.app.constant.Constant;
 import sjc.app.model.vo.GroupSmallVO;
 import sjc.app.rest.response.PaginationResponseSuccessful;
 import sjc.app.rest.response.ResponseSuccessful;
@@ -28,6 +29,9 @@ public class GroupEndpointImpl
     @ResponseBody
     public PaginationResponseSuccessful getGroups(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit, HttpServletRequest request)
     {
+        paginationResponse.addMetadata(Constant.OFFSET,offset.toString());
+        paginationResponse.addMetadata(Constant.LIMIT,limit.toString());
+        paginationResponse.addMetadata(Constant.COUNT,groupService.getCountGroupsFromUser(userId).toString());
         paginationResponse.setEntity(groupService.getGroups(userId, offset, limit, request.getUserPrincipal().getName()));
         return paginationResponse;
     }

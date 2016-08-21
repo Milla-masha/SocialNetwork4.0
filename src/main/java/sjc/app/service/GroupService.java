@@ -9,6 +9,8 @@ public interface GroupService
 {
     List<GroupVO> getGroups(Long userId, int offset, int limit, String login);
 
+    Long getCountGroupsFromUser(Long userId);
+
     GroupVO getGroup(Long groupId, String login);
 
     Long addGroup(GroupSmallVO group, String login);
