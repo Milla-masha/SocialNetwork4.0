@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sjc.app.Firebase.PushPosts;
 import sjc.app.model.entity.LikeEntityImpl;
 import sjc.app.model.entity.PostUserEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
@@ -93,6 +94,7 @@ public class PostUserServiceImpl implements PostUserService
             postEntity.setImage(imageDao.findImageByUrl(post.getUrlImage()));
         }
         postUserDao.save(postEntity);
+        PushPosts.push(post);
         return true;
     }
 

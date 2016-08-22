@@ -44,17 +44,17 @@ public class GroupServiceImpl implements GroupService
             group.setImage(groupEntity.getImage().getUrl());
             if (user.getGroups().contains(groupEntity))
             {
-                group.setIsMember(1);
+                group.setMember(true);
             } else
             {
-                group.setIsMember(0);
+                group.setMember(false);
             }
             if (groupEntity.getOwner().getId() == user.getId())
             {
-                group.setIsOwner(1);
+                group.setOwner(true);
             } else
             {
-                group.setIsOwner(0);
+                group.setOwner(false);
             }
             groups.add(group);
         }
@@ -84,17 +84,17 @@ public class GroupServiceImpl implements GroupService
         group.setDescription(groupEntity.getDescription());
         if (user.getGroups().contains(groupEntity))
         {
-            group.setIsMember(1);
+            group.setMember(true);
         } else
         {
-            group.setIsMember(0);
+            group.setMember(false);
         }
         if (groupEntity.getOwner().getId() == user.getId())
         {
-            group.setIsOwner(1);
+            group.setOwner(true);
         } else
         {
-            group.setIsOwner(0);
+            group.setOwner(false);
         }
         return group;
     }
@@ -110,6 +110,10 @@ public class GroupServiceImpl implements GroupService
         if (group.getUrlImage() != null)
         {
             groupEntity.setImage(imageDao.findImageByUrl(group.getUrlImage()));
+        }
+        else
+        {
+            groupEntity.setImage(imageDao.findById(65L));
         }
         groupEntity.getUsers().add(user);
         return groupDao.save(groupEntity).getId();
@@ -157,17 +161,17 @@ public class GroupServiceImpl implements GroupService
             group.setImage(groupEntity.getImage().getUrl());
             if (user.getGroups().contains(groupEntity))
             {
-                group.setIsMember(1);
+                group.setMember(true);
             } else
             {
-                group.setIsMember(0);
+                group.setMember(false);
             }
             if (groupEntity.getOwner().getId() == user.getId())
             {
-                group.setIsOwner(1);
+                group.setOwner(true);
             } else
             {
-                group.setIsOwner(0);
+                group.setOwner(false);
             }
             groups.add(group);
         }

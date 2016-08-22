@@ -1,5 +1,6 @@
 package sjc.app.service.impl;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -32,10 +33,8 @@ public class UserServiceImpl implements UserService
     private MailService mailService;
 
     @Override
-    public boolean addUser(UserRegisterVO user)
+    public boolean addUser(UserRegisterVO user) throws ConstraintViolationException
     {
-        try
-        {
             UserEntityImpl userEntity = new UserEntityImpl();
             userEntity.setLogin(user.getLogin());
             userEntity.setPassword(user.getPassword());
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService
             {
                 userEntity.setBirthdateString(user.getBday());
             }
-            userEntity.setAvatar(imageDao.findById(13L));
+            userEntity.setAvatar(imageDao.findById(63L));
             userEntity.setEmail(user.getEmail());
             userEntity.setEnabled(1);
             userEntity = userDao.save(userEntity);
@@ -58,10 +57,6 @@ public class UserServiceImpl implements UserService
             userEntity.getAuthorities().add(authority);
             userDao.update(userEntity);
             return true;
-        } catch (Exception e)
-        {
-            return false;
-        }
     }
 
     @Override

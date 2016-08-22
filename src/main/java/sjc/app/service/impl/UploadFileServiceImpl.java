@@ -72,6 +72,7 @@ public class UploadFileServiceImpl implements UploadfileService
                     {
                         MusicEntityImpl music = new MusicEntityImpl();
                         music.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0","?dl=1"));
+                        music.setName(name);
                         user.getMusics().add(music);
                         userDao.update(user);
                         return music.getUrl();
@@ -79,6 +80,7 @@ public class UploadFileServiceImpl implements UploadfileService
                     {
                         VideoEntityImpl video = new VideoEntityImpl();
                         video.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0","?dl=1"));
+                        video.setName(name);
                         user.getVideos().add(video);
                         userDao.update(user);
                         return video.getUrl();

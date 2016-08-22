@@ -29,13 +29,15 @@
     <servlet>
         <servlet-name>rest-dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>ThrowExceptionIfNoHandlerFound</param-name>
+            <param-value>true</param-value>
+        </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:application-context.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
-
     </servlet>
 
     <servlet-mapping>

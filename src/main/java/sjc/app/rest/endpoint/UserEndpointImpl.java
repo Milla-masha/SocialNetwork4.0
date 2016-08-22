@@ -1,6 +1,7 @@
 package sjc.app.rest.endpoint;
 
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,7 +54,7 @@ public class UserEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public ResponseSuccessful addUser(@RequestBody UserRegisterVO userRegister)
+    public ResponseSuccessful addUser(@RequestBody UserRegisterVO userRegister) throws ConstraintViolationException
     {
         response.setEntity(userService.addUser(userRegister));
         return response;
@@ -67,7 +68,6 @@ public class UserEndpointImpl
         response.setEntity(userService.editProfile(SecurityContextHolder.getContext().getAuthentication().getName(), user));
         return response;
     }
-
 
 }
 
