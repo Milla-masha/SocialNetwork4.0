@@ -57,8 +57,8 @@ public class MailServiceImpl implements MailService
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmail));
             message.setSubject(subject);
-            message.setText("Ale, yoba eto ti???,"
-                    + "\n\n"+passwordToSend);
+            message.setText("Hello, this is your password for SoN: "
+                    + "\n"+passwordToSend);
 
             Transport.send(message);
 

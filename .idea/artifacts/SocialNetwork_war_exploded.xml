@@ -10,6 +10,12 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-websocket:4.3.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.3.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:4.3.1.RELEASE" />
+          <element id="library" level="project" name="Maven: javax.mail:mail:1.4.7" />
+          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
+          <element id="library" level="project" name="Maven: org.springframework.cloud:spring-cloud-spring-service-connector:1.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.cloud:spring-cloud-core:1.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.cloud:spring-cloud-cloudfoundry-connector:1.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.cloud:spring-cloud-heroku-connector:1.2.3.RELEASE" />
           <element id="library" level="project" name="Maven: com.google.firebase:firebase-server-sdk:3.0.1" />
           <element id="library" level="project" name="Maven: com.google.api-client:google-api-client-gson:1.21.0" />
           <element id="library" level="project" name="Maven: com.google.api-client:google-api-client:1.21.0" />

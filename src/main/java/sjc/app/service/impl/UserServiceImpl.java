@@ -177,7 +177,7 @@ public class UserServiceImpl implements UserService
     public Boolean getUserPassword(String email)
     {
         UserEntityImpl user = userDao.findByEmail(email);
-        mailService.sendPasswordToEmail("Your password from son",user.getPassword(),email);
+        mailService.sendPasswordToEmail("Social Network, password recovery",user.getPassword(),email);
         return true;
     }
 
