@@ -1,3 +1,4 @@
+/*
 package sjc.app.Configuration;
 
 import org.apache.commons.dbcp.BasicDataSource;
@@ -8,6 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.TimeZone;
 
+*/
 /**
  * Created by psycl on 19.08.2016.
  *
@@ -16,7 +18,8 @@ import java.util.TimeZone;
  * И В НАСТРОЙКАХ HIBERNATE ПОМЕНЯТЬ heroku на datasource
  *
  *
- */
+ *//*
+
 @Configuration
 public class DatabaseConfiguration {
 
@@ -41,4 +44,4 @@ public class DatabaseConfiguration {
 
         return basicDataSource;
     }
-}
+}*/
