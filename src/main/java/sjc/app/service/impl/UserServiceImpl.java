@@ -10,6 +10,7 @@ import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.*;
 import sjc.app.repository.dao.ImageDao;
 import sjc.app.repository.dao.UserDao;
+import sjc.app.service.MailService;
 import sjc.app.service.UserService;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService
     private ImageDao imageDao;
     @Autowired
     private OnlineUser onlineUserService;
+    @Autowired
+    private MailService mailService;
 
     @Override
     public boolean addUser(UserRegisterVO user)
@@ -171,10 +174,11 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public UserPasswordVO getUserPassword(String email)
+    public Boolean getUserPassword(String email)
     {
         UserEntityImpl user = userDao.findByEmail(email);
-        return new UserPasswordVO(user.getPassword());
+        mailService.sendPasswordToEmail("Your password from son",user.getPassword(),email);
+        return true;
     }
 
     @Override

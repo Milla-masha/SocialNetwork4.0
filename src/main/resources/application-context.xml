@@ -27,17 +27,17 @@
 
     <context:component-scan base-package="sjc.app"/>
 
-   <!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url"
                   value="jdbc:mysql://localhost:3306/social_network?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
-    </bean>-->
+    </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="dataSource" ref="heroku"/><!--heroku поменять на datasource-->
+        <property name="dataSource" ref="dataSource"/><!--heroku поменять на datasource-->
         <property name="packagesToScan" value="sjc.app.model.entity"/>
         <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
         <property name="jpaProperties">
