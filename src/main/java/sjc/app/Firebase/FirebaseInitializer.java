@@ -3,7 +3,6 @@ package sjc.app.Firebase;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 
-import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -12,7 +11,7 @@ import java.io.FileNotFoundException;
  */
 public class FirebaseInitializer
 {
-   @PostConstruct
+
    public void init(){
        FirebaseOptions options = null;
        try

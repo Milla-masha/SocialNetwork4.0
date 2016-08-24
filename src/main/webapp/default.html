@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>Chat</title>
+
+
+    <script type="text/javascript">
+        "use strict";
+
+        var url = 'ws://' + window.location.host + '/websocket/chat';
+        var sock = new WebSocket(url);
+        sock.onopen = function () {
+            console.log('Opening');
+            sayMarco();
+        };
+
+        sock.onmessage = function (e) {
+            console.log('Received message: ', e.data);
+            setTimeout(function () {
+                sayMarco()
+            }, 2000);
+        };
+
+        sock.onclose = function () {
+            console.log('Closing');
+        };
+
+        function sayMarco() {
+            console.log('Sending Marco!');
+            sock.send("Marco!");
+        }
+
+        </script>
+</head>
+<body>
+<textarea id = "messageTextArea" readonly = "readonly" rows="10" cols="5"></textarea></br>
+<p>
+    <input type="text" placeholder="type and press enter to chat" id="chat"/>
+    <input type="button" value="Send" onclick="onmessage();">
+
+</p>
+
+<div class="noscript">
+    <h2 style="color: #ff0000">
+        Seems your browser doesn't support Javascript! Websockets rely on Javascript being enabled. Please enable
+        Javascript and reload this page!</h2></div>
+<div>
+     <div id="console-container">
+        <div id="console"/>
+    </div>
+</div>
+</body>
+</html>

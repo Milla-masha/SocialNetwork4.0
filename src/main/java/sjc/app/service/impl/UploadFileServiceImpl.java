@@ -24,6 +24,7 @@ import sjc.app.repository.dao.VideoDao;
 import sjc.app.service.UploadfileService;
 
 import java.io.InputStream;
+import java.util.Date;
 
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
 @Transactional
@@ -73,6 +74,7 @@ public class UploadFileServiceImpl implements UploadfileService
                         MusicEntityImpl music = new MusicEntityImpl();
                         music.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0","?dl=1"));
                         music.setName(name);
+                        music.setDate(new Date());
                         user.getMusics().add(music);
                         userDao.update(user);
                         return music.getUrl();
@@ -81,6 +83,7 @@ public class UploadFileServiceImpl implements UploadfileService
                         VideoEntityImpl video = new VideoEntityImpl();
                         video.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0","?dl=1"));
                         video.setName(name);
+                        video.setDate(new Date());
                         user.getVideos().add(video);
                         userDao.update(user);
                         return video.getUrl();

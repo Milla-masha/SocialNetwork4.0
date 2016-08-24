@@ -40,6 +40,7 @@ public class MusicEndpointImpl
     public ResponseSuccessful addMusicToUser(@RequestParam String url)
     {
         response.setEntity(musicService.addMusicToUser(url, SecurityContextHolder.getContext().getAuthentication().getName()));
+
         return response;
     }
 

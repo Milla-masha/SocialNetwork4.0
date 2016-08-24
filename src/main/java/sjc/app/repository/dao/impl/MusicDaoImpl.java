@@ -26,6 +26,7 @@ public class MusicDaoImpl extends GenericDaoImpl<MusicEntityImpl> implements Mus
         Root<MusicEntityImpl> root = criteriaQuery.from(MusicEntityImpl.class);
         Join<UserEntityImpl, MusicEntityImpl> usersJoin = root.join("users");
         criteriaQuery.select(root).where(cb.equal(usersJoin.get("id"), idUser));
+        criteriaQuery.orderBy(cb.desc(root.get("date")));
         TypedQuery<MusicEntityImpl> q = getEntityManager().createQuery(criteriaQuery);
         q.setFirstResult(offset);
         q.setMaxResults(limit);

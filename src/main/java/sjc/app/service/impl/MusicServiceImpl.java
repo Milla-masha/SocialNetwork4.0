@@ -13,6 +13,7 @@ import sjc.app.repository.dao.UserDao;
 import sjc.app.service.MusicService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
@@ -56,6 +57,7 @@ public class MusicServiceImpl implements MusicService
         {
             return false;
         } else user.getMusics().add(musicEntity);
+
         userDao.update(user);
         return true;
     }

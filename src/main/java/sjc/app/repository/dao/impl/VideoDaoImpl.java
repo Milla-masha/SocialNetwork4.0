@@ -26,6 +26,7 @@ public class VideoDaoImpl extends GenericDaoImpl<VideoEntityImpl> implements Vid
         Root<VideoEntityImpl> root = criteriaQuery.from(VideoEntityImpl.class);
         Join<UserEntityImpl, VideoEntityImpl> usersJoin = root.join("users");
         criteriaQuery.select(root).where(cb.equal(usersJoin.get("id"), idUser));
+        criteriaQuery.orderBy(cb.desc(root.get("date")));
         TypedQuery<VideoEntityImpl> q = getEntityManager().createQuery(criteriaQuery);
         q.setFirstResult(offset);
         q.setMaxResults(limit);

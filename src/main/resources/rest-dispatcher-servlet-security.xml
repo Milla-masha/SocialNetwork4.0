@@ -26,34 +26,45 @@
     <!-- The OAuth2 protected resources are separated out into their own block
         so we can deal with authorization and error handling separately. This isn't
         mandatory, but it makes it easier to control the behaviour. -->
-    <http pattern="/hello/*"
+    <!--
+-->
+    <http pattern="/index.jsp"
           auto-config="true"
-          entry-point-ref="oauthAuthenticationEntryPoint"
-          access-decision-manager-ref="accessDecisionManager"
+          security="none"
           create-session="never" use-expressions="false"
           xmlns="http://www.springframework.org/schema/security">
-        <intercept-url pattern="/users/*" access="ROLE_CLIENT"/>
-        <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
-        <access-denied-handler ref="oauthAccessDeniedHandler"/>
+    </http>
+    <http pattern="/index.jsp/*"
+          auto-config="true"
+          security="none"
+          create-session="never" use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
+    </http>
+    <http pattern="/chat/*"
+          auto-config="true"
+          security="none"
+          create-session="never" use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
+    </http>
 
+    <http pattern="/chat"
+          auto-config="true"
+          security="none"
+          create-session="never" use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
     </http>
 
 
-    <http pattern="/hello"
+    <http pattern="/user/*"
           auto-config="true"
           entry-point-ref="oauthAuthenticationEntryPoint"
           access-decision-manager-ref="accessDecisionManager"
           create-session="never" use-expressions="false"
           xmlns="http://www.springframework.org/schema/security">
-        <intercept-url pattern="/users/*" access="ROLE_CLIENT"/>
+        <intercept-url pattern="/user/*" access="ROLE_CLIENT"/>
         <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
         <anonymous enabled="false"/>
         <access-denied-handler ref="oauthAccessDeniedHandler"/>
-    </http>
-
-    <http pattern="/queue/*"
-          auto-config="true" security="none" create-session="never" use-expressions="false"
-          xmlns="http://www.springframework.org/schema/security">
     </http>
 
     <http pattern="/app/*"
@@ -62,8 +73,9 @@
           access-decision-manager-ref="accessDecisionManager"
           create-session="never" use-expressions="false"
           xmlns="http://www.springframework.org/schema/security">
-        <intercept-url pattern="/users/*" access="ROLE_CLIENT"/>
+        <intercept-url pattern="/app/*" access="ROLE_CLIENT"/>
         <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
+        <anonymous enabled="false"/>
         <access-denied-handler ref="oauthAccessDeniedHandler"/>
     </http>
 
@@ -157,17 +169,17 @@
     </http>
 
     <http pattern="/password/*" create-session="never" use-expressions="false"
-                     entry-point-ref="oauthAuthenticationEntryPoint"
-                     access-decision-manager-ref="accessDecisionManager"
-                     xmlns="http://www.springframework.org/schema/security">
-    <anonymous enabled="false"/>
-    <csrf disabled="true"/>
-    <intercept-url pattern="/password/*" method="OPTIONS"/>
-    <intercept-url pattern="/password/*" access="ROLE_CLIENT"/>
-    <custom-filter ref="corsFilter" before="SECURITY_CONTEXT_FILTER"/>
-    <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
-    <access-denied-handler ref="oauthAccessDeniedHandler"/>
-</http>
+          entry-point-ref="oauthAuthenticationEntryPoint"
+          access-decision-manager-ref="accessDecisionManager"
+          xmlns="http://www.springframework.org/schema/security">
+        <anonymous enabled="false"/>
+        <csrf disabled="true"/>
+        <intercept-url pattern="/password/*" method="OPTIONS"/>
+        <intercept-url pattern="/password/*" access="ROLE_CLIENT"/>
+        <custom-filter ref="corsFilter" before="SECURITY_CONTEXT_FILTER"/>
+        <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
+        <access-denied-handler ref="oauthAccessDeniedHandler"/>
+    </http>
 
     <http pattern="/*" create-session="never" use-expressions="false"
           entry-point-ref="oauthAuthenticationEntryPoint"
@@ -180,27 +192,13 @@
         <intercept-url pattern="/*" method="PUT" access="ROLE_CLIENT"/>
         <intercept-url pattern="/*" method="GET" access="ROLE_CLIENT"/>
         <intercept-url pattern="/*" method="DELETE" access="ROLE_CLIENT"/>
-        <intercept-url pattern="/*" method="DELETE" access="ROLE_CLIENT"/>
+
         <custom-filter ref="corsFilter" before="SECURITY_CONTEXT_FILTER"/>
         <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
         <access-denied-handler ref="oauthAccessDeniedHandler"/>
     </http>
-    <http pattern="/chat/*"
-          auto-config="true" security="none" create-session="never" use-expressions="false"
-          xmlns="http://www.springframework.org/schema/security">
-    </http>
-    <http pattern="/chat"
-          auto-config="true" security="none" create-session="never" use-expressions="false"
-          xmlns="http://www.springframework.org/schema/security">
-    </http>
-    <http pattern="/user/*"
-          auto-config="true" security="none" create-session="never" use-expressions="false"
-          xmlns="http://www.springframework.org/schema/security">
-    </http>
-    <http pattern="/topic/*"
-          auto-config="true" security="none" create-session="never" use-expressions="false"
-          xmlns="http://www.springframework.org/schema/security">
-    </http>
+
+
     <bean id="corsFilter"
           class="sjc.app.rest.authentication.filter.CustomCorsFilter"/>
 
@@ -231,6 +229,7 @@
                 <bean class="org.springframework.security.oauth2.provider.vote.ScopeVoter"/>
                 <bean class="org.springframework.security.access.vote.RoleVoter"/>
                 <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+
             </list>
         </constructor-arg>
     </bean>
