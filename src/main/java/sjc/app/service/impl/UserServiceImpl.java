@@ -119,6 +119,33 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
+    public InfoUserVO getUserById(String id)
+    {
+        UserEntityImpl userEntity = userDao.findById(Long.parseLong(id));
+        InfoUserVO user = new InfoUserVO();
+        ContactUserVO contact = new ContactUserVO();
+        user.setId(userEntity.getId());
+        if (userEntity.getSex().equals("Male"))
+            user.setSex(1);
+        else user.setSex(0);
+        user.setName(userEntity.getName());
+        user.setLastName(userEntity.getLastName());
+        if (userEntity.getAvatar() != null)
+        {
+            user.setAvatar(userEntity.getAvatar().getUrl());
+        }
+        user.setOnline(onlineUserService.isOnline(userEntity.getLogin()));
+        user.setAbout(userEntity.getAbout());
+        user.setBirthday(userEntity.getBirthdateString());
+        user.setCity(userEntity.getCity());
+        contact.setEmail(userEntity.getEmail());
+        contact.setMobile(userEntity.getMobile());
+        contact.setSkype(userEntity.getSkype());
+        user.setContactUser(contact);
+        return user;
+    }
+
+    @Override
     public boolean editProfile(String login, UserFullVO user)
     {
         UserEntityImpl userEntity = userDao.findByName(login);

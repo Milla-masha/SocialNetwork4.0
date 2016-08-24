@@ -6,4 +6,7 @@
   <data-source name="MySQL - social_network@localhost" uuid="a49c7913-bf45-4f80-8c98-0ce40e2a706e">
     <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
   </data-source>
+  <data-source name="mysql://bf12fcdc859398:e5d7bdaf@us-cdbr-iron-east-04.cleardb.net/heroku_baf039cbaa56f14?reconnect=true" uuid="f2045671-6255-4631-a68e-d755792a8514">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  </data-source>
 </component>

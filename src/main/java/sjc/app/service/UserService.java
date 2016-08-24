@@ -12,6 +12,8 @@ public interface UserService
 
     InfoUserVO getInfoUserLogin(String login);
 
+    InfoUserVO getUserById(String id);
+
     boolean editProfile(String login, UserFullVO user);
 
     List<FriendVO> findUsersByFullName(String login,String fullName, int offset, int limit);

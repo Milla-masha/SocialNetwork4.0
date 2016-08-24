@@ -13,22 +13,9 @@ import static sjc.app.constant.Constant.*;
 /**
  * Created by psycl on 22.08.2016.
  */
+
 @Controller
-public class MailServiceImpl implements MailService
-{
-
- /*       private Properties props;
-
-        public MailServiceImpl() {
-
-            props = new Properties();
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.put("mail.smtp.socketFactory.port", "465");
-            props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.port", "465");
-        }
-*/
+public class MailServiceImpl implements MailService{
 
 
     @Override

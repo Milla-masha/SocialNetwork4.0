@@ -10,14 +10,6 @@ import org.springframework.context.annotation.Profile;
 
 import javax.sql.DataSource;
 
-*/
-/**
- * Created by psycl on 19.08.2016.
- *
- * ЧТОБЫ ЗАПУСТИТЬ СЕРВЕР ЛОКАЛЬНО
- * НУЖНО ЗАКОМЕНТИТЬ ВЕСЬ ЭТОТ КЛАСС
- *
- *//*
 
 @Profile("cloud")
 @ServiceScan
