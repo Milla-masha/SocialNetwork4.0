@@ -14,12 +14,12 @@ import java.io.IOException;
  * Created by psycl on 24.08.2016.
  */
 @ServerEndpoint(value = "/chat/{roomId}" )
-public class ChatEndpoint
+public class ChatWebsocketEndpoint
 {
     private volatile String roomId;
- /*   @Autowired
-    Dialog dialog;*/
-    private Dialog dialog = Dialog.getDialog();
+    @Autowired
+    Dialog dialog = new Dialog();
+
     @Autowired
     UserDao userDao;
 
@@ -28,12 +28,15 @@ public class ChatEndpoint
     private String sessionId;
 
     @OnOpen
-    public void open(@PathParam("roomId")String roomId, Session session)
+    public void open(@PathParam("roomId")Long roomId, Session session)
     {
+        this.roomId = roomId.toString();
         try
         {
-            sessionId = session.getId();
-            session.getBasicRemote().sendText("Connected to websocket dialog: "+roomId);
+            dialog.join(session, roomId);
+
+
+            session.getBasicRemote().sendText("Connected to websocket dialog: "+ roomId);
             session.getBasicRemote().sendText(sessionId);
 
         } catch (IOException e)
@@ -43,19 +46,16 @@ public class ChatEndpoint
     }
 
     @OnMessage
-    public void onMessage(final Session session, final String messageJson)
+    public void onMessage(final Session session, final String messageJson) throws IOException
     {
-        dialog.join(session);
         JSONObject jsonObject = new JSONObject(messageJson);
-
-        dialog.sendMessage(jsonObject);
+        dialog.sendMessage(jsonObject, Long.parseLong(roomId));
 
     }
 
     @OnClose
     public void onClose(Session session, CloseReason reason)
     {
-
     }
 
     @OnError

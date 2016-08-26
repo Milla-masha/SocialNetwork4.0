@@ -12,49 +12,34 @@ import java.util.List;
 /**
  * Created by psycl on 23.08.2016.
  */
-
 @Service
 public class Dialog
 {
+    private List<SessionContainer> users = new ArrayList<>();
 
-    private static Dialog instance = null;
-    private List<Session> sessions = new ArrayList<Session>();
-
-    public synchronized void join(Session session)
+    public synchronized void join(Session session, Long roomId)
     {
-        sessions.add(session);
+        SessionContainer container = new SessionContainer(session, roomId);
+        users.add(container);
     }
 
-    public synchronized void leave(Session session)
+    public synchronized void leave(SessionContainer user)
     {
-        sessions.remove(session);
+        users.remove(user);
     }
 
-    public synchronized void sendMessage(JSONObject jsonObject)
+    public synchronized void sendMessage(JSONObject jsonObject, Long roomId) throws IOException
     {
-        for (Session session : sessions)
+        for (SessionContainer sess : users)
         {
-            if (session.isOpen())
+            if (sess.getRoomId() == roomId)
             {
-                try
-                {
-                    session.getBasicRemote().sendText(jsonObject.toString());
-
-                } catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
+            sess.getSession().getBasicRemote().sendText(jsonObject.toString());
             }
+
         }
     }
 
-    public synchronized static Dialog getDialog()
-    {
-        if (instance == null)
-        {
-            instance = new Dialog();
-        }
-        return instance;
-    }
 }
+
 
