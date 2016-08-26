@@ -35,22 +35,22 @@ public class LikeServiceImpl implements LikeService
     public Integer addLikeToPostUser(LikeVO likeVO, Long idPost, String login)
     {
         PostEntityImpl postEntity = postUserDao.findById(idPost);
-        if(postEntity==null)
+        if (postEntity == null)
         {
             return null;
         }
-        return addLikeToPostUser(postEntity,likeVO,login);
+        return addLikeToPostUser(postEntity, likeVO, login);
     }
 
     @Override
     public Integer addLikeToPostGroup(LikeVO likeVO, Long idPost, String login)
     {
         PostEntityImpl postEntity = postGroupDao.findById(idPost);
-        if(postEntity==null)
+        if (postEntity == null)
         {
             return null;
         }
-        return addLikeToPostUser(postEntity,likeVO,login);
+        return addLikeToPostUser(postEntity, likeVO, login);
     }
 
     public static int getCountLike(List<LikeEntityImpl> likes)
@@ -75,10 +75,10 @@ public class LikeServiceImpl implements LikeService
         return count;
     }
 
-    public Integer addLikeToPostUser(PostEntityImpl postEntity,LikeVO likeVO, String login)
+    public Integer addLikeToPostUser(PostEntityImpl postEntity, LikeVO likeVO, String login)
     {
         UserEntityImpl userEntity = userDao.findByName(login);
-        if(postEntity.getLikes()!=null)
+        if (postEntity.getLikes() != null)
         {
             for (LikeEntityImpl like : postEntity.getLikes())
             {

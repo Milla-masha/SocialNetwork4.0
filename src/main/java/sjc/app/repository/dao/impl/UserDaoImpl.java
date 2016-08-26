@@ -79,6 +79,40 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
     }
 
     @Override
+    public Boolean isExistLoginFromUser(String login)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Long> cUser = cb.createQuery(Long.class);
+        Root<UserEntityImpl> rUser = cUser.from(UserEntityImpl.class);
+        Predicate condition = cb.equal(rUser.get("login"), login);
+        cUser.select(cb.count(rUser)).where(condition);
+        if (getEntityManager().createQuery(cUser).getSingleResult() == 0)
+        {
+            return false;
+        } else
+        {
+            return true;
+        }
+    }
+
+    @Override
+    public Boolean isExistEmailFromUser(String email)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Long> cUser = cb.createQuery(Long.class);
+        Root<UserEntityImpl> rUser = cUser.from(UserEntityImpl.class);
+        Predicate condition = cb.equal(rUser.get("email"), email);
+        cUser.select(cb.count(rUser)).where(condition);
+        if (getEntityManager().createQuery(cUser).getSingleResult() == 0)
+        {
+            return false;
+        } else
+        {
+            return true;
+        }
+    }
+
+    @Override
     public List<UserEntityImpl> getFriends(Long idUser, int offset, int limit)
     {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();

@@ -151,6 +151,19 @@
         <access-denied-handler ref="oauthAccessDeniedHandler"/>
     </http>
 
+    <http pattern="/notifications" create-session="never" use-expressions="false"
+          entry-point-ref="oauthAuthenticationEntryPoint"
+          access-decision-manager-ref="accessDecisionManager"
+          xmlns="http://www.springframework.org/schema/security">
+        <anonymous enabled="false"/>
+        <csrf disabled="true"/>
+        <intercept-url pattern="/notifications" method="OPTIONS"/>
+        <intercept-url pattern="/notifications" access="ROLE_CLIENT"/>
+        <custom-filter ref="corsFilter" before="SECURITY_CONTEXT_FILTER"/>
+        <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
+        <access-denied-handler ref="oauthAccessDeniedHandler"/>
+    </http>
+
     <http pattern="/password/forgotten" create-session="never" use-expressions="false"
           security="none"
           xmlns="http://www.springframework.org/schema/security">
@@ -258,7 +271,7 @@
         <property name="tokenStore" ref="tokenStore"/>
         <property name="supportRefreshToken" value="true"/>
         <property name="clientDetailsService" ref="clientDetails"/>
-        <property name="accessTokenValiditySeconds" value="300"/>
+        <property name="accessTokenValiditySeconds" value="900"/>
     </bean>
 
     <bean id="userApprovalHandler"

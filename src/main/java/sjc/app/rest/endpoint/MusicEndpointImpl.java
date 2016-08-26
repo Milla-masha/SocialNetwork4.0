@@ -6,6 +6,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.constant.Constant;
+import sjc.app.rest.exception.AlreadyExsistsException;
+import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.rest.response.PaginationResponseSuccessful;
 import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
@@ -35,9 +37,9 @@ public class MusicEndpointImpl
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
     @ResponseBody
-    public ResponseSuccessful addMusicToUser(@RequestParam String url)
+    public ResponseSuccessful addMusicToUser(@RequestParam String url) throws NotFoundExseption, AlreadyExsistsException
     {
         response.setEntity(musicService.addMusicToUser(url, SecurityContextHolder.getContext().getAuthentication().getName()));
         return response;
@@ -46,7 +48,7 @@ public class MusicEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE, consumes = "application/json", value = "/{idMusic}")
     @ResponseBody
-    public ResponseSuccessful deleteMusicToUser(@PathVariable Long idMusic)
+    public ResponseSuccessful deleteMusicToUser(@PathVariable Long idMusic) throws NotFoundExseption
     {
         response.setEntity(musicService.deleteMusicToUser(idMusic, SecurityContextHolder.getContext().getAuthentication().getName()));
         return response;

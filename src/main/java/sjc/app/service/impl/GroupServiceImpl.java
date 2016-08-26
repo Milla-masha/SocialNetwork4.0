@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sjc.app.constant.Constant;
 import sjc.app.model.entity.GroupEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.GroupSmallVO;
@@ -12,6 +13,9 @@ import sjc.app.model.vo.GroupVO;
 import sjc.app.repository.dao.GroupDao;
 import sjc.app.repository.dao.ImageDao;
 import sjc.app.repository.dao.UserDao;
+import sjc.app.rest.exception.AlreadyExsistsException;
+import sjc.app.rest.exception.NoAccessExseption;
+import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.service.GroupService;
 
 import java.util.ArrayList;
@@ -74,6 +78,10 @@ public class GroupServiceImpl implements GroupService
         GroupVO group = new GroupVO();
         UserEntityImpl user = userDao.findByName(login);
         GroupEntityImpl groupEntity = groupDao.findById(groupId);
+        if (groupEntity == null)
+        {
+            return null;
+        }
         group.setId(groupEntity.getId());
         group.setName(groupEntity.getName());
         group.setFolowers(groupEntity.getUsers().size());
@@ -105,13 +113,12 @@ public class GroupServiceImpl implements GroupService
         GroupEntityImpl groupEntity = new GroupEntityImpl();
         groupEntity.setName(group.getName());
         groupEntity.setDescription(group.getDescription());
-        UserEntityImpl user= userDao.findByName(login);
+        UserEntityImpl user = userDao.findByName(login);
         groupEntity.setOwner(user);
         if (group.getUrlImage() != null)
         {
             groupEntity.setImage(imageDao.findImageByUrl(group.getUrlImage()));
-        }
-        else
+        } else
         {
             groupEntity.setImage(imageDao.findById(65L));
         }
@@ -120,13 +127,17 @@ public class GroupServiceImpl implements GroupService
     }
 
     @Override
-    public boolean addUserToGroup(Long groupId, String login)
+    public boolean addUserToGroup(Long groupId, String login) throws NotFoundExseption, AlreadyExsistsException
     {
         GroupEntityImpl groupEntity = groupDao.findById(groupId);
+        if (groupEntity == null)
+        {
+            throw new NotFoundExseption(Constant.GROUP + groupId + Constant.MESSAGE_NOT_FOUND);
+        }
         UserEntityImpl userEntity = userDao.findByName(login);
         if (groupEntity.getUsers().contains(userEntity))
         {
-            return false;
+            throw new AlreadyExsistsException(login + Constant.IN_GROUP + groupId + Constant.MESSAGE_EXIST);
         }
         groupEntity.getUsers().add(userEntity);
         groupDao.update(groupEntity);
@@ -134,20 +145,27 @@ public class GroupServiceImpl implements GroupService
     }
 
     @Override
-    public boolean leaveGroup(Long groupId, String login)
+    public boolean leaveGroup(Long groupId, String login) throws NotFoundExseption
     {
         GroupEntityImpl groupEntity = groupDao.findById(groupId);
+        if (groupEntity == null)
+        {
+            throw new NotFoundExseption(Constant.GROUP + groupId + Constant.MESSAGE_NOT_FOUND);
+        }
         UserEntityImpl userEntity = userDao.findByName(login);
         if (groupEntity.getUsers().contains(userEntity))
         {
             groupEntity.getUsers().remove(userEntity);
             groupDao.update(groupEntity);
             return true;
-        } else return false;
+        } else
+        {
+            throw new NotFoundExseption(login + Constant.IN_GROUP + groupId + Constant.MESSAGE_NOT_FOUND);
+        }
     }
 
     @Override
-    public List<GroupVO> findGroupsByName(String login ,String groupName, int offset, int limit)
+    public List<GroupVO> findGroupsByName(String login, String groupName, int offset, int limit)
     {
         List<GroupVO> groups = new ArrayList<>();
         List<GroupEntityImpl> groupsEntities = groupDao.findGroupsByName(groupName, offset, limit);
@@ -179,17 +197,20 @@ public class GroupServiceImpl implements GroupService
     }
 
     @Override
-    public boolean deleteGroup(Long groupId, String login)
+    public boolean deleteGroup(Long groupId, String login) throws NotFoundExseption, NoAccessExseption
     {
-        GroupEntityImpl groupEntity=groupDao.findById(groupId);
-        if(groupEntity.getOwner().getLogin().equals(login))
+        GroupEntityImpl groupEntity = groupDao.findById(groupId);
+        if (groupEntity == null)
+        {
+            throw new NotFoundExseption(Constant.GROUP + groupId + Constant.MESSAGE_NOT_FOUND);
+        }
+        if (groupEntity.getOwner().getLogin().equals(login))
         {
             groupDao.delete(groupEntity);
             return true;
-        }
-        else
+        } else
         {
-         return false;
+            throw new NoAccessExseption(login + Constant.MESSAGE_NOT_ACCESS_TO_GROUP+groupId);
         }
     }
 }

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.constant.Constant;
 import sjc.app.model.vo.GroupSmallVO;
+import sjc.app.rest.exception.AlreadyExsistsException;
+import sjc.app.rest.exception.NoAccessExseption;
+import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.rest.response.PaginationResponseSuccessful;
 import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
@@ -67,7 +70,7 @@ public class GroupEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", value = "/{groupId}")
     @ResponseBody
-    public ResponseSuccessful joinGroup(@PathVariable Long groupId, HttpServletRequest request)
+    public ResponseSuccessful joinGroup(@PathVariable Long groupId, HttpServletRequest request) throws AlreadyExsistsException, NotFoundExseption
     {
         response.setEntity(groupService.addUserToGroup(groupId, request.getUserPrincipal().getName()));
         return response;
@@ -76,7 +79,7 @@ public class GroupEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE, consumes = "application/json", value = "/{groupId}")
     @ResponseBody
-    public ResponseSuccessful leaveGroup(@PathVariable Long groupId, HttpServletRequest request)
+    public ResponseSuccessful leaveGroup(@PathVariable Long groupId, HttpServletRequest request) throws NotFoundExseption
     {
         response.setEntity(groupService.leaveGroup(groupId, request.getUserPrincipal().getName()));
         return response;
@@ -85,7 +88,7 @@ public class GroupEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE, consumes = "application/json")
     @ResponseBody
-    public ResponseSuccessful deleteGroup(@RequestParam Long groupId, HttpServletRequest request)
+    public ResponseSuccessful deleteGroup(@RequestParam Long groupId, HttpServletRequest request) throws NoAccessExseption, NotFoundExseption
     {
         response.setEntity(groupService.deleteGroup(groupId, request.getUserPrincipal().getName()));
         return response;

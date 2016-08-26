@@ -2,6 +2,9 @@ package sjc.app.service;
 
 import sjc.app.model.vo.GroupSmallVO;
 import sjc.app.model.vo.GroupVO;
+import sjc.app.rest.exception.AlreadyExsistsException;
+import sjc.app.rest.exception.NoAccessExseption;
+import sjc.app.rest.exception.NotFoundExseption;
 
 import java.util.List;
 
@@ -15,11 +18,11 @@ public interface GroupService
 
     Long addGroup(GroupSmallVO group, String login);
 
-    boolean addUserToGroup(Long groupId, String login);
+    boolean addUserToGroup(Long groupId, String login) throws NotFoundExseption, AlreadyExsistsException;
 
-    boolean leaveGroup(Long groupId, String login);
+    boolean leaveGroup(Long groupId, String login) throws NotFoundExseption;
 
     List<GroupVO> findGroupsByName(String login, String groupName, int offset, int limit);
 
-    boolean deleteGroup(Long groupId, String login);
+    boolean deleteGroup(Long groupId, String login) throws NotFoundExseption, NoAccessExseption;
 }

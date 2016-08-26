@@ -6,6 +6,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.constant.Constant;
+import sjc.app.rest.exception.AlreadyExsistsException;
+import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.rest.response.PaginationResponseSuccessful;
 import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
@@ -36,16 +38,16 @@ public class VideoEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/{videoId}")
     @ResponseBody
-    public ResponseSuccessful getVideo(@PathVariable Long videoId)
+    public ResponseSuccessful getVideo(@PathVariable Long videoId) throws NotFoundExseption
     {
         response.setEntity(videoService.getVideo(videoId));
         return response;
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
     @ResponseBody
-    public ResponseSuccessful addVideoToUser(@RequestParam String url)
+    public ResponseSuccessful addVideoToUser(@RequestParam String url) throws AlreadyExsistsException, NotFoundExseption
     {
         response.setEntity(videoService.addVideoToUser(url, SecurityContextHolder.getContext().getAuthentication().getName()));
         return response;
@@ -54,7 +56,7 @@ public class VideoEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE, consumes = "application/json", value = "/{idVideo}")
     @ResponseBody
-    public ResponseSuccessful deleteVideoToUser(@PathVariable Long idVideo)
+    public ResponseSuccessful deleteVideoToUser(@PathVariable Long idVideo) throws NotFoundExseption
     {
         response.setEntity(videoService.deleteVideoToUser(idVideo, SecurityContextHolder.getContext().getAuthentication().getName()));
         return response;

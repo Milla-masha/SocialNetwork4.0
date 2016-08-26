@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sjc.app.constant.Constant;
 import sjc.app.model.entity.GroupEntityImpl;
 import sjc.app.model.entity.LikeEntityImpl;
 import sjc.app.model.entity.PostGroupEntityImpl;
@@ -16,6 +17,8 @@ import sjc.app.repository.dao.GroupDao;
 import sjc.app.repository.dao.ImageDao;
 import sjc.app.repository.dao.PostGroupDao;
 import sjc.app.repository.dao.UserDao;
+import sjc.app.rest.exception.NoAccessExseption;
+import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.service.PostGroupService;
 
 import java.util.ArrayList;
@@ -40,12 +43,12 @@ public class PostGroupServiceImpl implements PostGroupService
     public List<PostVO> getPostsGroup(String login, Long GroupId, int offset, int limit)
     {
         List<PostVO> posts = new ArrayList<>();
-        UserEntityImpl userEntity=userDao.findByName(login);
+        UserEntityImpl userEntity = userDao.findByName(login);
         List<PostGroupEntityImpl> postsEntity = postGroupDao.getPostsGroup(GroupId, offset, limit);
         for (PostGroupEntityImpl postEntity : postsEntity)
         {
             PostVO post = new PostVO();
-            if(postEntity.getImage()!=null)
+            if (postEntity.getImage() != null)
             {
                 post.setImage(postEntity.getImage().getUrl());
             }
@@ -61,13 +64,12 @@ public class PostGroupServiceImpl implements PostGroupService
             owner.setName(postEntity.getUserFrom().getName());
             owner.setLastName(postEntity.getUserFrom().getLastName());
             post.setOwner(owner);
-            for (LikeEntityImpl like:postEntity.getLikes())
+            for (LikeEntityImpl like : postEntity.getLikes())
             {
-                if(userEntity.getLikes().contains(like))
+                if (userEntity.getLikes().contains(like))
                 {
                     post.setIsLike(like.getIsLike());
-                }
-                else
+                } else
                 {
                     post.setIsLike(0);
                 }
@@ -78,15 +80,23 @@ public class PostGroupServiceImpl implements PostGroupService
     }
 
     @Override
-    public boolean addPostGroup(PostSmallVO post, String login)
+    public boolean addPostGroup(PostSmallVO post, String login) throws NotFoundExseption, NoAccessExseption
     {
-        UserEntityImpl userEntityFrom=userDao.findByName(login);
-        GroupEntityImpl groupTo=groupDao.findById(post.getIdTo());
+        UserEntityImpl userEntityFrom = userDao.findByName(login);
+        GroupEntityImpl groupTo = groupDao.findById(post.getIdTo());
+        if (groupTo == null)
+        {
+            throw new NotFoundExseption(Constant.GROUP + post.getIdTo() + Constant.MESSAGE_NOT_FOUND);
+        }
+        if (!groupTo.getUsers().contains(userEntityFrom))
+        {
+            throw new NoAccessExseption(login + Constant.MESSAGE_NOT_ACCESS_TO_GROUP+groupTo.getId());
+        }
         PostGroupEntityImpl postEntity = new PostGroupEntityImpl();
         postEntity.setText(post.getText());
         postEntity.setGroup(groupTo);
         postEntity.setUserFrom(userEntityFrom);
-        if(post.getUrlImage()!=null)
+        if (post.getUrlImage() != null)
         {
             postEntity.setImage(imageDao.findImageByUrl(post.getUrlImage()));
         }
@@ -95,15 +105,22 @@ public class PostGroupServiceImpl implements PostGroupService
     }
 
     @Override
-    public boolean deletePostGroup(Long postId, String login)
+    public boolean deletePostGroup(Long postId, String login) throws NotFoundExseption, NoAccessExseption
     {
         PostGroupEntityImpl postEntity = postGroupDao.findById(postId);
+        if (postEntity == null)
+        {
+            throw new NotFoundExseption(Constant.GROUP + postId + Constant.MESSAGE_NOT_FOUND);
+        }
         if (postEntity.getUserFrom().getLogin().equals(login))
         {
             postGroupDao.delete(postId);
             return true;
+        } else
+        {
+            throw new NoAccessExseption(login + Constant.MESSAGE_NOT_ACCESS_TO_POST+postId);
+
         }
-        else return false;
     }
 
     @Override

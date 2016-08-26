@@ -6,10 +6,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sjc.app.constant.Constant;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.UserSmallVO;
 import sjc.app.repository.dao.FriendDao;
 import sjc.app.repository.dao.UserDao;
+import sjc.app.rest.exception.AlreadyExsistsException;
+import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.service.FriendService;
 
 import java.util.ArrayList;
@@ -51,26 +54,32 @@ public class FriendServiceImpl implements FriendService
     }
 
     @Override
-    public boolean addFriend(Long userId, String login)
-    {
-        try
-        {
-            UserEntityImpl userEntity = userDao.findByName(login);
-            UserEntityImpl friend = userDao.findById(userId);
-            userEntity.getFriends().add(friend);
-            userDao.update(userEntity);
-            return true;
-        } catch (NullPointerException ne)
-        {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean deleteFriend(Long userId, String login)
+    public boolean addFriend(Long userId, String login) throws AlreadyExsistsException, NotFoundExseption
     {
         UserEntityImpl userEntity = userDao.findByName(login);
         UserEntityImpl friend = userDao.findById(userId);
+        if (friend == null)
+        {
+            throw new NotFoundExseption("Friend " + userId + Constant.MESSAGE_NOT_FOUND);
+        }
+        if (userEntity.getFriends().contains(friend))
+        {
+            throw new AlreadyExsistsException("Friend " + userId + Constant.MESSAGE_EXIST);
+        }
+        userEntity.getFriends().add(friend);
+        userDao.update(userEntity);
+        return true;
+    }
+
+    @Override
+    public boolean deleteFriend(Long userId, String login) throws NotFoundExseption
+    {
+        UserEntityImpl userEntity = userDao.findByName(login);
+        UserEntityImpl friend = userDao.findById(userId);
+        if (friend == null || !userEntity.getFriends().contains(userEntity))
+        {
+            throw new NotFoundExseption("Friend " + userId + Constant.MESSAGE_NOT_FOUND);
+        }
         userEntity.getFriends().remove(friend);
         userDao.update(userEntity);
         return true;

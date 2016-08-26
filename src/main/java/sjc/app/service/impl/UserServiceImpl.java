@@ -1,16 +1,20 @@
 package sjc.app.service.impl;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sjc.app.constant.Constant;
+import sjc.app.model.entity.Role;
 import sjc.app.model.entity.RoleEntityImpl;
+import sjc.app.model.entity.Sex;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.*;
 import sjc.app.repository.dao.ImageDao;
 import sjc.app.repository.dao.UserDao;
+import sjc.app.rest.exception.AlreadyExsistsException;
+import sjc.app.rest.exception.NoAccessExseption;
 import sjc.app.service.MailService;
 import sjc.app.service.UserService;
 
@@ -33,36 +37,48 @@ public class UserServiceImpl implements UserService
     private MailService mailService;
 
     @Override
-    public boolean addUser(UserRegisterVO user) throws ConstraintViolationException
+    public boolean addUser(UserRegisterVO user) throws AlreadyExsistsException
     {
-            UserEntityImpl userEntity = new UserEntityImpl();
-            userEntity.setLogin(user.getLogin());
-            userEntity.setPassword(user.getPassword());
-            userEntity.setName(user.getName());
-            userEntity.setLastName(user.getLastName());
-            if (user.getSex().equals("1"))
-            {
-                userEntity.setSex("Male");
-            } else userEntity.setSex("Female");
-            {
-                userEntity.setBirthdateString(user.getBday());
-            }
-            userEntity.setAvatar(imageDao.findById(63L));
-            userEntity.setEmail(user.getEmail());
-            userEntity.setEnabled(1);
-            userEntity = userDao.save(userEntity);
-            RoleEntityImpl authority = new RoleEntityImpl();
-            authority.setUser(userEntity);
-            authority.setRole("ROLE_CLIENT");
-            userEntity.getAuthorities().add(authority);
-            userDao.update(userEntity);
-            return true;
+        UserEntityImpl userEntity = new UserEntityImpl();
+        if (userDao.isExistLoginFromUser(user.getLogin()))
+        {
+            throw new AlreadyExsistsException("Login " + user.getLogin() + Constant.MESSAGE_EXIST);
+        }
+        if (userDao.isExistEmailFromUser(user.getEmail()))
+        {
+            throw new AlreadyExsistsException("Email " + user.getEmail() + Constant.MESSAGE_EXIST);
+        }
+        userEntity.setLogin(user.getLogin());
+        userEntity.setPassword(user.getPassword());
+        userEntity.setName(user.getName());
+        userEntity.setLastName(user.getLastName());
+        if (user.getSex().equals("1"))
+        {
+            userEntity.setSex(Sex.MALE);
+        } else
+        {
+            userEntity.setSex(Sex.FEMALE);
+        }
+        userEntity.setBirthdateString(user.getBday());
+        userEntity.setAvatar(imageDao.findById(63L));
+        userEntity.setEmail(user.getEmail());
+        userEntity.setEnabled(true);
+        RoleEntityImpl authority = new RoleEntityImpl();
+        authority.setUser(userEntity);
+        authority.setRole(Role.ROLE_CLIENT);
+        userEntity.getAuthorities().add(authority);
+        userDao.save(userEntity);
+        return true;
     }
 
     @Override
     public InfoUserVO getInfoUserVO(String login, Long userId)
     {
         UserEntityImpl userEntity = userDao.findById(userId);
+        if (userEntity == null)
+        {
+            return null;
+        }
         UserEntityImpl userLogin = userDao.findByName(login);
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
@@ -122,6 +138,10 @@ public class UserServiceImpl implements UserService
     public InfoUserVO getUserById(String id)
     {
         UserEntityImpl userEntity = userDao.findById(Long.parseLong(id));
+        if (userEntity == null)
+        {
+            return null;
+        }
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
         user.setId(userEntity.getId());
@@ -146,9 +166,16 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public boolean editProfile(String login, UserFullVO user)
+    public boolean editProfile(String login, UserFullVO user) throws AlreadyExsistsException
     {
         UserEntityImpl userEntity = userDao.findByName(login);
+        if (!userEntity.getEmail().equals(user.getEmail())&&user.getEmail()!=null)
+        {
+            if (userDao.isExistEmailFromUser(user.getEmail()))
+            {
+                throw new AlreadyExsistsException("Email " + userEntity.getEmail() + Constant.MESSAGE_EXIST);
+            }
+        }
         userEntity.setName(user.getName());
         userEntity.setAbout(user.getAbout());
         if (user.getAvatarUrl() != null)
@@ -161,8 +188,8 @@ public class UserServiceImpl implements UserService
         userEntity.setLastName(user.getLastName());
         if (user.getSex() == 1)
         {
-            userEntity.setSex("Male");
-        } else userEntity.setSex("Female");
+            userEntity.setSex(Sex.MALE);
+        } else userEntity.setSex(Sex.FEMALE);
         userEntity.setMobile(user.getMobile());
         userEntity.setSkype(user.getSkype());
         userDao.update(userEntity);
@@ -199,12 +226,12 @@ public class UserServiceImpl implements UserService
     public Boolean getUserPassword(String email)
     {
         UserEntityImpl user = userDao.findByEmail(email);
-        mailService.sendPasswordToEmail("Social Network, password recovery",user.getPassword(),email);
+        mailService.sendPasswordToEmail("Social Network, password recovery", user.getPassword(), email);
         return true;
     }
 
     @Override
-    public boolean editUserPassword(PasswordVO password, String name)
+    public boolean editUserPassword(PasswordVO password, String name) throws NoAccessExseption
     {
         UserEntityImpl user = userDao.findByName(name);
         if (user.getPassword().equals(password.getOldPassword()))
@@ -212,8 +239,16 @@ public class UserServiceImpl implements UserService
             user.setPassword(password.getNewPassword());
             userDao.update(user);
             return true;
+        } else
+        {
+            throw new NoAccessExseption(Constant.MESSAGE_INVALID_PASSWORD + password.getOldPassword());
         }
-        return false;
+    }
+
+    @Override
+    public Long getUserId(String login)
+    {
+        return userDao.findByName(login).getId();
     }
 
 }

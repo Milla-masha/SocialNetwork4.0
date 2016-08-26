@@ -1,5 +1,6 @@
 package sjc.app.model.entity.interfaces;
 
+import sjc.app.model.entity.Role;
 import sjc.app.model.entity.UserEntityImpl;
 
 /**
@@ -7,9 +8,9 @@ import sjc.app.model.entity.UserEntityImpl;
  */
 public interface RoleEntity {
 
-    String getRole();
+    Role getRole();
 
-    void setRole(String role);
+    void setRole(Role role);
 
     UserEntityImpl getUser();
 

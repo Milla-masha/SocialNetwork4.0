@@ -7,35 +7,37 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "roles")
-public class RoleEntityImpl extends AbstractPersistable implements RoleEntity {
+public class RoleEntityImpl extends AbstractPersistable implements RoleEntity
+{
 
     @Column(name = "authorities")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEntityImpl user;
 
     @Override
-
-    public String getRole() {
+    public Role getRole()
+    {
         return role;
     }
 
     @Override
-
-    public void setRole(String role) {
+    public void setRole(Role role)
+    {
         this.role = role;
     }
 
     @Override
-
-    public UserEntityImpl getUser() {
+    public UserEntityImpl getUser()
+    {
         return user;
     }
 
     @Override
-
-    public void setUser(UserEntityImpl user) {
+    public void setUser(UserEntityImpl user)
+    {
         this.user = user;
     }
 }

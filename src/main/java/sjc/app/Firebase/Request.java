@@ -1,19 +1,19 @@
-package sjc.app.Firebase;
+package sjc.app.firebase;
 
 public class Request
 {
-    private Object data = null;
+    private Notification notification=new Notification();
 
-    private String to = null;
+    private String to;
 
-    public Object getData()
+    public Notification getNotification()
     {
-        return data;
+        return notification;
     }
 
-    public void setData(Object data)
+    public void setBody(String body)
     {
-        this.data = data;
+        this.notification.setBody(body);
     }
 
     public String getTo()

@@ -13,9 +13,6 @@ public class ImageEntityImpl extends MediaEntityImpl implements ImageEntity {
 
     private List<UserEntityImpl> users=new ArrayList<>(0);
 
-    public ImageEntityImpl() {
-    }
-
     @Access(AccessType.PROPERTY)
     @ManyToMany( fetch = FetchType.LAZY, mappedBy = "images", cascade = CascadeType.ALL)
     @Override

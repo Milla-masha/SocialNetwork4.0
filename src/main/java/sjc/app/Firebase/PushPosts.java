@@ -1,24 +1,27 @@
-package sjc.app.Firebase;
+package sjc.app.firebase;
 
 import com.google.gson.Gson;
 import org.apache.cxf.jaxrs.client.WebClient;
-import sjc.app.model.vo.PostSmallVO;
+import sjc.app.constant.Constant;
+import sjc.app.model.vo.PostNotificationVO;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 public class PushPosts
 {
-    public static void push(PostSmallVO postSmallVO)
+    public static void push(PostNotificationVO postNotificationVO, String token)
     {
-        WebClient client = WebClient.create("https://fcm.googleapis.com/fcm/send")
+        WebClient client = WebClient.create(Constant.URL_FOR_NOTIFICATION)
                 .accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON);
-        client.header("Authorization", "key=AIzaSyBuV8kUN2UMbIaZ20NbXGfn58-FPyB6h1I");
+        client.header(Constant.AUTHORIZATION, Constant.KEY_FOR_NOTIFICATION);
         Request request=new Request();
-        request.setData(postSmallVO);
-        request.setTo("fZV7bA7x9lE:APA91bFSxN0qBekZfQ-8_bhOEQnA1oQcyUg93wJHT9MRPqCcDboMG9REk9XwZxNK3gBe_RQkrT3bdM0cx-gYDEnf7rU9qnA2k3ns4zpOZ4Dk0eVOtcKOSfUCeGlMVPH-iJ2LSC0Sck1j");
+        request.setBody(postNotificationVO.getText());
+        request.setTo(token);
         Gson gson = new Gson();
         String jsonInString = gson.toJson(request);
-        client.post(jsonInString);
-    }
+        Response response= client.post(jsonInString);
+        String s;
+}
 }
 

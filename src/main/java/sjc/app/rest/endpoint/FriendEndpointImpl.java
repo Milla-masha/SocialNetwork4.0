@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.constant.Constant;
+import sjc.app.rest.exception.AlreadyExsistsException;
+import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.rest.response.PaginationResponseSuccessful;
 import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
@@ -37,7 +39,7 @@ public class FriendEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseSuccessful addFriend(@RequestParam Long userId, HttpServletRequest request)
+    public ResponseSuccessful addFriend(@RequestParam Long userId, HttpServletRequest request) throws AlreadyExsistsException, NotFoundExseption
     {
         response.setEntity(friendService.addFriend(userId, request.getUserPrincipal().getName()));
         return response;
@@ -46,7 +48,7 @@ public class FriendEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseSuccessful deleteFriend(@RequestParam Long userId, HttpServletRequest request)
+    public ResponseSuccessful deleteFriend(@RequestParam Long userId, HttpServletRequest request) throws NotFoundExseption
     {
         response.setEntity(friendService.deleteFriend(userId, request.getUserPrincipal().getName()));
         return response;

@@ -1,6 +1,5 @@
 package sjc.app.repository.dao.impl;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Repository;
 import sjc.app.model.entity.AbstractPersistable;
 import sjc.app.repository.dao.GenericDao;
@@ -33,7 +32,7 @@ public abstract class GenericDaoImpl<T extends AbstractPersistable> implements G
     }
 
     @Override
-    public T save(T obj) throws ConstraintViolationException
+    public T save(T obj)
     {
         T savedEntity;
         if (obj.getId() == null)

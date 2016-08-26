@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,6 @@ import java.util.List;
 @Table(name = "users")
 public class UserEntityImpl extends AbstractPersistable
 {
-
     private String password;
     private String login;
     private String name;
@@ -19,12 +19,13 @@ public class UserEntityImpl extends AbstractPersistable
     private String skype;
     private String mobile;
     private String lastName;
-    private String sex;
+    private Sex sex;
     private ImageEntityImpl avatar;
-    private Date birthdate;
+    private Calendar birthdate;
     private String city;
     private String about;
-    private int enabled;
+    private Boolean enabled;
+    private NotificationEntityImpl notification;
     private List<UserEntityImpl> friends = new ArrayList<>(0);
     private List<UserEntityImpl> blackListUsers = new ArrayList<>(0);
     private List<GroupEntityImpl> groups = new ArrayList<>(0);
@@ -46,7 +47,7 @@ public class UserEntityImpl extends AbstractPersistable
         this.password = password;
     }
 
-    @Column(name = "login")
+    @Column(name = "login", unique = true)
     public String getLogin()
     {
         return login;
@@ -125,13 +126,13 @@ public class UserEntityImpl extends AbstractPersistable
         this.blackListUsers = blackListUsers;
     }
 
-    @Column(name = "enabled")
-    public int getEnabled()
+    @Column(name = "enabled", nullable = false, columnDefinition = "TINYINT(1)")
+    public Boolean getEnabled()
     {
         return enabled;
     }
 
-    public void setEnabled(int enabled)
+    public void setEnabled(Boolean enabled)
     {
         this.enabled = enabled;
     }
@@ -158,13 +159,14 @@ public class UserEntityImpl extends AbstractPersistable
         this.lastName = lastName;
     }
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "sex")
-    public String getSex()
+    public Sex getSex()
     {
         return sex;
     }
 
-    public void setSex(String sex)
+    public void setSex(Sex sex)
     {
         this.sex = sex;
     }
@@ -182,32 +184,45 @@ public class UserEntityImpl extends AbstractPersistable
         this.avatar = avatar;
     }
 
+    @Access(AccessType.PROPERTY)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    public NotificationEntityImpl getNotification()
+    {
+        return notification;
+    }
+
+    public void setNotification(NotificationEntityImpl notification)
+    {
+        this.notification = notification;
+    }
+
     @Column(name = "birthdate")
-    public Date getBirthdate()
+    @Temporal(TemporalType.TIMESTAMP)
+    public Calendar getBirthdate()
     {
         return birthdate;
     }
 
     @Column(name = "birthdate")
+    @Temporal(TemporalType.TIMESTAMP)
     public String getBirthdateString()
     {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.format(birthdate);
+        return formatter.format(birthdate.getTime());
     }
 
-    public void setBirthdate(Date birthdate)
+    public void setBirthdate(Calendar birthdate)
     {
-        this.birthdate = birthdate;
+        this.birthdate=birthdate;
     }
 
     public void setBirthdateString(String birthdate)
     {
-
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         try
         {
-            this.birthdate = formatter.parse(birthdate);
-
+            Date date = formatter.parse(birthdate);
+            this.birthdate.setTime(date);
         } catch (ParseException e)
         {
             e.printStackTrace();
@@ -236,7 +251,7 @@ public class UserEntityImpl extends AbstractPersistable
         this.about = about;
     }
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     public String getEmail()
     {
         return email;

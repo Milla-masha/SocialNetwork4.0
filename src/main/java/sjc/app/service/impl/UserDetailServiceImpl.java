@@ -35,7 +35,6 @@ public class UserDetailServiceImpl implements UserDetailsService
         {
             throw new UsernameNotFoundException("User " + userName + " has no authorities");
         }
-
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
@@ -43,7 +42,7 @@ public class UserDetailServiceImpl implements UserDetailsService
         List<String> roles = new ArrayList<>();
         for (int i = 0; i < userEntity.getAuthorities().size(); i++)
         {
-            roles.add(userEntity.getAuthorities().iterator().next().getRole());
+            roles.add(userEntity.getAuthorities().iterator().next().getRole().name());
         }
         return new User(
                 userEntity.getLogin(),

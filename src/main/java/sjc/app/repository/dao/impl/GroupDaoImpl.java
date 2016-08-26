@@ -6,7 +6,6 @@ import sjc.app.model.entity.GroupEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.repository.dao.GroupDao;
 
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.List;
 
@@ -51,7 +50,7 @@ public class GroupDaoImpl extends GenericDaoImpl<GroupEntityImpl> implements Gro
         Root<GroupEntityImpl> groupEntityRoot = c.from(GroupEntityImpl.class);
         Predicate condition = cb.like(groupEntityRoot.get("name"), "%" + groupName + "%");
         c.where(condition);
-        TypedQuery<GroupEntityImpl> q = getEntityManager().createQuery(c);
-        return q.getResultList();
+        return  getEntityManager().createQuery(c).setFirstResult(offset).setMaxResults(limit).getResultList();
+
     }
 }

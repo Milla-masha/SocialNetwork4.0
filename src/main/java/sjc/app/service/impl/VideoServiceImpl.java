@@ -5,11 +5,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sjc.app.constant.Constant;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.entity.VideoEntityImpl;
 import sjc.app.model.vo.VideoFullVO;
 import sjc.app.repository.dao.UserDao;
 import sjc.app.repository.dao.VideoDao;
+import sjc.app.rest.exception.AlreadyExsistsException;
+import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.service.VideoService;
 
 import java.util.ArrayList;
@@ -50,9 +53,13 @@ public class VideoServiceImpl implements VideoService
     }
 
     @Override
-    public VideoFullVO getVideo(Long videoId)
+    public VideoFullVO getVideo(Long videoId) throws NotFoundExseption
     {
         VideoEntityImpl videoEntity = videoDao.findById(videoId);
+        if (videoEntity == null)
+        {
+            return null;
+        }
         VideoFullVO video = new VideoFullVO();
         video.setId(videoEntity.getId());
         video.setName(videoEntity.getName());
@@ -62,23 +69,32 @@ public class VideoServiceImpl implements VideoService
     }
 
     @Override
-    public boolean addVideoToUser(String url, String login)
+    public boolean addVideoToUser(String url, String login) throws NotFoundExseption, AlreadyExsistsException
     {
         UserEntityImpl user = userDao.findByName(login);
         VideoEntityImpl videoEntity = videoDao.findVideoByUrl(url);
+        if (videoEntity == null)
+        {
+            throw new NotFoundExseption(Constant.VIDEO_URL + url + Constant.MESSAGE_NOT_FOUND);
+
+        }
         if (user.getVideos().contains(videoEntity))
         {
-            return false;
+            throw new AlreadyExsistsException(Constant.VIDEO_URL + url + Constant.MESSAGE_EXIST);
         } else user.getVideos().add(videoEntity);
         userDao.update(user);
         return true;
     }
 
     @Override
-    public boolean deleteVideoToUser(Long id, String login)
+    public boolean deleteVideoToUser(Long id, String login) throws NotFoundExseption
     {
         UserEntityImpl user = userDao.findByName(login);
         VideoEntityImpl videoEntity = videoDao.findById(id);
+        if (videoEntity == null)
+        {
+            throw new NotFoundExseption(Constant.VIDEO_ID + id + Constant.MESSAGE_NOT_FOUND);
+        }
         if (user.getVideos().contains(videoEntity))
         {
             user.getVideos().remove(videoEntity);
@@ -86,7 +102,7 @@ public class VideoServiceImpl implements VideoService
             return true;
         } else
         {
-            return false;
+            throw new NotFoundExseption(Constant.VIDEO_ID + id + Constant.MESSAGE_NOT_FOUND_USER+login);
         }
     }
 }

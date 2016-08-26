@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import sjc.app.constant.Constant;
 import sjc.app.model.vo.LikeVO;
 import sjc.app.model.vo.PostSmallVO;
+import sjc.app.rest.exception.NoAccessExseption;
+import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.rest.response.PaginationResponseSuccessful;
 import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
@@ -43,7 +45,7 @@ public class PostUserEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public ResponseSuccessful addPostsUser(@RequestBody PostSmallVO post, HttpServletRequest request)
+    public ResponseSuccessful addPostsUser(@RequestBody PostSmallVO post, HttpServletRequest request) throws NoAccessExseption, NotFoundExseption
     {
         response.setEntity(postUserService.addPostUser(post, request.getUserPrincipal().getName()));
         return response;
@@ -52,7 +54,7 @@ public class PostUserEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseSuccessful deletePostUser(@RequestParam Long postId, HttpServletRequest request)
+    public ResponseSuccessful deletePostUser(@RequestParam Long postId, HttpServletRequest request) throws NoAccessExseption, NotFoundExseption
     {
         response.setEntity(postUserService.deletePostUser(postId, request.getUserPrincipal().getName()));
         return response;

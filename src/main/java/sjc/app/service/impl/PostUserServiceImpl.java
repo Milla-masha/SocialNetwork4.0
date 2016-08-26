@@ -5,16 +5,20 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sjc.app.Firebase.PushPosts;
+import sjc.app.constant.Constant;
+import sjc.app.firebase.PushPosts;
 import sjc.app.model.entity.LikeEntityImpl;
 import sjc.app.model.entity.PostUserEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
+import sjc.app.model.vo.PostNotificationVO;
 import sjc.app.model.vo.PostSmallVO;
 import sjc.app.model.vo.PostVO;
 import sjc.app.model.vo.UserSmallVO;
 import sjc.app.repository.dao.ImageDao;
 import sjc.app.repository.dao.PostUserDao;
 import sjc.app.repository.dao.UserDao;
+import sjc.app.rest.exception.NoAccessExseption;
+import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.service.PostUserService;
 
 import java.util.ArrayList;
@@ -34,10 +38,10 @@ public class PostUserServiceImpl implements PostUserService
     private ImageDao imageDao;
 
     @Override
-    public List<PostVO> getPostsUser(String login,Long userId, int offset, int limit)
+    public List<PostVO> getPostsUser(String login, Long userId, int offset, int limit)
     {
         List<PostVO> posts = new ArrayList<>();
-        UserEntityImpl userEntity=userDao.findByName(login);
+        UserEntityImpl userEntity = userDao.findByName(login);
         List<PostUserEntityImpl> postsEntity = postUserDao.getPostsUser(userId, offset, limit);
         for (PostUserEntityImpl postEntity : postsEntity)
         {
@@ -52,13 +56,12 @@ public class PostUserServiceImpl implements PostUserService
             post.setDislike(LikeServiceImpl.getCountDisLike(postEntity.getLikes()));
             post.setText(postEntity.getText());
             UserSmallVO owner = new UserSmallVO();
-            for (LikeEntityImpl like:postEntity.getLikes())
+            for (LikeEntityImpl like : postEntity.getLikes())
             {
-                if(userEntity.getLikes().contains(like))
+                if (userEntity.getLikes().contains(like))
                 {
                     post.setIsLike(like.getIsLike());
-                }
-                else
+                } else
                 {
                     post.setIsLike(0);
                 }
@@ -77,13 +80,17 @@ public class PostUserServiceImpl implements PostUserService
     }
 
     @Override
-    public boolean addPostUser(PostSmallVO post, String login)
+    public boolean addPostUser(PostSmallVO post, String login) throws NoAccessExseption, NotFoundExseption
     {
         UserEntityImpl userEntityFrom = userDao.findByName(login);
         UserEntityImpl userEntityTo = userDao.findById(post.getIdTo());
-        if (userEntityTo.getBlackListUsers().contains(userEntityFrom))
+        if (userEntityTo == null)
         {
-            return false;
+            throw new NotFoundExseption(Constant.USER + post.getIdTo() + Constant.MESSAGE_NOT_FOUND);
+        }
+        if (userEntityTo.getBlackListUsers().contains(userEntityFrom) || !userEntityTo.getFriends().contains(userEntityFrom))
+        {
+            throw new NoAccessExseption(Constant.USER + userEntityFrom.getId() + Constant.MESSAGE_NOT_ACCESS_TO_USER + userEntityTo.getLogin());
         }
         PostUserEntityImpl postEntity = new PostUserEntityImpl();
         postEntity.setText(post.getText());
@@ -93,21 +100,32 @@ public class PostUserServiceImpl implements PostUserService
         {
             postEntity.setImage(imageDao.findImageByUrl(post.getUrlImage()));
         }
-        postUserDao.save(postEntity);
-        PushPosts.push(post);
+        postEntity = postUserDao.save(postEntity);
+        if (userEntityTo.getNotification() != null)
+        {
+            PostNotificationVO postNotificationVO = new PostNotificationVO();
+            postNotificationVO.setText(postEntity.getText());
+            PushPosts.push(postNotificationVO, userEntityTo.getNotification().getToken());
+        }
         return true;
     }
 
     @Override
-    public boolean deletePostUser(Long postId, String login)
+    public boolean deletePostUser(Long postId, String login) throws NotFoundExseption, NoAccessExseption
     {
         PostUserEntityImpl postEntity = postUserDao.findById(postId);
+        if (postEntity == null)
+        {
+            throw new NotFoundExseption(Constant.POST_ID + postId + Constant.MESSAGE_NOT_FOUND);
+        }
         if (postEntity.getUserFrom().getLogin().equals(login) || postEntity.getUser().getLogin().equals(login))
         {
-            System.out.print(postEntity.getId() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
             postUserDao.delete(postId);
             return true;
-        } else return false;
+        } else
+        {
+            throw new NoAccessExseption(Constant.USER + login + Constant.MESSAGE_NOT_ACCESS_TO_POST + postId);
+        }
     }
 
     @Override

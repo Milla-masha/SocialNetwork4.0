@@ -1,7 +1,6 @@
 package sjc.app.rest.endpoint;
 
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.model.vo.UserFullVO;
 import sjc.app.model.vo.UserRegisterVO;
+import sjc.app.rest.exception.AlreadyExsistsException;
 import sjc.app.rest.response.PaginationResponseSuccessful;
 import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
@@ -43,6 +43,15 @@ public class UserEndpointImpl
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, path = "/id")
+    @ResponseBody
+    public ResponseSuccessful getUserId()
+    {
+        response.setEntity(userService.getUserId(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return response;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET, value = "/{idUser}")
     @ResponseBody
     public ResponseSuccessful getProfile(@PathVariable Long idUser)
@@ -54,7 +63,7 @@ public class UserEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public ResponseSuccessful addUser(@RequestBody UserRegisterVO userRegister) throws ConstraintViolationException
+    public ResponseSuccessful addUser(@RequestBody UserRegisterVO userRegister) throws AlreadyExsistsException
     {
         response.setEntity(userService.addUser(userRegister));
         return response;
@@ -63,7 +72,7 @@ public class UserEndpointImpl
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
     @ResponseBody
-    public ResponseSuccessful editProfileInfo(@RequestBody UserFullVO user)
+    public ResponseSuccessful editProfileInfo(@RequestBody UserFullVO user) throws AlreadyExsistsException
     {
         response.setEntity(userService.editProfile(SecurityContextHolder.getContext().getAuthentication().getName(), user));
         return response;
