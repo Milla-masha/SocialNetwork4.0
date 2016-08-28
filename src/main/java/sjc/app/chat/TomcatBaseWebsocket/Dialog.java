@@ -1,3 +1,4 @@
+/*
 package sjc.app.chat.TomcatBaseWebsocket;
 
 
@@ -9,9 +10,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /**
  * Created by psycl on 23.08.2016.
- */
+ *//*
+
 @Service
 public class Dialog
 {
@@ -43,3 +46,4 @@ public class Dialog
 }
 
 
+*/

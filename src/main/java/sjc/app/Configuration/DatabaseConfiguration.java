@@ -1,5 +1,13 @@
 /*
-//package sjc.app.Configuration;
+package sjc.app.Configuration;
+
+
+import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @Configuration
 public class DatabaseConfiguration
@@ -9,7 +17,6 @@ public class DatabaseConfiguration
     public BasicDataSource dataSource() throws URISyntaxException
     {
         URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
 
