@@ -26,7 +26,7 @@ public class DatabaseConfiguration
         basicDataSource.addConnectionProperty("serverTimezone", "America/Los_Angeles");
         basicDataSource.addConnectionProperty("testWhileIdle", "true");
         basicDataSource.addConnectionProperty("timeBetweenEvictionRunsMillis", "60000");
-        //hebasicDataSource.addConnectionProperty("validationQuery ","SELECT 1");
+        //basicDataSource.addConnectionProperty("validationQuery ","SELECT 1");
         basicDataSource.addConnectionProperty("maxActive", "10");
         basicDataSource.addConnectionProperty("maxIdle", "5");
         basicDataSource.addConnectionProperty("minIdle", "2");
