@@ -14,7 +14,7 @@ public class DialogEntityImpl extends AbstractPersistable
     private List<UserEntityImpl> users = new ArrayList<>(0);
 
     @Access(AccessType.PROPERTY)
-    @OneToMany(mappedBy = "dialog", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "dialog", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     public List<MessageEntityImpl> getMessages()
     {
         return messages;

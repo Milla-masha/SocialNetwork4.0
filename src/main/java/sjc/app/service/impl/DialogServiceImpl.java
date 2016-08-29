@@ -55,6 +55,7 @@ public class DialogServiceImpl implements DialogService
                 userVO.setOnline(onlineUserService.isOnline(usersEntity.getLogin()));
                 usersVO.add(userVO);
             }
+            userEntities.add(user);
             dialog.setReciver(usersVO);
             dialogs.add(dialog);
         }
@@ -85,10 +86,10 @@ public class DialogServiceImpl implements DialogService
 
         }
         DialogEntityImpl dialog = new DialogEntityImpl();
-        dialog.getUsers().add(user);
-        dialog = dialogDao.save(dialog);
-        dialog.getUsers().add(userTo);
-        dialogDao.update(dialog);
-        return dialog.getId();
+        List<UserEntityImpl> users = new ArrayList<>();
+        users.add(userTo);
+        users.add(user);
+        dialog.getUsers().addAll(users);
+        return dialogDao.save(dialog).getId();
     }
 }

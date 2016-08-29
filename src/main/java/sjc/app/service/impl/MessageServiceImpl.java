@@ -109,7 +109,8 @@ public class MessageServiceImpl implements MessageService
         messageEntity.setText(text);
         messageEntity.setSender(user);
         messageEntity.setDate(new Date());
-        dialogEntity.getMessages().add(messageEntity);
-        dialogDao.update(dialogEntity);
+        messageDao.save(messageEntity);
+        //dialogEntity.getMessages().add(messageEntity);
+       // dialogDao.update(dialogEntity);
     }
 }
