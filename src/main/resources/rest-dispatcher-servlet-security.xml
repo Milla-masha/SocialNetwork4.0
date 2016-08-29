@@ -86,7 +86,9 @@
           xmlns="http://www.springframework.org/schema/security">
         <anonymous enabled="false"/>
         <csrf disabled="true"/>
+        <intercept-url pattern="/users/*" method="OPTIONS"/>
         <intercept-url pattern="/users/*" access="ROLE_CLIENT"/>
+        <custom-filter ref="corsFilter" before="SECURITY_CONTEXT_FILTER"/>
         <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
         <access-denied-handler ref="oauthAccessDeniedHandler"/>
     </http>
@@ -170,17 +172,17 @@
     </http>
 
     <http pattern="/password/*" create-session="never" use-expressions="false"
-                     entry-point-ref="oauthAuthenticationEntryPoint"
-                     access-decision-manager-ref="accessDecisionManager"
-                     xmlns="http://www.springframework.org/schema/security">
-    <anonymous enabled="false"/>
-    <csrf disabled="true"/>
-    <intercept-url pattern="/password/*" method="OPTIONS"/>
-    <intercept-url pattern="/password/*" access="ROLE_CLIENT"/>
-    <custom-filter ref="corsFilter" before="SECURITY_CONTEXT_FILTER"/>
-    <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
-    <access-denied-handler ref="oauthAccessDeniedHandler"/>
-</http>
+          entry-point-ref="oauthAuthenticationEntryPoint"
+          access-decision-manager-ref="accessDecisionManager"
+          xmlns="http://www.springframework.org/schema/security">
+        <anonymous enabled="false"/>
+        <csrf disabled="true"/>
+        <intercept-url pattern="/password/*" method="OPTIONS"/>
+        <intercept-url pattern="/password/*" access="ROLE_CLIENT"/>
+        <custom-filter ref="corsFilter" before="SECURITY_CONTEXT_FILTER"/>
+        <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
+        <access-denied-handler ref="oauthAccessDeniedHandler"/>
+    </http>
 
     <http pattern="/*" create-session="never" use-expressions="false"
           entry-point-ref="oauthAuthenticationEntryPoint"
