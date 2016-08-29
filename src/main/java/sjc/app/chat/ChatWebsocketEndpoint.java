@@ -1,4 +1,4 @@
-package sjc.app.chat.TomcatBaseWebsocket;
+package sjc.app.chat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +13,7 @@ import java.util.Objects;
 
 
 @ServerEndpoint(value = "/chat/{roomId}")
-
-public class ChatWebsocketEndpoint
+class ChatWebsocketEndpoint
 {
 
     private static Logger logger = LoggerFactory.getLogger(ChatWebsocketEndpoint.class);
@@ -23,11 +22,9 @@ public class ChatWebsocketEndpoint
 
 
     @OnOpen
-    public void open(@PathParam("roomId") Long roomId, Session session, EndpointConfig endpointConfig)
+    public void open(@PathParam("roomId") Long roomId, Session session)
     {
         sessionMap.put(session, roomId);
-
-
         try
         {
             session.getBasicRemote().sendText("Connected to websocket dialog: " + roomId);
@@ -57,7 +54,7 @@ public class ChatWebsocketEndpoint
                     e.printStackTrace();
                 }
 
-                logger.debug(chatTag + messageJson);
+                logger.debug(chatTag + "session id: " + session.getId() + " send message: " + messageJson);
 
             }
         }
@@ -66,14 +63,42 @@ public class ChatWebsocketEndpoint
     @OnClose
     public void onClose(Session session, CloseReason reason) throws IOException
     {
-        session.close();
+        Long roomId = sessionMap.get(session);
+        for (Map.Entry<Session, Long> sessionLongEntry : sessionMap.entrySet())
+        {
+
+
+            if (Objects.equals(sessionLongEntry.getValue(), roomId))
+            {
+                sessionMap.remove(session);
+
+                logger.debug(chatTag + reason.toString());
+
+            }
+        }
+
     }
 
     @OnError
     public void onError(Session session, Throwable ex)
     {
 
-     }
+        Long roomId = sessionMap.get(session);
+        for (Map.Entry<Session, Long> sessionLongEntry : sessionMap.entrySet())
+        {
+
+
+            if (Objects.equals(sessionLongEntry.getValue(), roomId))
+            {
+
+                sessionMap.remove(session);
+
+
+            }
+        }
+
+
+    }
 
 
 }
