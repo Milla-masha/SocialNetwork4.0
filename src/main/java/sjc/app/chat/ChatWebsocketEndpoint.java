@@ -1,4 +1,4 @@
-package sjc.app.chat;
+package sjc.app.chat.TomcatBaseWebsocket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,19 +12,22 @@ import java.util.Map;
 import java.util.Objects;
 
 
+@Component("chat")
 @ServerEndpoint(value = "/chat/{roomId}")
-class ChatWebsocketEndpoint
+public class ChatWebsocketEndpoint
 {
-
-    private static Logger logger = LoggerFactory.getLogger(ChatWebsocketEndpoint.class);
-    private static String chatTag = "Chat: ";
+    @Autowired
+    private MessageService messageService;
+   // private static Logger logger = LoggerFactory.getLogger(ChatWebsocketEndpoint.class);
+   // private static String chatTag = "Chat: ";
     private static Map<Session, Long> sessionMap = new HashMap<>();
 
-
     @OnOpen
-    public void open(@PathParam("roomId") Long roomId, Session session)
+    public void open(@PathParam("roomId") Long roomId, Session session, EndpointConfig endpointConfig)
     {
         sessionMap.put(session, roomId);
+
+
         try
         {
             session.getBasicRemote().sendText("Connected to websocket dialog: " + roomId);
@@ -49,13 +52,17 @@ class ChatWebsocketEndpoint
                 try
                 {
                     sessionLongEntry.getKey().getBasicRemote().sendText(messageJson);
+                    Gson gson = new Gson();
+                    MessageSmallVO messageSmallVO = gson.fromJson(messageJson, MessageSmallVO.class);
+                    messageService.addMessage(messageSmallVO.getMessage(), messageSmallVO.getSenderId(), roomId);
                 } catch (IOException e)
                 {
                     e.printStackTrace();
+                } catch (NotFoundExseption notFoundExseption)
+                {
+                    notFoundExseption.printStackTrace();
                 }
-
-                logger.debug(chatTag + "session id: " + session.getId() + " send message: " + messageJson);
-
+               // logger.debug(chatTag + messageJson);
             }
         }
     }
@@ -76,13 +83,13 @@ class ChatWebsocketEndpoint
 
             }
         }
-
     }
 
     @OnError
     public void onError(Session session, Throwable ex)
     {
 
+    }
         Long roomId = sessionMap.get(session);
         for (Map.Entry<Session, Long> sessionLongEntry : sessionMap.entrySet())
         {

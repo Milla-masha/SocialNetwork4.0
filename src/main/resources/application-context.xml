@@ -26,6 +26,7 @@
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
+    <bean id="chat" class="sjc.app.chat.TomcatBaseWebsocket.ChatWebsocketEndpoint"></bean>
     <context:component-scan base-package="sjc.app"/>
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"

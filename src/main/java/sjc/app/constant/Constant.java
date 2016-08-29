@@ -28,6 +28,7 @@ public class Constant
     public static final String VIDEO_URL = "Video with url ";
     public static final String VIDEO_ID = "Video with id ";
     public static final String USER = "User ";
+    public static final String DIALOG = "Dialog ";
     public static final String TITLE = "New post.";
     public static final String MESSAGE_INVALID_PASSWORD = "Invalid password";
 }

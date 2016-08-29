@@ -35,6 +35,7 @@ public class UserEntityImpl extends AbstractPersistable
     private List<VideoEntityImpl> videos = new ArrayList<>(0);
     private List<ImageEntityImpl> images = new ArrayList<>(0);
     private List<LikeEntityImpl> likes = new ArrayList<>(0);
+    private List<DialogEntityImpl> dialogs = new ArrayList<>(0);
 
     @Column(name = "password")
     public String getPassword()
@@ -213,7 +214,7 @@ public class UserEntityImpl extends AbstractPersistable
 
     public void setBirthdate(Calendar birthdate)
     {
-        this.birthdate=birthdate;
+        this.birthdate = birthdate;
     }
 
     public void setBirthdateString(String birthdate)
@@ -342,6 +343,18 @@ public class UserEntityImpl extends AbstractPersistable
     public void setLikes(List<LikeEntityImpl> likes)
     {
         this.likes = likes;
+    }
+
+    @Access(AccessType.PROPERTY)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    public List<DialogEntityImpl> getDialogs()
+    {
+        return dialogs;
+    }
+
+    public void setDialogs(List<DialogEntityImpl> dialogs)
+    {
+        this.dialogs = dialogs;
     }
 
     @Override

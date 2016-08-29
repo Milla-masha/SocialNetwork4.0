@@ -166,6 +166,45 @@
         <access-denied-handler ref="oauthAccessDeniedHandler"/>
     </http>
 
+    <http pattern="/dialogs/*/messages" create-session="never" use-expressions="false"
+          entry-point-ref="oauthAuthenticationEntryPoint"
+          access-decision-manager-ref="accessDecisionManager"
+          xmlns="http://www.springframework.org/schema/security">
+        <anonymous enabled="false"/>
+        <csrf disabled="true"/>
+        <intercept-url pattern="/dialogs/*/messages" method="OPTIONS"/>
+        <intercept-url pattern="/dialogs/*/messages" access="ROLE_CLIENT"/>
+        <custom-filter ref="corsFilter" before="SECURITY_CONTEXT_FILTER"/>
+        <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
+        <access-denied-handler ref="oauthAccessDeniedHandler"/>
+    </http>
+
+    <http pattern="/dialogs/find" create-session="never" use-expressions="false"
+          entry-point-ref="oauthAuthenticationEntryPoint"
+          access-decision-manager-ref="accessDecisionManager"
+          xmlns="http://www.springframework.org/schema/security">
+        <anonymous enabled="false"/>
+        <csrf disabled="true"/>
+        <intercept-url pattern="/dialogs/find" method="OPTIONS"/>
+        <intercept-url pattern="/dialogs/find" access="ROLE_CLIENT"/>
+        <custom-filter ref="corsFilter" before="SECURITY_CONTEXT_FILTER"/>
+        <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
+        <access-denied-handler ref="oauthAccessDeniedHandler"/>
+    </http>
+
+    <http pattern="/dialogs" create-session="never" use-expressions="false"
+          entry-point-ref="oauthAuthenticationEntryPoint"
+          access-decision-manager-ref="accessDecisionManager"
+          xmlns="http://www.springframework.org/schema/security">
+        <anonymous enabled="false"/>
+        <csrf disabled="true"/>
+        <intercept-url pattern="/dialogs" method="OPTIONS"/>
+        <intercept-url pattern="/dialogs" access="ROLE_CLIENT"/>
+        <custom-filter ref="corsFilter" before="SECURITY_CONTEXT_FILTER"/>
+        <custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
+        <access-denied-handler ref="oauthAccessDeniedHandler"/>
+    </http>
+
     <http pattern="/password/forgotten" create-session="never" use-expressions="false"
           security="none"
           xmlns="http://www.springframework.org/schema/security">
