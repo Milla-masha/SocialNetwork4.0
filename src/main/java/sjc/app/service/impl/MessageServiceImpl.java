@@ -65,7 +65,7 @@ public class MessageServiceImpl implements MessageService
             messagesVO.add(messVO);
         }
         messageVO.setMessages(messagesVO);
-        if(messagesEntity.get(0)!=null)
+        if (messagesEntity.get(0) != null)
         {
             List<UserEntityImpl> users = messagesEntity.get(0).getDialog().getUsers();
             users.remove(owner);

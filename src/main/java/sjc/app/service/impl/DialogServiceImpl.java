@@ -72,13 +72,13 @@ public class DialogServiceImpl implements DialogService
     {
         UserEntityImpl user = userDao.findByName(login);
         UserEntityImpl userTo = userDao.findById(userId);
-        if(userTo==null)
+        if (userTo == null)
         {
             throw new NotFoundExseption(Constant.USER + userId + Constant.MESSAGE_NOT_FOUND);
         }
         for (DialogEntityImpl dialog : user.getDialogs())
         {
-            if(dialog.getUsers().contains(userTo))
+            if (dialog.getUsers().contains(userTo))
             {
                 return dialog.getId();
             }
@@ -86,7 +86,9 @@ public class DialogServiceImpl implements DialogService
         }
         DialogEntityImpl dialog = new DialogEntityImpl();
         dialog.getUsers().add(user);
+        dialog = dialogDao.save(dialog);
         dialog.getUsers().add(userTo);
-        return dialogDao.save(dialog).getId();
+        dialogDao.update(dialog);
+        return dialog.getId();
     }
 }
