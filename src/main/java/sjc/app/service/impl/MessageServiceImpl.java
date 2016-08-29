@@ -35,10 +35,14 @@ public class MessageServiceImpl implements MessageService
     private OnlineUser onlineUserService;
 
     @Override
-    public MessageDialogVO getDialogs(String login, Long dialogId, int offset, int limit)
+    public MessageDialogVO getMessages(String login, Long dialogId, int offset, int limit)
     {
         List<MessageEntityImpl> messagesEntity = messageDao.getMessageByDialog(dialogId, offset, limit);
         if (messagesEntity == null)
+        {
+            return null;
+        }
+        if (messagesEntity.size() == 0)
         {
             return null;
         }
@@ -61,20 +65,23 @@ public class MessageServiceImpl implements MessageService
             messagesVO.add(messVO);
         }
         messageVO.setMessages(messagesVO);
-        List<UserEntityImpl> users = messagesEntity.get(0).getDialog().getUsers();
-        users.remove(owner);
-        List<UserSmallVO> usersVO = new ArrayList<>(0);
-        for (UserEntityImpl userEntity : users)
+        if(messagesEntity.get(0)!=null)
         {
-            UserSmallVO userVO = new UserSmallVO();
-            userVO.setId(userEntity.getId());
-            userVO.setName(userEntity.getName());
-            userVO.setLastName(userEntity.getLastName());
-            userVO.setAvatar(userEntity.getAvatar().getUrl());
-            userVO.setOnline(onlineUserService.isOnline(userEntity.getLogin()));
-            usersVO.add(userVO);
+            List<UserEntityImpl> users = messagesEntity.get(0).getDialog().getUsers();
+            users.remove(owner);
+            List<UserSmallVO> usersVO = new ArrayList<>(0);
+            for (UserEntityImpl userEntity : users)
+            {
+                UserSmallVO userVO = new UserSmallVO();
+                userVO.setId(userEntity.getId());
+                userVO.setName(userEntity.getName());
+                userVO.setLastName(userEntity.getLastName());
+                userVO.setAvatar(userEntity.getAvatar().getUrl());
+                userVO.setOnline(onlineUserService.isOnline(userEntity.getLogin()));
+                usersVO.add(userVO);
+            }
+            messageVO.setReciver(usersVO);
         }
-        messageVO.setReciver(usersVO);
         return messageVO;
     }
 
@@ -90,14 +97,15 @@ public class MessageServiceImpl implements MessageService
         DialogEntityImpl dialogEntity = dialogDao.findById(dialogId);
         if (dialogEntity == null)
         {
-           return;
+            return;
         }
-        UserEntityImpl user=userDao.findById(userId);
+        UserEntityImpl user = userDao.findById(userId);
         if (user == null)
         {
             return;
         }
-        MessageEntityImpl messageEntity=new MessageEntityImpl();
+        MessageEntityImpl messageEntity = new MessageEntityImpl();
+        messageEntity.setDialog(dialogEntity);
         messageEntity.setText(text);
         messageEntity.setSender(user);
         messageEntity.setDate(new Date());

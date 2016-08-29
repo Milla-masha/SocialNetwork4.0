@@ -24,7 +24,7 @@ public interface ChatMessageEntity
 
     void setMessage(String message);
 
-    List<DialogEntityImpl> getDialogs();
+    List<DialogEntityImpl> getMessages();
 
     void setDialogs(List<DialogEntityImpl> dialogs);
 }*/

@@ -10,12 +10,11 @@ import java.util.List;
 @Table(name = "dialogs")
 public class DialogEntityImpl extends AbstractPersistable
 {
-
     private List<MessageEntityImpl> messages = new ArrayList<>(0);
     private List<UserEntityImpl> users = new ArrayList<>(0);
 
     @Access(AccessType.PROPERTY)
-    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "dialog", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<MessageEntityImpl> getMessages()
     {
         return messages;
@@ -29,9 +28,8 @@ public class DialogEntityImpl extends AbstractPersistable
     @Access(AccessType.PROPERTY)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_dialog", joinColumns = {
-            @JoinColumn(name = "fk_dialog", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "fk_user",
-                    nullable = false, updatable = false)})
+            @JoinColumn(name = "fk_dialog")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_user")})
     public List<UserEntityImpl> getUsers()
     {
         return users;

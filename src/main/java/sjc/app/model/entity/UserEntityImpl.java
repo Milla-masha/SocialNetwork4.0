@@ -346,7 +346,7 @@ public class UserEntityImpl extends AbstractPersistable
     }
 
     @Access(AccessType.PROPERTY)
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade =CascadeType.ALL)
     public List<DialogEntityImpl> getDialogs()
     {
         return dialogs;

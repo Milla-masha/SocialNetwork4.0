@@ -42,7 +42,7 @@ public class DialogEndpoint
     @ResponseBody
     public PaginationResponseSuccessful getMessages(@PathVariable Long dialogId, @RequestParam Integer offset, @RequestParam Integer limit)
     {
-        paginationResponse.setEntity(messageService.getDialogs(SecurityContextHolder.getContext().getAuthentication().getName(), dialogId, offset, limit));
+        paginationResponse.setEntity(messageService.getMessages(SecurityContextHolder.getContext().getAuthentication().getName(), dialogId, offset, limit));
         paginationResponse.addMetadata(Constant.OFFSET, offset.toString());
         paginationResponse.addMetadata(Constant.LIMIT, limit.toString());
         paginationResponse.addMetadata(Constant.COUNT, messageService.getCountMassagesFromDialog(dialogId).toString());

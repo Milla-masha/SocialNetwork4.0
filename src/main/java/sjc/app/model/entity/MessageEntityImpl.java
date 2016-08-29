@@ -8,10 +8,12 @@ import java.util.Date;
 @Table(name = "messages")
 public class MessageEntityImpl extends AbstractPersistable
 {
-
     private String text;
     private Date date;
     private DialogEntityImpl dialog;
+
+    @JoinColumn(name = "fk_user", referencedColumnName = "id")
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private UserEntityImpl sender;
 
     @Access(AccessType.PROPERTY)
@@ -38,9 +40,6 @@ public class MessageEntityImpl extends AbstractPersistable
         this.date = date;
     }
 
-    @Access(AccessType.PROPERTY)
-    @JoinColumn(name = "fk_user", referencedColumnName = "id")
-    @ManyToOne(optional = false)
     public UserEntityImpl getSender()
     {
         return sender;

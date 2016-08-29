@@ -1,7 +1,11 @@
-package sjc.app.chat.TomcatBaseWebsocket;
+package sjc.app.chat;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.socket.server.standard.SpringConfigurator;
+import sjc.app.model.vo.MessageSmallVO;
+import sjc.app.rest.exception.NotFoundExseption;
+import sjc.app.service.MessageService;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
@@ -11,23 +15,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-
-@Component("chat")
-@ServerEndpoint(value = "/chat/{roomId}")
+@ServerEndpoint(value = "/chat/{roomId}", configurator = SpringConfigurator.class)
 public class ChatWebsocketEndpoint
 {
     @Autowired
     private MessageService messageService;
-   // private static Logger logger = LoggerFactory.getLogger(ChatWebsocketEndpoint.class);
-   // private static String chatTag = "Chat: ";
+    // private static Logger logger = LoggerFactory.getLogger(ChatWebsocketEndpoint.class);
+    // private static String chatTag = "Chat: ";
     private static Map<Session, Long> sessionMap = new HashMap<>();
 
     @OnOpen
     public void open(@PathParam("roomId") Long roomId, Session session, EndpointConfig endpointConfig)
     {
         sessionMap.put(session, roomId);
-
-
         try
         {
             session.getBasicRemote().sendText("Connected to websocket dialog: " + roomId);
@@ -41,12 +41,8 @@ public class ChatWebsocketEndpoint
     public void onMessage(final Session session, final String messageJson)
     {
         Long roomId = sessionMap.get(session);
-
-
         for (Map.Entry<Session, Long> sessionLongEntry : sessionMap.entrySet())
         {
-
-
             if (Objects.equals(sessionLongEntry.getValue(), roomId))
             {
                 try
@@ -62,7 +58,7 @@ public class ChatWebsocketEndpoint
                 {
                     notFoundExseption.printStackTrace();
                 }
-               // logger.debug(chatTag + messageJson);
+                // logger.debug(chatTag + messageJson);
             }
         }
     }
@@ -79,7 +75,7 @@ public class ChatWebsocketEndpoint
             {
                 sessionMap.remove(session);
 
-                logger.debug(chatTag + reason.toString());
+                //logger.debug(chatTag + reason.toString());
 
             }
         }
@@ -88,8 +84,6 @@ public class ChatWebsocketEndpoint
     @OnError
     public void onError(Session session, Throwable ex)
     {
-
-    }
         Long roomId = sessionMap.get(session);
         for (Map.Entry<Session, Long> sessionLongEntry : sessionMap.entrySet())
         {

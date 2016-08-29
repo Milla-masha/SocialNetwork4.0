@@ -87,7 +87,6 @@ public class DialogServiceImpl implements DialogService
         DialogEntityImpl dialog = new DialogEntityImpl();
         dialog.getUsers().add(user);
         dialog.getUsers().add(userTo);
-        dialogDao.save(dialog);
         return dialogDao.save(dialog).getId();
     }
 }
