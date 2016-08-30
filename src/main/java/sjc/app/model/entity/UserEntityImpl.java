@@ -223,7 +223,9 @@ public class UserEntityImpl extends AbstractPersistable
         try
         {
             Date date = formatter.parse(birthdate);
-            this.birthdate.setTime(date);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            this.birthdate=calendar;
         } catch (ParseException e)
         {
             e.printStackTrace();

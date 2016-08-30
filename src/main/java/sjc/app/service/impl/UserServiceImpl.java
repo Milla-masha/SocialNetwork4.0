@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService
         UserEntityImpl userLogin = userDao.findByName(login);
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
-        if (userEntity.getSex().equals("Male"))
+        if (userEntity.getSex().equals(Sex.MALE))
             user.setSex(1);
         else user.setSex(0);
         user.setId(userEntity.getId());
@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService
         InfoUserVO user = new InfoUserVO();
         ContactUserVO contact = new ContactUserVO();
         user.setId(userEntity.getId());
-        if (userEntity.getSex().equals("Male"))
+        if (userEntity.getSex().equals(Sex.MALE))
             user.setSex(1);
         else user.setSex(0);
         user.setName(userEntity.getName());
@@ -169,7 +169,7 @@ public class UserServiceImpl implements UserService
     public boolean editProfile(String login, UserFullVO user) throws AlreadyExsistsException
     {
         UserEntityImpl userEntity = userDao.findByName(login);
-        if (!userEntity.getEmail().equals(user.getEmail())&&user.getEmail()!=null)
+        if (!userEntity.getEmail().equals(user.getEmail()) && user.getEmail() != null)
         {
             if (userDao.isExistEmailFromUser(user.getEmail()))
             {
@@ -189,7 +189,10 @@ public class UserServiceImpl implements UserService
         if (user.getSex() == 1)
         {
             userEntity.setSex(Sex.MALE);
-        } else userEntity.setSex(Sex.FEMALE);
+        } else
+        {
+            userEntity.setSex(Sex.FEMALE);
+        }
         userEntity.setMobile(user.getMobile());
         userEntity.setSkype(user.getSkype());
         userDao.update(userEntity);

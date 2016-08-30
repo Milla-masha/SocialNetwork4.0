@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.constant.Constant;
-import sjc.app.firebase.PushPosts;
+import sjc.app.firebase.PushNotification;
 import sjc.app.model.entity.LikeEntityImpl;
 import sjc.app.model.entity.PostUserEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
@@ -88,7 +88,7 @@ public class PostUserServiceImpl implements PostUserService
         {
             throw new NotFoundExseption(Constant.USER + post.getIdTo() + Constant.MESSAGE_NOT_FOUND);
         }
-        if (userEntityTo.getBlackListUsers().contains(userEntityFrom) || !userEntityTo.getFriends().contains(userEntityFrom))
+        if (userEntityTo.getBlackListUsers().contains(userEntityFrom))
         {
             throw new NoAccessExseption(Constant.USER + userEntityFrom.getId() + Constant.MESSAGE_NOT_ACCESS_TO_USER + userEntityTo.getLogin());
         }
@@ -101,11 +101,11 @@ public class PostUserServiceImpl implements PostUserService
             postEntity.setImage(imageDao.findImageByUrl(post.getUrlImage()));
         }
         postEntity = postUserDao.save(postEntity);
-        if (userEntityTo.getNotification() != null && userEntityTo.getId().equals(userEntityFrom.getId()))
+        if (userEntityTo.getNotification() != null && !userEntityTo.getId().equals(userEntityFrom.getId()))
         {
             PostNotificationVO postNotificationVO = new PostNotificationVO();
             postNotificationVO.setText(postEntity.getText());
-            PushPosts.push(postNotificationVO, userEntityTo.getNotification().getToken());
+            PushNotification.push(postNotificationVO,Constant.TITLE, userEntityTo.getNotification().getToken());
         }
         return true;
     }

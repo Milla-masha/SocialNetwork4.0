@@ -5,9 +5,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sjc.app.constant.Constant;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.UserSmallVO;
 import sjc.app.repository.dao.BlackListDao;
+import sjc.app.repository.dao.UserDao;
+import sjc.app.rest.exception.AlreadyExsistsException;
+import sjc.app.rest.exception.NoAccessExseption;
+import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.service.BlackListService;
 
 import java.util.ArrayList;
@@ -20,6 +25,8 @@ public class BlackListServiceImpl implements BlackListService
 {
     @Autowired
     private BlackListDao blackListDao;
+    @Autowired
+    private UserDao userDao;
 
     @Override
     public List<UserSmallVO> getBlackList(Long userId, int offset, int limit)
@@ -42,18 +49,37 @@ public class BlackListServiceImpl implements BlackListService
     }
 
     @Override
-    public void addBlackList(Long userId, Long bUserId)
+    public void addBlackList(Long userId, Long bUserId) throws NotFoundExseption, AlreadyExsistsException, NoAccessExseption
     {
-        if (userId != null && bUserId != null && !userId.equals(bUserId))
+        UserEntityImpl userEntity = userDao.findById(userId);
+        UserEntityImpl blackUser = userDao.findById(bUserId);
+        if (blackUser == null)
         {
-            blackListDao.addBlackList(userId, bUserId);
+            throw new NotFoundExseption("User " + userId + Constant.MESSAGE_NOT_FOUND);
         }
+        if (userEntity.getBlackListUsers().contains(blackUser))
+        {
+            throw new AlreadyExsistsException("In black list user " + userId + Constant.MESSAGE_EXIST);
+        }
+        if (userEntity.equals(blackUser))
+        {
+            throw new NoAccessExseption("You dont add yourself in black list.");
+        }
+        userEntity.getBlackListUsers().add(blackUser);
+        userDao.update(userEntity);
     }
 
     @Override
-    public void deleteBlackList(Long userId, Long bUserId)
+    public void deleteBlackList(Long userId, Long bUserId) throws NotFoundExseption
     {
-        blackListDao.deleteBlackList(userId, bUserId);
+        UserEntityImpl userEntity = userDao.findById(userId);
+        UserEntityImpl blackUser = userDao.findById(bUserId);
+        if (blackUser == null || !userEntity.getBlackListUsers().contains(blackUser))
+        {
+            throw new NotFoundExseption("Friend " + userId + Constant.MESSAGE_NOT_FOUND);
+        }
+        userEntity.getBlackListUsers().remove(blackUser);
+        userDao.update(userEntity);
     }
 
     @Override

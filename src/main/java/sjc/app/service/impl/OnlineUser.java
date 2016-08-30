@@ -2,6 +2,7 @@ package sjc.app.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.stereotype.Service;
 import sjc.app.constant.Constant;
@@ -13,6 +14,8 @@ public class OnlineUser
 {
     @Autowired
     private InMemoryTokenStore tokenStore;
+    @Autowired
+    private ResourceServerTokenServices tokenServices;
 
     public boolean isOnline(String login)
     {
@@ -30,4 +33,14 @@ public class OnlineUser
         }
         return false;
     }
+
+    public boolean isAuthorize(String accessToken)
+    {
+       if(tokenServices.loadAuthentication(accessToken).isAuthenticated())
+       {
+           return true;
+       }
+        return false;
+    }
+
 }

@@ -2,17 +2,17 @@ package sjc.app.model.vo;
 
 public class MessageVO extends BaseVO
 {
-    private String text;
+    private String message;
     private Long senderId;
 
-    public String getText()
+    public String getMessage()
     {
-        return text;
+        return message;
     }
 
-    public void setText(String text)
+    public void setMessage(String message)
     {
-        this.text = text;
+        this.message = message;
     }
 
     public Long getSenderId()

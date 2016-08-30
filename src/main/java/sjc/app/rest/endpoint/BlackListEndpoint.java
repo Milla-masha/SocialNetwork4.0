@@ -5,6 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.constant.Constant;
+import sjc.app.rest.exception.AlreadyExsistsException;
+import sjc.app.rest.exception.NoAccessExseption;
+import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.rest.response.PaginationResponseSuccessful;
 import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.PaginationResponseImpl;
@@ -35,7 +38,7 @@ public class BlackListEndpoint
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ResponseSuccessful addBlackList(@RequestParam Long ownerId, @RequestParam Long bUserId)
+    public ResponseSuccessful addBlackList(@RequestParam Long ownerId, @RequestParam Long bUserId) throws NotFoundExseption, AlreadyExsistsException, NoAccessExseption
     {
         blackListService.addBlackList(ownerId, bUserId);
         return response;
@@ -44,7 +47,7 @@ public class BlackListEndpoint
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseSuccessful deleteBlackList(Long ownerId, Long bUserId)
+    public ResponseSuccessful deleteBlackList(Long ownerId, Long bUserId) throws NotFoundExseption
     {
         blackListService.deleteBlackList(ownerId, bUserId);
         return response;

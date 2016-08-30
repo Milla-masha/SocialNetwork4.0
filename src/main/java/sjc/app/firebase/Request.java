@@ -11,11 +11,14 @@ public class Request
         return notification;
     }
 
-    public void setBody(String body)
+    public void setBody(Object body)
     {
         this.notification.setBody(body);
     }
-
+    public void setTitle(String title)
+    {
+        this.notification.setTitle(title);
+    }
     public String getTo()
     {
         return to;

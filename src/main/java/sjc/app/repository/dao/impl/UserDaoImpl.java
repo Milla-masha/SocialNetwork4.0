@@ -155,57 +155,6 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
     }
 
     @Override
-    public void addBlackList(Long ownerId, Long bUserId)
-    {
-        try
-        {
-            UserEntityImpl owner = getEntityManager().find(UserEntityImpl.class, ownerId);
-            UserEntityImpl black = getEntityManager().find(UserEntityImpl.class, bUserId);
-            List<UserEntityImpl> blackList = owner.getBlackListUsers();
-            for (UserEntityImpl user : blackList)
-            {
-                if (user.getId().equals(black.getId()))
-                {
-                    return;
-                }
-            }
-            owner.getBlackListUsers().add(black);
-            getEntityManager().merge(owner);
-        } catch (NullPointerException ne)
-        {
-        }
-    }
-
-    @Override
-    public void deleteBlackList(Long ownerId, Long bUserId)
-    {
-        try
-        {
-            UserEntityImpl owner = getEntityManager().find(UserEntityImpl.class, ownerId);
-            UserEntityImpl black = getEntityManager().find(UserEntityImpl.class, bUserId);
-
-            List<UserEntityImpl> blackList = owner.getBlackListUsers();
-
-            if (blackList.contains(black))
-            {
-                owner.getBlackListUsers().remove(black);
-                getEntityManager().merge(owner);
-            }
-
-            /*for (UserEntityImpl user : blackList)
-            {
-                if (user.getId().equals(black.getId()))
-                {
-                    owner.getBlackListUsers().remove(black);
-                    getEntityManager().merge(owner);
-                }
-            }*/
-        } catch (NullPointerException ne)
-        {
-        }
-    }
-
-    @Override
     public Long getCountBlackList(Long idUser)
     {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();

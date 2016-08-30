@@ -76,7 +76,7 @@ public class FriendServiceImpl implements FriendService
     {
         UserEntityImpl userEntity = userDao.findByName(login);
         UserEntityImpl friend = userDao.findById(userId);
-        if (friend == null || !userEntity.getFriends().contains(userEntity))
+        if (friend == null || !userEntity.getFriends().contains(friend))
         {
             throw new NotFoundExseption("Friend " + userId + Constant.MESSAGE_NOT_FOUND);
         }

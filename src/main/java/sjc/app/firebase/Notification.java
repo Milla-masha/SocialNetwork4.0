@@ -1,18 +1,16 @@
 package sjc.app.firebase;
 
-import sjc.app.constant.Constant;
-
 public class Notification
 {
-    String title= Constant.TITLE;
-    String body;
+    String title;
+    Object body;
 
-    public String getBody()
+    public Object getBody()
     {
         return body;
     }
 
-    public void setBody(String body)
+    public void setBody(Object body)
     {
         this.body = body;
     }

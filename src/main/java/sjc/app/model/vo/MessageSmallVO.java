@@ -3,7 +3,6 @@ package sjc.app.model.vo;
 public class MessageSmallVO
 {
     private String message;
-    private Long senderId;
 
     public String getMessage()
     {
@@ -15,13 +14,4 @@ public class MessageSmallVO
         this.message = message;
     }
 
-    public Long getSenderId()
-    {
-        return senderId;
-    }
-
-    public void setSenderId(Long senderId)
-    {
-        this.senderId = senderId;
-    }
 }
