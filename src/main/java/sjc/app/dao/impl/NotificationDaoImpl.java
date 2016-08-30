@@ -1,8 +1,8 @@
-package sjc.app.repository.dao.impl;
+package sjc.app.dao.impl;
 
 import org.springframework.stereotype.Repository;
 import sjc.app.model.entity.NotificationEntityImpl;
-import sjc.app.repository.dao.NotificationDao;
+import sjc.app.dao.NotificationDao;
 
 @Repository
 public class NotificationDaoImpl extends GenericDaoImpl<NotificationEntityImpl> implements NotificationDao

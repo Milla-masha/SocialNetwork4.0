@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import sjc.app.model.entity.NotificationEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.NotificationVO;
-import sjc.app.repository.dao.NotificationDao;
-import sjc.app.repository.dao.UserDao;
+import sjc.app.dao.NotificationDao;
+import sjc.app.dao.UserDao;
 import sjc.app.service.NotificationService;
 
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)

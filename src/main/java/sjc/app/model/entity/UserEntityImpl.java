@@ -21,6 +21,8 @@ public class UserEntityImpl extends AbstractPersistable
     private String lastName;
     private Sex sex;
     private ImageEntityImpl avatar;
+    @Column(name = "birthdate")
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar birthdate;
     private String city;
     private String about;
@@ -197,15 +199,11 @@ public class UserEntityImpl extends AbstractPersistable
         this.notification = notification;
     }
 
-    @Column(name = "birthdate")
-    @Temporal(TemporalType.TIMESTAMP)
     public Calendar getBirthdate()
     {
         return birthdate;
     }
 
-    @Column(name = "birthdate")
-    @Temporal(TemporalType.TIMESTAMP)
     public String getBirthdateString()
     {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -226,6 +224,19 @@ public class UserEntityImpl extends AbstractPersistable
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             this.birthdate=calendar;
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void setUpdateBirthdateString(String birthdate)
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        try
+        {
+            Date date = formatter.parse(birthdate);
+            this.birthdate.setTime(date);
         } catch (ParseException e)
         {
             e.printStackTrace();

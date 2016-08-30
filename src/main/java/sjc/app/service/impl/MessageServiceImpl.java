@@ -13,9 +13,9 @@ import sjc.app.model.vo.MessageDialogVO;
 import sjc.app.model.vo.MessageSmallVO;
 import sjc.app.model.vo.MessageVO;
 import sjc.app.model.vo.UserSmallVO;
-import sjc.app.repository.dao.DialogDao;
-import sjc.app.repository.dao.MessageDao;
-import sjc.app.repository.dao.UserDao;
+import sjc.app.dao.DialogDao;
+import sjc.app.dao.MessageDao;
+import sjc.app.dao.UserDao;
 import sjc.app.service.MessageService;
 
 import java.util.ArrayList;

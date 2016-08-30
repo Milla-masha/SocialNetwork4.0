@@ -10,8 +10,8 @@ import sjc.app.model.entity.DialogEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.DialogVO;
 import sjc.app.model.vo.UserSmallVO;
-import sjc.app.repository.dao.DialogDao;
-import sjc.app.repository.dao.UserDao;
+import sjc.app.dao.DialogDao;
+import sjc.app.dao.UserDao;
 import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.service.DialogService;
 

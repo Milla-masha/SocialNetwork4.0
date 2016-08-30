@@ -1,9 +1,9 @@
-package sjc.app.repository.dao.impl;
+package sjc.app.dao.impl;
 
 import org.springframework.stereotype.Repository;
 import sjc.app.model.entity.DialogEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
-import sjc.app.repository.dao.DialogDao;
+import sjc.app.dao.DialogDao;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;

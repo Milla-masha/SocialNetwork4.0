@@ -1,8 +1,8 @@
-package sjc.app.repository.dao.impl;
+package sjc.app.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import sjc.app.dao.PostUserDao;
 import sjc.app.model.entity.PostUserEntityImpl;
-import sjc.app.repository.dao.PostUserDao;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;

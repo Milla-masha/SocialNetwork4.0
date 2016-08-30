@@ -1,9 +1,9 @@
-package sjc.app.repository.dao.impl;
+package sjc.app.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import sjc.app.dao.MusicDao;
 import sjc.app.model.entity.MusicEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
-import sjc.app.repository.dao.MusicDao;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;

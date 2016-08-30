@@ -1,8 +1,8 @@
-package sjc.app.repository.dao.impl;
+package sjc.app.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import sjc.app.dao.LikeDao;
 import sjc.app.model.entity.LikeEntityImpl;
-import sjc.app.repository.dao.LikeDao;
 
 @Repository
 public class LikeDaoImpl extends GenericDaoImpl<LikeEntityImpl> implements LikeDao

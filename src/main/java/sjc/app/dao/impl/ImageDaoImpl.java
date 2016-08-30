@@ -1,8 +1,8 @@
-package sjc.app.repository.dao.impl;
+package sjc.app.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import sjc.app.dao.ImageDao;
 import sjc.app.model.entity.ImageEntityImpl;
-import sjc.app.repository.dao.ImageDao;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;

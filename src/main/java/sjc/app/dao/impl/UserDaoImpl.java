@@ -1,10 +1,10 @@
-package sjc.app.repository.dao.impl;
+package sjc.app.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import sjc.app.dao.FriendDao;
+import sjc.app.dao.UserDao;
 import sjc.app.model.entity.UserEntityImpl;
-import sjc.app.repository.dao.BlackListDao;
-import sjc.app.repository.dao.FriendDao;
-import sjc.app.repository.dao.UserDao;
+import sjc.app.dao.BlackListDao;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;

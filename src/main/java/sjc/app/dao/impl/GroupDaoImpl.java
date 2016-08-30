@@ -1,10 +1,10 @@
-package sjc.app.repository.dao.impl;
+package sjc.app.dao.impl;
 
 
 import org.springframework.stereotype.Repository;
 import sjc.app.model.entity.GroupEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
-import sjc.app.repository.dao.GroupDao;
+import sjc.app.dao.GroupDao;
 
 import javax.persistence.criteria.*;
 import java.util.List;

@@ -1,8 +1,8 @@
-package sjc.app.repository.dao.impl;
+package sjc.app.dao.impl;
 
 import org.springframework.stereotype.Repository;
 import sjc.app.model.entity.MessageEntityImpl;
-import sjc.app.repository.dao.MessageDao;
+import sjc.app.dao.MessageDao;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;

@@ -11,8 +11,8 @@ import sjc.app.model.entity.RoleEntityImpl;
 import sjc.app.model.entity.Sex;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.*;
-import sjc.app.repository.dao.ImageDao;
-import sjc.app.repository.dao.UserDao;
+import sjc.app.dao.ImageDao;
+import sjc.app.dao.UserDao;
 import sjc.app.rest.exception.AlreadyExsistsException;
 import sjc.app.rest.exception.NoAccessExseption;
 import sjc.app.service.MailService;
@@ -182,7 +182,7 @@ public class UserServiceImpl implements UserService
         {
             userEntity.setAvatar(imageDao.findImageByUrl(user.getAvatarUrl()));
         }
-        userEntity.setBirthdateString(user.getBirthdate());
+        userEntity.setUpdateBirthdateString(user.getBirthdate());
         userEntity.setCity(user.getCity());
         userEntity.setEmail(user.getEmail());
         userEntity.setLastName(user.getLastName());

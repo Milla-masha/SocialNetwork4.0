@@ -9,10 +9,10 @@ import sjc.app.model.entity.LikeEntityImpl;
 import sjc.app.model.entity.PostEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.LikeVO;
-import sjc.app.repository.dao.LikeDao;
-import sjc.app.repository.dao.PostGroupDao;
-import sjc.app.repository.dao.PostUserDao;
-import sjc.app.repository.dao.UserDao;
+import sjc.app.dao.LikeDao;
+import sjc.app.dao.PostGroupDao;
+import sjc.app.dao.PostUserDao;
+import sjc.app.dao.UserDao;
 import sjc.app.service.LikeService;
 
 import java.util.List;

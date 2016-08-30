@@ -1,4 +1,4 @@
-package sjc.app.repository.dao;
+package sjc.app.dao;
 
 import sjc.app.model.entity.LikeEntityImpl;
 

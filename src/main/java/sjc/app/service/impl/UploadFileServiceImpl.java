@@ -17,10 +17,10 @@ import sjc.app.model.entity.ImageEntityImpl;
 import sjc.app.model.entity.MusicEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.entity.VideoEntityImpl;
-import sjc.app.repository.dao.ImageDao;
-import sjc.app.repository.dao.MusicDao;
-import sjc.app.repository.dao.UserDao;
-import sjc.app.repository.dao.VideoDao;
+import sjc.app.dao.ImageDao;
+import sjc.app.dao.MusicDao;
+import sjc.app.dao.UserDao;
+import sjc.app.dao.VideoDao;
 import sjc.app.service.UploadfileService;
 
 import java.io.InputStream;

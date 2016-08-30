@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import sjc.app.model.entity.UserEntityImpl;
-import sjc.app.repository.dao.UserDao;
+import sjc.app.dao.UserDao;
 
 import java.util.ArrayList;
 import java.util.List;
