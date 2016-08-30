@@ -16,7 +16,7 @@ import sjc.app.service.MusicService;
 
 @Controller
 @RequestMapping("/musics")
-public class MusicEndpointImpl
+public class MusicEndpoint
 {
 
     @Autowired

@@ -17,7 +17,7 @@ import sjc.app.service.UserService;
 
 @Controller
 @RequestMapping("/users")
-public class UserEndpointImpl
+public class UserEndpoint
 {
     @Autowired
     private UserService userService;

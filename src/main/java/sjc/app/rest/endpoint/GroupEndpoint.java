@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/groups")
-public class GroupEndpointImpl
+public class GroupEndpoint
 {
 
     @Autowired

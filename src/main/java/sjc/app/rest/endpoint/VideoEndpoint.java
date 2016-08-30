@@ -16,7 +16,7 @@ import sjc.app.service.VideoService;
 
 @Controller
 @RequestMapping("/videos")
-public class VideoEndpointImpl
+public class VideoEndpoint
 {
     @Autowired
     private VideoService videoService;

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/users/posts")
-public class PostUserEndpointImpl
+public class PostUserEndpoint
 {
     @Autowired
     private PostUserService postUserService;
