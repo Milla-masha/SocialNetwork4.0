@@ -213,4 +213,25 @@ public class GroupServiceImpl implements GroupService
             throw new NoAccessExseption(login + Constant.MESSAGE_NOT_ACCESS_TO_GROUP+groupId);
         }
     }
+
+    @Override
+    public void editGroup(GroupSmallVO group, String login, Long groupId) throws NotFoundExseption, NoAccessExseption
+    {
+        GroupEntityImpl groupEntity = groupDao.findById(groupId);
+        if(groupEntity==null)
+        {
+            throw new NotFoundExseption(Constant.GROUP + groupId + Constant.MESSAGE_NOT_FOUND);
+        }
+        if(!groupEntity.getOwner().getLogin().equals(login))
+        {
+            throw new NoAccessExseption(login + Constant.MESSAGE_NOT_ACCESS_TO_GROUP+groupId);
+        }
+        groupEntity.setName(group.getName());
+        groupEntity.setDescription(group.getDescription());
+        if (group.getUrlImage() != null)
+        {
+            groupEntity.setImage(imageDao.findImageByUrl(group.getUrlImage()));
+        }
+        groupDao.update(groupEntity);
+    }
 }

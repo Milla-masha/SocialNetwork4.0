@@ -25,4 +25,7 @@ public interface GroupService
     List<GroupVO> findGroupsByName(String login, String groupName, int offset, int limit);
 
     boolean deleteGroup(Long groupId, String login) throws NotFoundExseption, NoAccessExseption;
+
+    void editGroup(GroupSmallVO group, String login, Long groupId) throws NotFoundExseption, NoAccessExseption;
+
 }

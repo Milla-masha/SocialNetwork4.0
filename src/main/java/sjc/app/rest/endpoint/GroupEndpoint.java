@@ -66,6 +66,13 @@ public class GroupEndpoint
         return response;
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value = "/{groupId}")
+    @ResponseBody
+    public void editGroup(@RequestBody GroupSmallVO group,@PathVariable Long groupId, HttpServletRequest request) throws NoAccessExseption, NotFoundExseption
+    {
+        groupService.editGroup(group, request.getUserPrincipal().getName(),groupId );
+    }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", value = "/{groupId}")
