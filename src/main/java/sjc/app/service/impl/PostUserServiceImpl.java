@@ -101,7 +101,7 @@ public class PostUserServiceImpl implements PostUserService
             postEntity.setImage(imageDao.findImageByUrl(post.getUrlImage()));
         }
         postEntity = postUserDao.save(postEntity);
-        if (userEntityTo.getNotification() != null)
+        if (userEntityTo.getNotification() != null && userEntityTo.getId().equals(userEntityFrom.getId()))
         {
             PostNotificationVO postNotificationVO = new PostNotificationVO();
             postNotificationVO.setText(postEntity.getText());
