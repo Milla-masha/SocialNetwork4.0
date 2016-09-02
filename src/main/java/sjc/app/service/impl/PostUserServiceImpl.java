@@ -22,7 +22,6 @@ import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.service.PostUserService;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
@@ -87,18 +86,17 @@ public class PostUserServiceImpl implements PostUserService
         PostVO result = new PostVO();
         UserEntityImpl userEntity = userDao.findById(userId);
         List<PostUserEntityImpl> postEntitys = postUserDao.getLatestPost(userId);
-        for (PostUserEntityImpl postEntity : postEntitys)
+         for (PostUserEntityImpl postEntity : postEntitys)
         {
-           // PostVO post = new PostVO();
             if (postEntity.getImage() != null)
             {
                 result.setImage(postEntity.getImage().getUrl());
             }
-           result.setDate(postEntity.getDateString());
-           result.setId(postEntity.getId());
-           result.setLike(LikeServiceImpl.getCountLike(postEntity.getLikes()));
-           result.setDislike(LikeServiceImpl.getCountDisLike(postEntity.getLikes()));
-           result.setText(postEntity.getText());
+            result.setDate(postEntity.getDateString());
+            result.setId(postEntity.getId());
+            result.setLike(LikeServiceImpl.getCountLike(postEntity.getLikes()));
+            result.setDislike(LikeServiceImpl.getCountDisLike(postEntity.getLikes()));
+            result.setText(postEntity.getText());
             UserSmallVO owner = new UserSmallVO();
             for (LikeEntityImpl like : postEntity.getLikes())
             {
@@ -119,13 +117,9 @@ public class PostUserServiceImpl implements PostUserService
             owner.setLastName(postEntity.getUserFrom().getLastName());
             result.setOwner(owner);
         }
-                         if(new Date(result.getDate()).after(new Date())) {
-                             return result;
-                         } else{
-                             return null;
-                         }
 
-            }
+        return result;
+    }
 
 
     @Override

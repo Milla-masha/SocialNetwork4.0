@@ -44,9 +44,11 @@ public class PostUserDaoImpl extends GenericDaoImpl<PostUserEntityImpl> implemen
         Predicate condition = builder.equal(postRoot.get("user"), idUser);
         criteriaQuery.where(condition);
         criteriaQuery.orderBy(builder.desc(postRoot.get("date")));
-        TypedQuery<PostUserEntityImpl> q = getEntityManager().createQuery(criteriaQuery);
-        q.setMaxResults(1);
-        return q.getResultList();
+
+        //TypedQuery<PostUserEntityImpl> q = getEntityManager().createQuery(criteriaQuery);
+
+        return getEntityManager().createQuery(criteriaQuery).setMaxResults(1).getResultList();
+
     }
 
     @Override
