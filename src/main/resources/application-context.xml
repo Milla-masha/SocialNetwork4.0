@@ -26,7 +26,12 @@
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <context:component-scan base-package="sjc.app"/>
+    <context:component-scan base-package="sjc.app.configuration"/>
+    <context:component-scan base-package="sjc.app.dao"/>
+    <context:component-scan base-package="sjc.app.service"/>
+    <context:component-scan base-package="sjc.app.rest"/>
+
+
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
@@ -43,7 +48,7 @@
         <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
                 <prop key="hibernate.show_sql">false</prop>
             </props>
         </property>

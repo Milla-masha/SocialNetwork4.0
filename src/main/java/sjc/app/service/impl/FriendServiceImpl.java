@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.constant.Constant;
 import sjc.app.model.entity.UserEntityImpl;
+import sjc.app.model.vo.PostVO;
 import sjc.app.model.vo.UserSmallVO;
 import sjc.app.dao.FriendDao;
 import sjc.app.dao.UserDao;
@@ -90,4 +91,6 @@ public class FriendServiceImpl implements FriendService
     {
         return friendsDao.getCountFriends(userId);
     }
+
+
 }

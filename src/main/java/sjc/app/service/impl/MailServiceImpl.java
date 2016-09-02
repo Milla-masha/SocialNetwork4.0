@@ -1,7 +1,6 @@
 package sjc.app.service.impl;
 
 import org.springframework.stereotype.Controller;
-import sjc.app.constant.Constant;
 import sjc.app.service.MailService;
 
 import javax.mail.*;
@@ -9,6 +8,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+import static sjc.app.constant.Constant.LOGIN_EMAIL;
+import static sjc.app.constant.Constant.PASSWORD_EMAIL;
+import static sjc.app.constant.Constant.PASSWORD_RECOVERY_MESSAGE;
 /**
  * Created by psycl on 22.08.2016.
  */
@@ -16,6 +18,8 @@ import java.util.Properties;
 @Controller
 public class MailServiceImpl implements MailService
 {
+
+
 
 
     @Override
@@ -34,7 +38,7 @@ public class MailServiceImpl implements MailService
                 {
                     protected PasswordAuthentication getPasswordAuthentication()
                     {
-                        return new PasswordAuthentication(Constant.LOGIN_EMAIL, Constant.PASSWORD_EMAIL);
+                        return new PasswordAuthentication(LOGIN_EMAIL, PASSWORD_EMAIL);
                     }
                 });
 
@@ -42,12 +46,11 @@ public class MailServiceImpl implements MailService
         try
         {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(Constant.LOGIN_EMAIL));
+            message.setFrom(new InternetAddress(LOGIN_EMAIL));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toEmail));
             message.setSubject(subject);
-            message.setText("Hello, this is your password for SoN: "
-                    + "\n" + passwordToSend);
+            message.setText(PASSWORD_RECOVERY_MESSAGE + passwordToSend);
 
             Transport.send(message);
 

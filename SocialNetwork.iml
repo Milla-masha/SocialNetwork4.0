@@ -156,5 +156,20 @@
     <orderEntry type="library" name="Maven: org.apache.cxf:cxf-rt-frontend-jaxrs:3.1.6" level="project" />
     <orderEntry type="library" name="Maven: javax.ws.rs:javax.ws.rs-api:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:8.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.36" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-jasper:8.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-el:8.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jdt.core.compiler:ecj:4.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-jasper:8.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-servlet-api:8.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-juli:8.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-el-api:8.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-api:8.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-util-scan:8.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-util:8.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-jasper-el:8.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-jsp-api:8.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-websocket:8.5.4" level="project" />
   </component>
 </module>

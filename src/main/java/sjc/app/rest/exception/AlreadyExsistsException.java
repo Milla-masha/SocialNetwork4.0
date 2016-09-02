@@ -5,7 +5,7 @@ import sjc.app.rest.response.ResponseException;
 
 public class AlreadyExsistsException extends Exception implements ResponseException
 {
-    private String error= Constant.ERROR_DATA_CONFLICT;
+    private String error = Constant.ERROR_DATA_CONFLICT;
     private String message;
 
     public AlreadyExsistsException()

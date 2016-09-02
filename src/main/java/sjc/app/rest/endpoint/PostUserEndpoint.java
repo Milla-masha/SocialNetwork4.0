@@ -35,10 +35,10 @@ public class PostUserEndpoint
     public PaginationResponseSuccessful getPostsUser(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit, HttpServletRequest request)
     {
         System.out.println(request.getRequestURL());
-        paginationResponse.setEntity(postUserService.getPostsUser(request.getUserPrincipal().getName(),userId , offset, limit));
-        paginationResponse.addMetadata(Constant.OFFSET,offset.toString());
-        paginationResponse.addMetadata(Constant.LIMIT,limit.toString());
-        paginationResponse.addMetadata(Constant.COUNT,postUserService.getCountPostsUser(userId).toString());
+        paginationResponse.setEntity(postUserService.getPostsUser(request.getUserPrincipal().getName(), userId, offset, limit));
+        paginationResponse.addMetadata(Constant.OFFSET, offset.toString());
+        paginationResponse.addMetadata(Constant.LIMIT, limit.toString());
+        paginationResponse.addMetadata(Constant.COUNT, postUserService.getCountPostsUser(userId).toString());
         return paginationResponse;
     }
 

@@ -11,6 +11,8 @@ public interface PostUserService
 {
     List<PostVO> getPostsUser(String login,Long idTo, int offset, int limit);
 
+    PostVO getUsersLatestPost(Long userId, String login);
+
     boolean addPostUser(PostSmallVO post, String login) throws NoAccessExseption, NotFoundExseption;
 
     boolean deletePostUser(Long postId, String login) throws NotFoundExseption, NoAccessExseption;

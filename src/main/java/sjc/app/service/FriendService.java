@@ -16,4 +16,5 @@ public interface FriendService
     boolean deleteFriend(Long userId, String login) throws NotFoundExseption;
 
     Long getCountFriends(Long userId);
+
 }

@@ -32,6 +32,21 @@ public class PostUserDaoImpl extends GenericDaoImpl<PostUserEntityImpl> implemen
         q.setFirstResult(offset);
         q.setMaxResults(limit);
         return q.getResultList();
+
+    }
+
+    @Override
+    public List<PostUserEntityImpl> getLatestPost(Long idUser)
+    {
+        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<PostUserEntityImpl> criteriaQuery = builder.createQuery(PostUserEntityImpl.class);
+        Root<PostUserEntityImpl> postRoot = criteriaQuery.from(PostUserEntityImpl.class);
+        Predicate condition = builder.equal(postRoot.get("user"), idUser);
+        criteriaQuery.where(condition);
+        criteriaQuery.orderBy(builder.desc(postRoot.get("date")));
+        TypedQuery<PostUserEntityImpl> q = getEntityManager().createQuery(criteriaQuery);
+        q.setMaxResults(1);
+        return q.getResultList();
     }
 
     @Override

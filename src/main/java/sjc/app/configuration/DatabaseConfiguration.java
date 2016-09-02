@@ -1,5 +1,5 @@
 /*
-package sjc.app.Configuration;
+package sjc.app.configuration;
 
 
 import org.apache.commons.dbcp.BasicDataSource;
@@ -23,7 +23,7 @@ public class DatabaseConfiguration
         String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
 
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.addConnectionProperty("serverTimezone", "America/Los_Angeles");
+        basicDataSource.addConnectionProperty("serverTimezone", "Europe/Minsk");
         basicDataSource.addConnectionProperty("testWhileIdle", "true");
         basicDataSource.addConnectionProperty("timeBetweenEvictionRunsMillis", "60000");
         //basicDataSource.addConnectionProperty("validationQuery ","SELECT 1");

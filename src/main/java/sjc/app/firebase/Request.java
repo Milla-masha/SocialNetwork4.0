@@ -2,7 +2,7 @@ package sjc.app.firebase;
 
 public class Request
 {
-    private Notification notification=new Notification();
+    private Notification notification = new Notification();
 
     private String to;
 

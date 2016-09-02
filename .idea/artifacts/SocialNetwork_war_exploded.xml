@@ -105,6 +105,21 @@
           <element id="library" level="project" name="Maven: org.apache.cxf:cxf-rt-frontend-jaxrs:3.1.6" />
           <element id="library" level="project" name="Maven: javax.ws.rs:javax.ws.rs-api:2.0.1" />
           <element id="library" level="project" name="Maven: javax.annotation:javax.annotation-api:1.2" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:8.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.36" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat.embed:tomcat-embed-jasper:8.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat.embed:tomcat-embed-el:8.5.4" />
+          <element id="library" level="project" name="Maven: org.eclipse.jdt.core.compiler:ecj:4.5.1" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-jasper:8.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-servlet-api:8.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-juli:8.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-el-api:8.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-api:8.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-util-scan:8.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-util:8.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-jasper-el:8.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-jsp-api:8.5.4" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat.embed:tomcat-embed-websocket:8.5.4" />
         </element>
       </element>
       <element id="directory" name="META-INF">

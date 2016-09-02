@@ -122,6 +122,7 @@ public class MessageServiceImpl implements MessageService
         {
             if (userEach.getNotification() != null && !userEach.getId().equals(user.getId()))
                 PushNotification.push(messageVO,user.getName() + " " + user.getLastName(), userEach.getNotification().getToken());
+
         }
     }
 }

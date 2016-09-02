@@ -28,8 +28,10 @@ public class ChatWebsocketEndpoint
     private static Map<Session, Long> sessionMap = new HashMap<>();
 
     @OnOpen
-    public void open(@PathParam("roomId") Long roomId, @PathParam("accessToken") String accessToken, Session session, EndpointConfig endpointConfig)
+    public void open(@PathParam("roomId") Long roomId, @PathParam("accessToken") String accessToken, Session session)
     {
+
+
         if (onlineUser.isAuthorize(accessToken))
         {
             sessionMap.put(session, roomId);

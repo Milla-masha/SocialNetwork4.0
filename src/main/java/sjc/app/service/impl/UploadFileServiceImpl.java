@@ -13,14 +13,14 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import sjc.app.model.entity.ImageEntityImpl;
-import sjc.app.model.entity.MusicEntityImpl;
-import sjc.app.model.entity.UserEntityImpl;
-import sjc.app.model.entity.VideoEntityImpl;
 import sjc.app.dao.ImageDao;
 import sjc.app.dao.MusicDao;
 import sjc.app.dao.UserDao;
 import sjc.app.dao.VideoDao;
+import sjc.app.model.entity.ImageEntityImpl;
+import sjc.app.model.entity.MusicEntityImpl;
+import sjc.app.model.entity.UserEntityImpl;
+import sjc.app.model.entity.VideoEntityImpl;
 import sjc.app.service.UploadfileService;
 
 import java.io.InputStream;
@@ -60,18 +60,18 @@ public class UploadFileServiceImpl implements UploadfileService
                     FileMetadata metadata = client.files().uploadBuilder("/" + file.getOriginalFilename())
                             .uploadAndFinish(in);
                     SharedLinkMetadata sharedLinkMetadata = client.sharing().createSharedLinkWithSettings(metadata.getPathDisplay());
-                    UserEntityImpl user= userDao.findByName(login);
+                    UserEntityImpl user = userDao.findByName(login);
                     if (file.getContentType().contains("image"))
                     {
                         ImageEntityImpl image = new ImageEntityImpl();
-                        image.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0","?dl=1"));
+                        image.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0", "?dl=1"));
                         user.getImages().add(image);
                         userDao.update(user);
                         return image.getUrl();
                     } else if (file.getContentType().contains("audio"))
                     {
                         MusicEntityImpl music = new MusicEntityImpl();
-                        music.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0","?dl=1"));
+                        music.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0", "?dl=1"));
                         music.setName(name);
                         user.getMusics().add(music);
                         userDao.update(user);
@@ -79,7 +79,7 @@ public class UploadFileServiceImpl implements UploadfileService
                     } else if (file.getContentType().contains("video"))
                     {
                         VideoEntityImpl video = new VideoEntityImpl();
-                        video.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0","?dl=1"));
+                        video.setUrl(sharedLinkMetadata.getUrl().replace("?dl=0", "?dl=1"));
                         video.setName(name);
                         user.getVideos().add(video);
                         userDao.update(user);

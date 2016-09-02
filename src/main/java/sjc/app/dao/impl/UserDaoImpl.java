@@ -20,7 +20,7 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
     }
 
     @Override
-    public UserEntityImpl findByName(String userName)
+    public  UserEntityImpl  findByName(String userName)
     {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<UserEntityImpl> c = cb.createQuery(UserEntityImpl.class);
@@ -28,6 +28,7 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
         Predicate condition = cb.equal(registerUser.get("login"), userName);
         c.where(condition);
         TypedQuery<UserEntityImpl> q = getEntityManager().createQuery(c);
+
         return q.getSingleResult();
     }
 

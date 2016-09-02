@@ -6,6 +6,9 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.constant.Constant;
+import sjc.app.dao.ImageDao;
+import sjc.app.dao.PostUserDao;
+import sjc.app.dao.UserDao;
 import sjc.app.firebase.PushNotification;
 import sjc.app.model.entity.LikeEntityImpl;
 import sjc.app.model.entity.PostUserEntityImpl;
@@ -14,14 +17,12 @@ import sjc.app.model.vo.PostNotificationVO;
 import sjc.app.model.vo.PostSmallVO;
 import sjc.app.model.vo.PostVO;
 import sjc.app.model.vo.UserSmallVO;
-import sjc.app.dao.ImageDao;
-import sjc.app.dao.PostUserDao;
-import sjc.app.dao.UserDao;
 import sjc.app.rest.exception.NoAccessExseption;
 import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.service.PostUserService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
@@ -79,11 +80,60 @@ public class PostUserServiceImpl implements PostUserService
         return posts;
     }
 
+
+    @Override
+    public PostVO getUsersLatestPost(Long userId, String login)
+    {
+        PostVO result = new PostVO();
+        UserEntityImpl userEntity = userDao.findById(userId);
+        List<PostUserEntityImpl> postEntitys = postUserDao.getLatestPost(userId);
+        for (PostUserEntityImpl postEntity : postEntitys)
+        {
+           // PostVO post = new PostVO();
+            if (postEntity.getImage() != null)
+            {
+                result.setImage(postEntity.getImage().getUrl());
+            }
+           result.setDate(postEntity.getDateString());
+           result.setId(postEntity.getId());
+           result.setLike(LikeServiceImpl.getCountLike(postEntity.getLikes()));
+           result.setDislike(LikeServiceImpl.getCountDisLike(postEntity.getLikes()));
+           result.setText(postEntity.getText());
+            UserSmallVO owner = new UserSmallVO();
+            for (LikeEntityImpl like : postEntity.getLikes())
+            {
+                if (userEntity.getLikes().contains(like))
+                {
+                    result.setIsLike(like.getIsLike());
+                } else
+                {
+                    result.setIsLike(0);
+                }
+            }
+            if (postEntity.getUserFrom().getAvatar() != null)
+            {
+                owner.setAvatar(postEntity.getUserFrom().getAvatar().getUrl());
+            }
+            owner.setId(postEntity.getUserFrom().getId());
+            owner.setName(postEntity.getUserFrom().getName());
+            owner.setLastName(postEntity.getUserFrom().getLastName());
+            result.setOwner(owner);
+        }
+                         if(new Date(result.getDate()).after(new Date())) {
+                             return result;
+                         } else{
+                             return null;
+                         }
+
+            }
+
+
     @Override
     public boolean addPostUser(PostSmallVO post, String login) throws NoAccessExseption, NotFoundExseption
     {
         UserEntityImpl userEntityFrom = userDao.findByName(login);
         UserEntityImpl userEntityTo = userDao.findById(post.getIdTo());
+
         if (userEntityTo == null)
         {
             throw new NotFoundExseption(Constant.USER + post.getIdTo() + Constant.MESSAGE_NOT_FOUND);
@@ -105,7 +155,7 @@ public class PostUserServiceImpl implements PostUserService
         {
             PostNotificationVO postNotificationVO = new PostNotificationVO();
             postNotificationVO.setText(postEntity.getText());
-            PushNotification.push(postNotificationVO,Constant.TITLE, userEntityTo.getNotification().getToken());
+            PushNotification.push(postNotificationVO, Constant.TITLE, userEntityTo.getNotification().getToken());
         }
         return true;
     }
