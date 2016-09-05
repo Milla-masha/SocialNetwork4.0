@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sjc.app.model.vo.GroupVO;
 import sjc.app.model.vo.PostVO;
 import sjc.app.model.vo.UserSmallVO;
 import sjc.app.service.FriendService;
+import sjc.app.service.GroupService;
+import sjc.app.service.PostGroupService;
 import sjc.app.service.PostUserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,8 +27,11 @@ public class FeedEndpoint
     @Autowired
     private PostUserService postUserService;
     @Autowired
+    private PostGroupService postGroupService;
+    @Autowired
     private FriendService friendService;
-
+    @Autowired
+    private GroupService groupService;
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
@@ -35,13 +41,26 @@ public class FeedEndpoint
     {
 
         List<UserSmallVO> users = friendService.getFriends(userId, offset, limit);
+        List<GroupVO> groups = groupService.getGroups(userId, offset, limit, request.getUserPrincipal().getName());
 
         List<PostVO> posts = new ArrayList<>();
-
+        PostVO postFromUser;
+        PostVO postFromGroup;
         for (UserSmallVO user : users)
         {
-            posts.add(postUserService.getUsersLatestPost(user.getId(), user.getName()));
+            postFromUser = postUserService.getUsersLatestPost(user.getId(), user.getName());
+
+            posts.add(postFromUser);
+            
         }
+        for (GroupVO group : groups)
+        {
+            postFromGroup = postGroupService.getGroupLatestPost(group.getId(), group.getName());
+            posts.add(postFromGroup);
+
+        }
+
+        posts.sort((PostVO post1, PostVO post2) -> post1.getDate().compareTo(post2.getDate()));
         return posts;
 
     }

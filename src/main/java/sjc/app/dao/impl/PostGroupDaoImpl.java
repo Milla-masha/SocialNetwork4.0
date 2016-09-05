@@ -45,4 +45,22 @@ public class PostGroupDaoImpl extends GenericDaoImpl<PostGroupEntityImpl> implem
         cq.select(qb.count(post));
         return getEntityManager().createQuery(cq).getSingleResult();
     }
+
+
+    @Override
+    public List<PostGroupEntityImpl> getLatestPost(Long idGroup)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<PostGroupEntityImpl> c = cb.createQuery(PostGroupEntityImpl.class);
+        Root<PostGroupEntityImpl> post = c.from(PostGroupEntityImpl.class);
+        Predicate condition = cb.equal(post.get("group"), idGroup);
+        c.orderBy(cb.desc(post.get("date")));
+        c.where(condition);
+      /*  TypedQuery<PostGroupEntityImpl> q = getEntityManager().createQuery(c);
+        q.setFirstResult(offset);
+        q.setMaxResults(limit);*/
+        return getEntityManager().createQuery(c).setMaxResults(1).getResultList();
+
+    }
+
 }

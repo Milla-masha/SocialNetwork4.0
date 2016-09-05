@@ -16,4 +16,7 @@ public interface PostGroupService
     boolean deletePostGroup(Long postId, String login) throws NotFoundExseption, NoAccessExseption;
 
     Long getCountPostsByGroup(Long groupId);
+
+    PostVO getGroupLatestPost(Long groupId, String login);
+
 }

@@ -6,10 +6,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.constant.Constant;
-import sjc.app.model.entity.GroupEntityImpl;
-import sjc.app.model.entity.LikeEntityImpl;
-import sjc.app.model.entity.PostGroupEntityImpl;
-import sjc.app.model.entity.UserEntityImpl;
+import sjc.app.model.entity.*;
 import sjc.app.model.vo.PostSmallVO;
 import sjc.app.model.vo.PostVO;
 import sjc.app.model.vo.UserSmallVO;
@@ -90,7 +87,7 @@ public class PostGroupServiceImpl implements PostGroupService
         }
         if (!groupTo.getUsers().contains(userEntityFrom))
         {
-            throw new NoAccessExseption(login + Constant.MESSAGE_NOT_ACCESS_TO_GROUP+groupTo.getId());
+            throw new NoAccessExseption(login + Constant.MESSAGE_NOT_ACCESS_TO_GROUP + groupTo.getId());
         }
         PostGroupEntityImpl postEntity = new PostGroupEntityImpl();
         postEntity.setText(post.getText());
@@ -118,7 +115,7 @@ public class PostGroupServiceImpl implements PostGroupService
             return true;
         } else
         {
-            throw new NoAccessExseption(login + Constant.MESSAGE_NOT_ACCESS_TO_POST+postId);
+            throw new NoAccessExseption(login + Constant.MESSAGE_NOT_ACCESS_TO_POST + postId);
 
         }
     }
@@ -127,5 +124,47 @@ public class PostGroupServiceImpl implements PostGroupService
     public Long getCountPostsByGroup(Long groupId)
     {
         return postGroupDao.getCountPostsByGroup(groupId);
+    }
+
+    @Override
+    public PostVO getGroupLatestPost(Long groupId, String login)
+    {
+        PostVO result = new PostVO();
+        UserEntityImpl userEntity = userDao.findById(groupId);
+        List<PostGroupEntityImpl> postEntitys = postGroupDao.getLatestPost(groupId);
+        for (PostGroupEntityImpl postEntity : postEntitys)
+        {
+            if (postEntity.getImage() != null)
+            {
+                result.setImage(postEntity.getImage().getUrl());
+            }
+            result.setDate(postEntity.getDateString());
+            result.setId(postEntity.getId());
+            result.setLike(LikeServiceImpl.getCountLike(postEntity.getLikes()));
+            result.setDislike(LikeServiceImpl.getCountDisLike(postEntity.getLikes()));
+            result.setText(postEntity.getText());
+            UserSmallVO owner = new UserSmallVO();
+            for (LikeEntityImpl like : postEntity.getLikes())
+            {
+                if (userEntity.getLikes().contains(like))
+                {
+                    result.setIsLike(like.getIsLike());
+                } else
+                {
+                    result.setIsLike(0);
+                }
+            }
+            if (postEntity.getUserFrom().getAvatar() != null)
+            {
+                owner.setAvatar(postEntity.getUserFrom().getAvatar().getUrl());
+            }
+            owner.setId(postEntity.getUserFrom().getId());
+            owner.setName(postEntity.getUserFrom().getName());
+            owner.setLastName(postEntity.getUserFrom().getLastName());
+            result.setOwner(owner);
+        }
+
+        return result;
+
     }
 }
