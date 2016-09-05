@@ -27,15 +27,13 @@ public class FriendEndpoint
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public PaginationResponseSuccessful getFriend(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit)
+    public PaginationResponseSuccessful getFriend(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit, HttpServletRequest request)
     {
-        
-        paginationResponse.setEntity(friendService.getFriends(userId, offset, limit));
+        paginationResponse.setEntity(friendService.getFriends( request.getUserPrincipal().getName(),userId, offset, limit));
         paginationResponse.addMetadata(Constant.OFFSET, offset.toString());
         paginationResponse.addMetadata(Constant.LIMIT, limit.toString());
         paginationResponse.addMetadata(Constant.COUNT, friendService.getCountFriends(userId).toString());
         return paginationResponse;
-
     }
 
     @ResponseStatus(HttpStatus.OK)

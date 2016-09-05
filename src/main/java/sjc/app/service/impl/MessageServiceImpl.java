@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sjc.app.dao.DialogDao;
+import sjc.app.dao.MessageDao;
+import sjc.app.dao.UserDao;
 import sjc.app.firebase.PushNotification;
 import sjc.app.model.entity.DialogEntityImpl;
 import sjc.app.model.entity.MessageEntityImpl;
@@ -40,6 +43,7 @@ public class MessageServiceImpl implements MessageService
     public MessageDialogVO getMessages(String login, Long dialogId, int offset, int limit)
     {
         List<MessageEntityImpl> messagesEntity = messageDao.getMessageByDialog(dialogId, offset, limit);
+        messagesEntity.sort((s1, s2) -> s1.getDate().compareTo(s2.getDate()));
         DialogEntityImpl dialogEntity = dialogDao.findById(dialogId);
         if (messagesEntity == null)
         {
@@ -122,7 +126,6 @@ public class MessageServiceImpl implements MessageService
         {
             if (userEach.getNotification() != null && !userEach.getId().equals(user.getId()))
                 PushNotification.push(messageVO, user.getName() + " " + user.getLastName(), userEach.getNotification().getToken());
-
         }
     }
 }

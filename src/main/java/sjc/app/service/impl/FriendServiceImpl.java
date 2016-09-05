@@ -7,11 +7,10 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.constant.Constant;
-import sjc.app.model.entity.UserEntityImpl;
-import sjc.app.model.vo.PostVO;
-import sjc.app.model.vo.UserSmallVO;
 import sjc.app.dao.FriendDao;
 import sjc.app.dao.UserDao;
+import sjc.app.model.entity.UserEntityImpl;
+import sjc.app.model.vo.FriendVO;
 import sjc.app.rest.exception.AlreadyExsistsException;
 import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.service.FriendService;
@@ -33,13 +32,21 @@ public class FriendServiceImpl implements FriendService
     private OnlineUser onlineUserService;
 
     @Override
-    public List<UserSmallVO> getFriends(Long userId, int offset, int limit)
+    public List<FriendVO> getFriends(String login, Long userId, int offset, int limit)
     {
         List<UserEntityImpl> infoFriend = friendsDao.getFriends(userId, offset, limit);
-        List<UserSmallVO> friends = new ArrayList<>();
+        UserEntityImpl owner = userDao.findByName(login);
+        List<FriendVO> friends = new ArrayList<>();
         for (UserEntityImpl user : infoFriend)
         {
-            UserSmallVO friend = new UserSmallVO();
+            FriendVO friend = new FriendVO();
+            if (owner.getFriends().contains(user))
+            {
+                friend.setIsFriend(1);
+            } else
+            {
+                friend.setIsFriend(0);
+            }
             friend.setOnline(onlineUserService.isOnline(user.getLogin()));
             friend.setId(user.getId());
             friend.setName(user.getName());
@@ -91,6 +98,4 @@ public class FriendServiceImpl implements FriendService
     {
         return friendsDao.getCountFriends(userId);
     }
-
-
 }

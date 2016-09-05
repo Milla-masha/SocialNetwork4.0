@@ -1,7 +1,7 @@
 package sjc.app.service;
 
 
-import sjc.app.model.vo.UserSmallVO;
+import sjc.app.model.vo.FriendVO;
 import sjc.app.rest.exception.AlreadyExsistsException;
 import sjc.app.rest.exception.NotFoundExseption;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface FriendService
 {
-    List<UserSmallVO> getFriends(Long userId, int offset, int limit);
+    List<FriendVO> getFriends(String login,Long userId, int offset, int limit);
 
     boolean addFriend(Long userId, String login) throws AlreadyExsistsException, NotFoundExseption;
 

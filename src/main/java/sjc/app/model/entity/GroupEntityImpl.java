@@ -81,7 +81,7 @@ public class GroupEntityImpl extends AbstractPersistable implements GroupEntity
     }
 
     @Access(AccessType.PROPERTY)
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
     @Override
     public List<PostGroupEntityImpl> getPosts()
     {

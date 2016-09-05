@@ -103,7 +103,6 @@ public class DialogServiceImpl implements DialogService
             {
                 return dialog.getId();
             }
-
         }
         DialogEntityImpl dialog = new DialogEntityImpl();
         List<UserEntityImpl> users = new ArrayList<>();
