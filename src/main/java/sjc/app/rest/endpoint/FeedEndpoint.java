@@ -1,5 +1,6 @@
 package sjc.app.rest.endpoint;
 
+import org.apache.commons.collections4.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -48,10 +49,11 @@ public class FeedEndpoint
         PostVO postFromGroup;
         for (UserSmallVO user : users)
         {
+
             postFromUser = postUserService.getUsersLatestPost(user.getId(), user.getName());
 
             posts.add(postFromUser);
-            
+
         }
         for (GroupVO group : groups)
         {
@@ -60,8 +62,11 @@ public class FeedEndpoint
 
         }
 
-        posts.sort((PostVO post1, PostVO post2) -> post1.getDate().compareTo(post2.getDate()));
-        return posts;
+       // posts.sort((PostVO post1, PostVO post2) -> post1.getDate().compareTo(post2.getDate()));
+        //Pageable p = new Pageable(posts);
+       // ListUtils.partition(posts, limit);
+        return ListUtils.partition(posts, limit);
+
 
     }
 }
