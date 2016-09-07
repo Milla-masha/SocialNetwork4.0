@@ -34,6 +34,22 @@ public class MessageDaoImpl  extends GenericDaoImpl<MessageEntityImpl> implement
         return q.getResultList();
     }
 
+
+    @Override
+    public MessageEntityImpl getLastMessageByDialog(Long dialogId)
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<MessageEntityImpl> c = cb.createQuery(MessageEntityImpl.class);
+        Root<MessageEntityImpl> post = c.from(MessageEntityImpl.class);
+        Predicate condition = cb.equal(post.get("dialog"), dialogId);
+        c.orderBy(cb.desc(post.get("date")));
+        c.where(condition);
+       /* TypedQuery<MessageEntityImpl> q = getEntityManager().createQuery(c);
+        q.setFirstResult(offset);
+        q.setMaxResults(limit);*/
+        return getEntityManager().createQuery(c).setMaxResults(1).getSingleResult();
+    }
+
     @Override
     public Long getCountMessagesByDialog(Long dialogId)
     {

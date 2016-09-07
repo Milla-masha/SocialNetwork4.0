@@ -6,12 +6,15 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sjc.app.constant.Constant;
+import sjc.app.dao.DialogDao;
+import sjc.app.dao.MessageDao;
+import sjc.app.dao.UserDao;
 import sjc.app.model.entity.DialogEntityImpl;
+import sjc.app.model.entity.MessageEntityImpl;
 import sjc.app.model.entity.UserEntityImpl;
 import sjc.app.model.vo.DialogVO;
+import sjc.app.model.vo.MessageVO;
 import sjc.app.model.vo.UserSmallVO;
-import sjc.app.dao.DialogDao;
-import sjc.app.dao.UserDao;
 import sjc.app.rest.exception.NotFoundExseption;
 import sjc.app.service.DialogService;
 
@@ -29,24 +32,41 @@ public class DialogServiceImpl implements DialogService
     private UserDao userDao;
     @Autowired
     private OnlineUser onlineUserService;
+    @Autowired
+    private MessageDao messageDao;
 
     @Override
     public List<DialogVO> getDialogs(String login, int offset, int limit)
     {
         UserEntityImpl user = userDao.findByName(login);
         List<DialogEntityImpl> dialogEntities = dialogDao.getDialogsByUser(user.getId(), offset, limit);
+
         if (dialogEntities == null)
+        {
             return null;
+        }
         List<DialogVO> dialogs = new ArrayList<>();
         for (DialogEntityImpl dialogEntity : dialogEntities)
         {
+            MessageEntityImpl lastMessageEntity = messageDao.getLastMessageByDialog(dialogEntity.getId());
+            MessageVO messageVO = new MessageVO();
+            messageVO.setMessage(lastMessageEntity.getText());
+            messageVO.setSenderId(lastMessageEntity.getSender().getId());
+            messageVO.setId(lastMessageEntity.getId());
+
+
             DialogVO dialog = new DialogVO();
             dialog.setId(dialogEntity.getId());
+            dialog.setLastMessage(messageVO);
+
             List<UserSmallVO> usersVO = new ArrayList<>();
             List<UserEntityImpl> userEntities = dialogEntity.getUsers();
+
             userEntities.remove(user);
             for (UserEntityImpl usersEntity : userEntities)
             {
+
+
                 UserSmallVO userVO = new UserSmallVO();
                 userVO.setId(usersEntity.getId());
                 userVO.setAvatar(usersEntity.getAvatar().getUrl());

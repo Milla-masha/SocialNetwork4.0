@@ -6,8 +6,8 @@ import java.util.List;
 public class MessageDialogVO
 {
     private UserSmallVO owner;
-    private List<UserSmallVO> reciver=new ArrayList<>(0);
-    private List<MessageVO> messages=new ArrayList<>(0);
+    private List<UserSmallVO> reciver = new ArrayList<>(0);
+    private List<MessageVO> messages = new ArrayList<>(0);
 
     public UserSmallVO getOwner()
     {

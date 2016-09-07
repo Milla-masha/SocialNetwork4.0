@@ -117,11 +117,11 @@ public class MessageServiceImpl implements MessageService
         messageDao.save(messageEntity);
         MessageSmallVO messageVO = new MessageSmallVO();
         messageVO.setMessage(text);
-        List<UserEntityImpl> dialogsUser=dialogEntity.getUsers();
+        List<UserEntityImpl> dialogsUser = dialogEntity.getUsers();
         for (UserEntityImpl userEach : dialogsUser)
         {
             if (userEach.getNotification() != null && !userEach.getId().equals(user.getId()))
-                PushNotification.push(messageVO,user.getName() + " " + user.getLastName(), userEach.getNotification().getToken());
+                PushNotification.push(messageVO, user.getName() + " " + user.getLastName(), userEach.getNotification().getToken());
 
         }
     }

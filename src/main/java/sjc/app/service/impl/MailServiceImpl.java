@@ -18,10 +18,6 @@ import static sjc.app.constant.Constant.PASSWORD_RECOVERY_MESSAGE;
 @Controller
 public class MailServiceImpl implements MailService
 {
-
-
-
-
     @Override
     public void sendPasswordToEmail(String subject, String passwordToSend, String toEmail)
     {
