@@ -1,5 +1,6 @@
 package sjc.app.rest.endpoint;
 
+
 import org.apache.commons.collections4.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,7 @@ public class FeedEndpoint
     public List getFeed(@RequestParam Long userId, @RequestParam Integer offset, @RequestParam Integer limit, HttpServletRequest request)
     {
 
-        List<UserSmallVO> users = friendService.getFriends(userId, offset, limit);
+        List<UserSmallVO> users=null;// = friendService.getFriends(userId, offset, limit);
         List<GroupVO> groups = groupService.getGroups(userId, offset, limit, request.getUserPrincipal().getName());
 
         List<PostVO> posts = new ArrayList<>();
