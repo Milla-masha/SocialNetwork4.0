@@ -42,8 +42,7 @@ public class ChatWebsocketEndpoint
             {
                 e.printStackTrace();
             }
-        }
-        else return;
+        } else return;
     }
 
     @OnMessage

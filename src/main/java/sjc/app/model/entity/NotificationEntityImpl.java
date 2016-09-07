@@ -9,7 +9,7 @@ public class NotificationEntityImpl extends AbstractPersistable
     @Column(name = "token")
     private String token;
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private UserEntityImpl user;
 
     public String getToken()

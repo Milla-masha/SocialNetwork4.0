@@ -28,7 +28,6 @@ public class UserDaoImpl extends GenericDaoImpl<UserEntityImpl> implements UserD
         Predicate condition = cb.equal(registerUser.get("login"), userName);
         c.where(condition);
         TypedQuery<UserEntityImpl> q = getEntityManager().createQuery(c);
-
         return q.getSingleResult();
     }
 
