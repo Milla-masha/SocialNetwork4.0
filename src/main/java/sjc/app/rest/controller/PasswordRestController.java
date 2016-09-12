@@ -1,9 +1,8 @@
-package sjc.app.rest.endpoint;
+package sjc.app.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.model.vo.PasswordVO;
 import sjc.app.rest.exception.NoAccessExseption;
@@ -11,9 +10,9 @@ import sjc.app.rest.response.ResponseSuccessful;
 import sjc.app.rest.response.impl.ResponseImpl;
 import sjc.app.service.UserService;
 
-@Controller
+@RestController
 @RequestMapping("/password")
-public class PasswordEndpoint
+public class PasswordRestController
 {
     @Autowired
     private UserService userService;

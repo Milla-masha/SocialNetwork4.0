@@ -1,4 +1,4 @@
-package sjc.app.rest.endpoint;
+package sjc.app.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import sjc.app.service.MessageService;
 
 @Controller
 @RequestMapping("/dialogs")
-public class DialogEndpoint
+public class DialogRestController
 {
     @Autowired
     private DialogService dialogService;

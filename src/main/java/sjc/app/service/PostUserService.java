@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface PostUserService
 {
-    List<PostVO> getPostsUser(String login,Long idTo, int offset, int limit);
+    List<PostVO> getPostsUser(String login, Long idTo, int offset, int limit);
 
-    PostVO getUsersLatestPost(Long userId, String login);
+    PostVO getUsersLatestPosts(Long userId);
 
     boolean addPostUser(PostSmallVO post, String login) throws NoAccessExseption, NotFoundExseption;
 

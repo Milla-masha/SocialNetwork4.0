@@ -1,8 +1,7 @@
-package sjc.app.rest.endpoint;
+package sjc.app.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.model.vo.InfoUserVO;
 import sjc.app.service.UserService;
@@ -11,9 +10,9 @@ import sjc.app.service.UserService;
  * Created by psycl on 24.08.2016.
  */
 
-@Controller
+@RestController
 @RequestMapping("/dialog")
-public class ChatEndpoint
+public class ChatRestController
 {
     @Autowired
     private UserService userService;

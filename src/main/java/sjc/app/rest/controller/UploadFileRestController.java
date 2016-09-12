@@ -1,4 +1,4 @@
-package sjc.app.rest.endpoint;
+package sjc.app.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +17,7 @@ import sjc.app.service.UploadfileService;
 
 @Controller
 @RequestMapping("/files")
-public class UploadFileEndpoint
+public class UploadFileRestController
 {
     @Autowired
     UploadfileService uploadfile;

@@ -1,8 +1,7 @@
-package sjc.app.rest.endpoint;
+package sjc.app.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.constant.Constant;
 import sjc.app.rest.exception.AlreadyExsistsException;
@@ -15,9 +14,9 @@ import sjc.app.service.FriendService;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Controller
+@RestController
 @RequestMapping("/friends")
-public class FriendEndpoint
+public class FriendRestController
 {
     @Autowired
     private FriendService friendService;

@@ -38,6 +38,7 @@ public class DialogServiceImpl implements DialogService
     @Override
     public List<DialogVO> getDialogs(String login, int offset, int limit)
     {
+
         UserEntityImpl user = userDao.findByName(login);
         List<DialogEntityImpl> dialogEntities = dialogDao.getDialogsByUser(user.getId(), offset, limit);
 
@@ -45,28 +46,16 @@ public class DialogServiceImpl implements DialogService
         {
             return null;
         }
+
         List<DialogVO> dialogs = new ArrayList<>();
         for (DialogEntityImpl dialogEntity : dialogEntities)
         {
-            MessageEntityImpl lastMessageEntity = messageDao.getLastMessageByDialog(dialogEntity.getId());
-            MessageVO messageVO = new MessageVO();
-            messageVO.setMessage(lastMessageEntity.getText());
-            messageVO.setSenderId(lastMessageEntity.getSender().getId());
-            messageVO.setId(lastMessageEntity.getId());
-
-
-            DialogVO dialog = new DialogVO();
-            dialog.setId(dialogEntity.getId());
-            dialog.setLastMessage(messageVO);
-
             List<UserSmallVO> usersVO = new ArrayList<>();
             List<UserEntityImpl> userEntities = dialogEntity.getUsers();
 
             userEntities.remove(user);
             for (UserEntityImpl usersEntity : userEntities)
             {
-
-
                 UserSmallVO userVO = new UserSmallVO();
                 userVO.setId(usersEntity.getId());
                 userVO.setAvatar(usersEntity.getAvatar().getUrl());
@@ -75,10 +64,32 @@ public class DialogServiceImpl implements DialogService
                 userVO.setOnline(onlineUserService.isOnline(usersEntity.getLogin()));
                 usersVO.add(userVO);
             }
-            userEntities.add(user);
-            dialog.setReciver(usersVO);
-            dialogs.add(dialog);
-        }
+            if (!dialogEntity.getMessages().isEmpty())
+            {
+                MessageEntityImpl lastMessageEntity;
+                MessageVO messageVO = new MessageVO();
+                lastMessageEntity = messageDao.getLastMessageByDialog(dialogEntity.getId());
+                messageVO.setMessage(lastMessageEntity.getText());
+                messageVO.setSenderId(lastMessageEntity.getSender().getId());
+                messageVO.setId(lastMessageEntity.getId());
+                DialogVO dialog = new DialogVO();
+
+                dialog.setId(dialogEntity.getId());
+                dialog.setLastMessage(messageVO);
+                userEntities.add(user);
+                dialog.setReciver(usersVO);
+                dialogs.add(dialog);
+            }else{
+                MessageVO messageVO = new MessageVO();
+                DialogVO dialog = new DialogVO();
+
+                dialog.setId(dialogEntity.getId());
+                dialog.setLastMessage(messageVO);
+                userEntities.add(user);
+                dialog.setReciver(usersVO);
+                dialogs.add(dialog);
+            }
+  }
         return dialogs;
     }
 

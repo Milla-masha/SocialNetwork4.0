@@ -81,31 +81,34 @@ public class PostUserServiceImpl implements PostUserService
 
 
     @Override
-    public PostVO getUsersLatestPost(Long userId, String login)
+    public PostVO getUsersLatestPosts(Long userId)
     {
-        PostVO result = new PostVO();
+        PostVO post = new PostVO();
         UserEntityImpl userEntity = userDao.findById(userId);
+
         List<PostUserEntityImpl> postEntitys = postUserDao.getLatestPost(userId);
-         for (PostUserEntityImpl postEntity : postEntitys)
+
+        for (PostUserEntityImpl postEntity : postEntitys)
         {
             if (postEntity.getImage() != null)
             {
-                result.setImage(postEntity.getImage().getUrl());
+                post.setImage(postEntity.getImage().getUrl());
             }
-            result.setDate(postEntity.getDateString());
-            result.setId(postEntity.getId());
-            result.setLike(LikeServiceImpl.getCountLike(postEntity.getLikes()));
-            result.setDislike(LikeServiceImpl.getCountDisLike(postEntity.getLikes()));
-            result.setText(postEntity.getText());
+            post.setDate(postEntity.getDateString());
+            post.setId(postEntity.getId());
+            post.setLike(LikeServiceImpl.getCountLike(postEntity.getLikes()));
+            post.setDislike(LikeServiceImpl.getCountDisLike(postEntity.getLikes()));
+            post.setText(postEntity.getText());
             UserSmallVO owner = new UserSmallVO();
             for (LikeEntityImpl like : postEntity.getLikes())
             {
                 if (userEntity.getLikes().contains(like))
                 {
-                    result.setIsLike(like.getIsLike());
+                    post.setIsLike(like.getIsLike());
+
                 } else
                 {
-                    result.setIsLike(0);
+                    post.setIsLike(0);
                 }
             }
             if (postEntity.getUserFrom().getAvatar() != null)
@@ -115,10 +118,10 @@ public class PostUserServiceImpl implements PostUserService
             owner.setId(postEntity.getUserFrom().getId());
             owner.setName(postEntity.getUserFrom().getName());
             owner.setLastName(postEntity.getUserFrom().getLastName());
-            result.setOwner(owner);
+            post.setOwner(owner);
         }
 
-        return result;
+        return post;
     }
 
 

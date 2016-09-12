@@ -1,8 +1,7 @@
-package sjc.app.rest.endpoint;
+package sjc.app.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sjc.app.constant.Constant;
 import sjc.app.model.vo.GroupSmallVO;
@@ -17,15 +16,33 @@ import sjc.app.service.GroupService;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Controller
+@RestController
 @RequestMapping("/groups")
-public class GroupEndpoint
+public class GroupRestController
 {
 
     @Autowired
     private GroupService groupService;
     private PaginationResponseSuccessful paginationResponse = new PaginationResponseImpl();
     private ResponseSuccessful response = new ResponseImpl();
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, value = "/{groupId}")
+    @ResponseBody
+    public ResponseSuccessful getGroup(@PathVariable Long groupId, HttpServletRequest request)
+    {
+        response.setEntity(groupService.getGroup(groupId, request.getUserPrincipal().getName()));
+        return response;
+    }
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET, value = "/find")
+    @ResponseBody
+    public PaginationResponseSuccessful findGroupsByName(@RequestParam String name, @RequestParam Integer offset, @RequestParam Integer limit, HttpServletRequest request)
+    {
+        paginationResponse.setEntity(groupService.findGroupsByName( request.getUserPrincipal().getName(),name, offset, limit));
+        return paginationResponse;
+    }
+
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.GET)
@@ -39,23 +56,7 @@ public class GroupEndpoint
         return paginationResponse;
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value = "/find")
-    @ResponseBody
-    public PaginationResponseSuccessful findGroupsByName(@RequestParam String name, @RequestParam Integer offset, @RequestParam Integer limit, HttpServletRequest request)
-    {
-        paginationResponse.setEntity(groupService.findGroupsByName( request.getUserPrincipal().getName(),name, offset, limit));
-        return paginationResponse;
-    }
 
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(method = RequestMethod.GET, value = "/{groupId}")
-    @ResponseBody
-    public ResponseSuccessful getGroup(@PathVariable Long groupId, HttpServletRequest request)
-    {
-        response.setEntity(groupService.getGroup(groupId, request.getUserPrincipal().getName()));
-        return response;
-    }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")

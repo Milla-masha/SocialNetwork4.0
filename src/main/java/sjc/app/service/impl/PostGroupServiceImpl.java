@@ -131,8 +131,8 @@ public class PostGroupServiceImpl implements PostGroupService
     {
         PostVO result = new PostVO();
         UserEntityImpl userEntity = userDao.findById(groupId);
-        List<PostGroupEntityImpl> postEntitys = postGroupDao.getLatestPost(groupId);
-        for (PostGroupEntityImpl postEntity : postEntitys)
+        List<PostGroupEntityImpl> postEntities = postGroupDao.getLatestPost(groupId);
+        for (PostGroupEntityImpl postEntity : postEntities)
         {
             if (postEntity.getImage() != null)
             {
