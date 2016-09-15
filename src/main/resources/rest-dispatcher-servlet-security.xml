@@ -10,7 +10,6 @@
                     http://www.springframework.org/schema/security
                     http://www.springframework.org/schema/security/spring-security-4.1.xsd">
 
-
     <http pattern="/oauth/token" create-session="stateless" use-expressions="false"
           authentication-manager-ref="clientAuthenticationManager"
           xmlns="http://www.springframework.org/schema/security">
