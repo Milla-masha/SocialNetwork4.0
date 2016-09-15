@@ -120,7 +120,7 @@ public class GroupServiceImpl implements GroupService
             groupEntity.setImage(imageDao.findImageByUrl(group.getUrlImage()));
         } else
         {
-            groupEntity.setImage(imageDao.findById(94L));
+            groupEntity.setImage(imageDao.findById(2L));
         }
         groupEntity.getUsers().add(user);
         return groupDao.save(groupEntity).getId();

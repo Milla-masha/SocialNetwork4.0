@@ -1,11 +1,7 @@
 package sjc.app.chat;
 
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.server.standard.SpringConfigurator;
-import sjc.app.model.vo.MessageVO;
-import sjc.app.rest.exception.NotFoundExseption;
-import sjc.app.service.MessageService;
 import sjc.app.service.impl.OnlineUser;
 
 import javax.websocket.*;
@@ -16,57 +12,42 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@ServerEndpoint(value = "/chat/{roomId}/{accessToken}", configurator = SpringConfigurator.class)
-public class ChatWebsocketEndpoint
+/**
+ * Created by psycl on 15.09.2016.
+ */
+@ServerEndpoint(value = "/notification/{userId}/{accessToken}", configurator = SpringConfigurator.class)
+public class NotificationWebsocketEndpoint
 {
-    @Autowired
-    private MessageService messageService;
+
     @Autowired
     private OnlineUser onlineUser;
-    // private static Logger logger = LoggerFactory.getLogger(ChatWebsocketEndpoint.class);
-    // private static String chatTag = "Chat: ";
     private static Map<Session, Long> sessionMap = new HashMap<>();
 
     @OnOpen
-    public void open(@PathParam("roomId") Long roomId, @PathParam("accessToken") String accessToken, Session session)
+    public void open(@PathParam("userId") Long userId, @PathParam("accessToken") String accessToken, Session session)
     {
-
-
         if (onlineUser.isAuthorize(accessToken))
         {
-            sessionMap.put(session, roomId);
-            try
-            {
-                session.getBasicRemote().sendText("Connected to websocket dialog: " + roomId);
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+            sessionMap.put(session, userId);
         } else return;
     }
 
-    @OnMessage
-    public void onMessage(final Session session, final String messageJson) throws NotFoundExseption
+    public static void notificationSender(Long idUser, Object object)
     {
-        Long roomId = sessionMap.get(session);
         for (Map.Entry<Session, Long> sessionLongEntry : sessionMap.entrySet())
         {
-            if (Objects.equals(sessionLongEntry.getValue(), roomId))
+            if (Objects.equals(sessionLongEntry.getValue(), idUser))
             {
                 try
                 {
-                    sessionLongEntry.getKey().getBasicRemote().sendText(messageJson);
-
-
+                    sessionLongEntry.getKey().getBasicRemote().sendText(object.toString());
                 } catch (IOException e)
                 {
+                    e.printStackTrace();
                 }
-                // logger.debug(chatTag + messageJson);
             }
         }
-        Gson gson = new Gson();
-        MessageVO messageVO = gson.fromJson(messageJson, MessageVO.class);
-        messageService.addMessage(messageVO.getMessage(), messageVO.getSenderId(), roomId);
+
     }
 
     @OnClose
@@ -106,6 +87,5 @@ public class ChatWebsocketEndpoint
 
 
     }
-
 
 }

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sjc.app.chat.NotificationWebsocketEndpoint;
 import sjc.app.dao.DialogDao;
 import sjc.app.dao.MessageDao;
 import sjc.app.dao.UserDao;
@@ -16,9 +17,6 @@ import sjc.app.model.vo.MessageDialogVO;
 import sjc.app.model.vo.MessageSmallVO;
 import sjc.app.model.vo.MessageVO;
 import sjc.app.model.vo.UserSmallVO;
-import sjc.app.dao.DialogDao;
-import sjc.app.dao.MessageDao;
-import sjc.app.dao.UserDao;
 import sjc.app.service.MessageService;
 
 import java.util.ArrayList;
@@ -125,7 +123,10 @@ public class MessageServiceImpl implements MessageService
         for (UserEntityImpl userEach : dialogsUser)
         {
             if (userEach.getNotification() != null && !userEach.getId().equals(user.getId()))
+            {
                 PushNotification.push(messageVO, user.getName() + " " + user.getLastName(), userEach.getNotification().getToken());
+            }
+            NotificationWebsocketEndpoint.notificationSender(userEach.getId(), dialogEntity.getId());
         }
     }
 }

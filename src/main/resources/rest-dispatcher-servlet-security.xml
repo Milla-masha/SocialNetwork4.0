@@ -252,6 +252,10 @@
           auto-config="true" security="none" create-session="never" use-expressions="false"
           xmlns="http://www.springframework.org/schema/security">
     </http>
+    <http pattern="/notification/*"
+          auto-config="true" security="none" create-session="never" use-expressions="false"
+          xmlns="http://www.springframework.org/schema/security">
+    </http>
 
     <bean id="corsFilter"
           class="sjc.app.rest.authentication.filter.CustomCorsFilter"/>

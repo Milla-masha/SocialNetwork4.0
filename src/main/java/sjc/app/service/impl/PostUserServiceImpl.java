@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sjc.app.chat.NotificationWebsocketEndpoint;
 import sjc.app.constant.Constant;
 import sjc.app.dao.ImageDao;
 import sjc.app.dao.PostUserDao;
@@ -148,6 +149,7 @@ public class PostUserServiceImpl implements PostUserService
             postEntity.setImage(imageDao.findImageByUrl(post.getUrlImage()));
         }
         postEntity = postUserDao.save(postEntity);
+        NotificationWebsocketEndpoint.notificationSender(post.getIdTo(), "New post");
         if (userEntityTo.getNotification() != null && !userEntityTo.getId().equals(userEntityFrom.getId()))
         {
             PostNotificationVO postNotificationVO = new PostNotificationVO();

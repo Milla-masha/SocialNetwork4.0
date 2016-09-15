@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService
             userEntity.setSex(Sex.FEMALE);
         }
         userEntity.setBirthdateString(user.getBday());
-        userEntity.setAvatar(imageDao.findById(63L));
+        userEntity.setAvatar(imageDao.findById(1L));
         userEntity.setEmail(user.getEmail());
         userEntity.setEnabled(true);
         RoleEntityImpl authority = new RoleEntityImpl();
